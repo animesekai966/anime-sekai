@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeStudioRole } from '../prisma/anime-studio-role.enum';
+import { AnimeStudioType } from '../prisma/anime-studio-type.enum';
 
 @ObjectType()
 export class AnimeStudioMinAggregate {
@@ -12,8 +12,8 @@ export class AnimeStudioMinAggregate {
     @Field(() => Int, {nullable:true})
     malId?: number;
 
-    @Field(() => AnimeStudioRole, {nullable:true})
-    role?: keyof typeof AnimeStudioRole;
+    @Field(() => AnimeStudioType, {nullable:true})
+    type?: keyof typeof AnimeStudioType;
 
     @Field(() => String, {nullable:true})
     name?: string;

@@ -58,11 +58,5 @@ export class AnimeScalarWhereInput {
     genreIDs?: StringNullableListFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
-    themesIDs?: StringNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
-    demographicIDs?: StringNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
     studioIDs?: StringNullableListFilter;
 }

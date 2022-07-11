@@ -4,16 +4,17 @@ import axios, { AxiosRequestConfig } from 'axios';
 @Injectable()
 export class JikanService {
   async getFullAnime(malId: number): Promise<MalFullAnime> {
-    let baseAnime = await axios
-      .get(`https://api.jikan.moe/v4/anime/${malId}/full`)
-      .then((req) => req.data.data);
-    let animePictures = await axios
-      .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
-      .then((req) => req.data.data);
-    let animeRecommendations = await axios
-      .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
-      .then((req) => req.data.data);
-
+    let [baseAnime, animePictures, animeRecommendations] = await Promise.all([
+      await axios
+        .get(`https://api.jikan.moe/v4/anime/${malId}/full`)
+        .then((req) => req.data.data),
+      await axios
+        .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
+        .then((req) => req.data.data),
+      await axios
+        .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
+        .then((req) => req.data.data),
+    ]);
     return {
       ...baseAnime,
       altImages: animePictures,

@@ -50,12 +50,6 @@ export class AnimeGroupBy {
     genreIDs?: Array<string>;
 
     @Field(() => [String], {nullable:true})
-    themesIDs?: Array<string>;
-
-    @Field(() => [String], {nullable:true})
-    demographicIDs?: Array<string>;
-
-    @Field(() => [String], {nullable:true})
     studioIDs?: Array<string>;
 
     @Field(() => AnimeCountAggregate, {nullable:true})

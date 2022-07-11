@@ -11,7 +11,7 @@ export class AnimeStudioMinAggregateInput {
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    role?: true;
+    type?: true;
 
     @Field(() => Boolean, {nullable:true})
     name?: true;

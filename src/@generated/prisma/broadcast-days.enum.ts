@@ -1,13 +1,13 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum BroadcastDays {
-    MONDAY = "MONDAY",
-    TUESDAY = "TUESDAY",
-    WEDNESDAY = "WEDNESDAY",
-    THURSDAY = "THURSDAY",
-    FRIDAY = "FRIDAY",
-    SATURDAY = "SATURDAY",
-    SUNDAY = "SUNDAY"
+    MONDAYS = "MONDAYS",
+    TUESDAYS = "TUESDAYS",
+    WEDNESDAYS = "WEDNESDAYS",
+    THURSDAYS = "THURSDAYS",
+    FRIDAYS = "FRIDAYS",
+    SATURDAYS = "SATURDAYS",
+    SUNDAYS = "SUNDAYS"
 }
 
 

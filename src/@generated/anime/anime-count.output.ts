@@ -6,14 +6,8 @@ import { Int } from '@nestjs/graphql';
 export class AnimeCount {
 
     @Field(() => Int, {nullable:false})
-    genres?: number;
-
-    @Field(() => Int, {nullable:false})
-    themes?: number;
-
-    @Field(() => Int, {nullable:false})
-    demographics?: number;
-
-    @Field(() => Int, {nullable:false})
     studios?: number;
+
+    @Field(() => Int, {nullable:false})
+    genres?: number;
 }

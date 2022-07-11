@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
 import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
-import { EnumAnimeStudioRoleWithAggregatesFilter } from '../prisma/enum-anime-studio-role-with-aggregates-filter.input';
+import { EnumAnimeStudioTypeWithAggregatesFilter } from '../prisma/enum-anime-studio-type-with-aggregates-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 
 @InputType()
@@ -23,8 +23,8 @@ export class AnimeStudioScalarWhereWithAggregatesInput {
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     malId?: IntWithAggregatesFilter;
 
-    @Field(() => EnumAnimeStudioRoleWithAggregatesFilter, {nullable:true})
-    role?: EnumAnimeStudioRoleWithAggregatesFilter;
+    @Field(() => EnumAnimeStudioTypeWithAggregatesFilter, {nullable:true})
+    type?: EnumAnimeStudioTypeWithAggregatesFilter;
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     name?: StringWithAggregatesFilter;

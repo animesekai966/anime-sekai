@@ -4,9 +4,9 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
-import { CoverCompositeFilter } from '../prisma/cover-composite-filter.input';
-import { CoverObjectEqualityInput } from '../prisma/cover-object-equality.input';
-import { TitleCompositeFilter } from '../prisma/title-composite-filter.input';
+import { AnimeCoverCompositeFilter } from '../prisma/anime-cover-composite-filter.input';
+import { AnimeCoverObjectEqualityInput } from '../prisma/anime-cover-object-equality.input';
+import { AnimeTitleCompositeFilter } from '../prisma/anime-title-composite-filter.input';
 import { EnumAnimeTypeFilter } from '../prisma/enum-anime-type-filter.input';
 import { FuzzyDateCompositeFilter } from '../prisma/fuzzy-date-composite-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
@@ -18,10 +18,8 @@ import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.
 import { RelatedAnimeObjectEqualityInput } from '../prisma/related-anime-object-equality.input';
 import { EpisodeObjectEqualityInput } from '../prisma/episode-object-equality.input';
 import { ExternalSiteObjectEqualityInput } from '../prisma/external-site-object-equality.input';
-import { AnimeGenreListRelationFilter } from '../anime-genre/anime-genre-list-relation-filter.input';
-import { AnimeThemeListRelationFilter } from '../anime-theme/anime-theme-list-relation-filter.input';
-import { AnimeDemographicListRelationFilter } from '../anime-demographic/anime-demographic-list-relation-filter.input';
 import { AnimeStudioListRelationFilter } from '../anime-studio/anime-studio-list-relation-filter.input';
+import { AnimeGenreListRelationFilter } from '../anime-genre/anime-genre-list-relation-filter.input';
 
 @InputType()
 export class AnimeWhereInput {
@@ -50,14 +48,14 @@ export class AnimeWhereInput {
     @Field(() => StringNullableFilter, {nullable:true})
     banner?: StringNullableFilter;
 
-    @Field(() => CoverCompositeFilter, {nullable:true})
-    cover?: CoverCompositeFilter;
+    @Field(() => AnimeCoverCompositeFilter, {nullable:true})
+    cover?: AnimeCoverCompositeFilter;
 
-    @Field(() => [CoverObjectEqualityInput], {nullable:true})
-    altCovers?: Array<CoverObjectEqualityInput>;
+    @Field(() => [AnimeCoverObjectEqualityInput], {nullable:true})
+    altCovers?: Array<AnimeCoverObjectEqualityInput>;
 
-    @Field(() => TitleCompositeFilter, {nullable:true})
-    title?: TitleCompositeFilter;
+    @Field(() => AnimeTitleCompositeFilter, {nullable:true})
+    title?: AnimeTitleCompositeFilter;
 
     @Field(() => EnumAnimeTypeFilter, {nullable:true})
     type?: EnumAnimeTypeFilter;
@@ -96,19 +94,10 @@ export class AnimeWhereInput {
     genreIDs?: StringNullableListFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
-    themesIDs?: StringNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
-    demographicIDs?: StringNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
     studioIDs?: StringNullableListFilter;
 
     @Field(() => [RelatedAnimeObjectEqualityInput], {nullable:true})
     related?: Array<RelatedAnimeObjectEqualityInput>;
-
-    @Field(() => [RelatedAnimeObjectEqualityInput], {nullable:true})
-    recommendations?: Array<RelatedAnimeObjectEqualityInput>;
 
     @Field(() => [EpisodeObjectEqualityInput], {nullable:true})
     episodes?: Array<EpisodeObjectEqualityInput>;
@@ -116,15 +105,9 @@ export class AnimeWhereInput {
     @Field(() => [ExternalSiteObjectEqualityInput], {nullable:true})
     externalSites?: Array<ExternalSiteObjectEqualityInput>;
 
-    @Field(() => AnimeGenreListRelationFilter, {nullable:true})
-    genres?: AnimeGenreListRelationFilter;
-
-    @Field(() => AnimeThemeListRelationFilter, {nullable:true})
-    themes?: AnimeThemeListRelationFilter;
-
-    @Field(() => AnimeDemographicListRelationFilter, {nullable:true})
-    demographics?: AnimeDemographicListRelationFilter;
-
     @Field(() => AnimeStudioListRelationFilter, {nullable:true})
     studios?: AnimeStudioListRelationFilter;
+
+    @Field(() => AnimeGenreListRelationFilter, {nullable:true})
+    genres?: AnimeGenreListRelationFilter;
 }

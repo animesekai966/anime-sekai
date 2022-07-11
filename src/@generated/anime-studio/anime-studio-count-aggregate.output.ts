@@ -12,7 +12,7 @@ export class AnimeStudioCountAggregate {
     malId!: number;
 
     @Field(() => Int, {nullable:false})
-    role!: number;
+    type!: number;
 
     @Field(() => Int, {nullable:false})
     name!: number;

@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeStudioRole } from '../prisma/anime-studio-role.enum';
+import { AnimeStudioType } from '../prisma/anime-studio-type.enum';
 import { AnimeStudioCreateanimeIDsInput } from './anime-studio-createanime-i-ds.input';
 
 @InputType()
@@ -13,8 +13,8 @@ export class AnimeStudioCreateManyInput {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => AnimeStudioRole, {nullable:true})
-    role?: keyof typeof AnimeStudioRole;
+    @Field(() => AnimeStudioType, {nullable:true})
+    type?: keyof typeof AnimeStudioType;
 
     @Field(() => String, {nullable:false})
     name!: string;

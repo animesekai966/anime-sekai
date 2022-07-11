@@ -41,12 +41,6 @@ export class AnimeCountAggregateInput {
     genreIDs?: true;
 
     @Field(() => Boolean, {nullable:true})
-    themesIDs?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    demographicIDs?: true;
-
-    @Field(() => Boolean, {nullable:true})
     studioIDs?: true;
 
     @Field(() => Boolean, {nullable:true})

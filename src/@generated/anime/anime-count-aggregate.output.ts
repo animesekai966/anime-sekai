@@ -42,12 +42,6 @@ export class AnimeCountAggregate {
     genreIDs!: number;
 
     @Field(() => Int, {nullable:false})
-    themesIDs!: number;
-
-    @Field(() => Int, {nullable:false})
-    demographicIDs!: number;
-
-    @Field(() => Int, {nullable:false})
     studioIDs!: number;
 
     @Field(() => Int, {nullable:false})

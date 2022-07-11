@@ -8,6 +8,7 @@ import { AnimeXService } from './anime-x/anime-x.service';
 import { AnimesModule } from './animes/animes.module';
 import { PrismaService } from './prisma/prisma.service';
 import { AnimeXModule } from './anime-x/anime-x.module';
+import { JikanService } from './jikan.service';
 
 @Module({
   imports: [
@@ -19,8 +20,11 @@ import { AnimeXModule } from './anime-x/anime-x.module';
     AnimesModule,
     ScheduleModule.forRoot(),
     AnimeXModule,
+    JikanService,
+    
   ],
   controllers: [AppController],
-  providers: [AppService, AnimeXService, PrismaService],
+  providers: [AppService, AnimeXService, PrismaService, JikanService],
+  exports: [JikanService]
 })
 export class AppModule {}

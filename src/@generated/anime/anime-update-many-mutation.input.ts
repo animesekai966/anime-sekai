@@ -4,9 +4,9 @@ import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operat
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { CoverUpdateEnvelopeInput } from '../cover/cover-update-envelope.input';
-import { CoverCreateInput } from '../cover/cover-create.input';
-import { TitleUpdateEnvelopeInput } from '../title/title-update-envelope.input';
+import { AnimeCoverUpdateEnvelopeInput } from '../anime-cover/anime-cover-update-envelope.input';
+import { AnimeCoverCreateInput } from '../anime-cover/anime-cover-create.input';
+import { AnimeTitleUpdateEnvelopeInput } from '../anime-title/anime-title-update-envelope.input';
 import { EnumAnimeTypeFieldUpdateOperationsInput } from '../prisma/enum-anime-type-field-update-operations.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
@@ -17,8 +17,6 @@ import { AnimeDescriptionUpdateEnvelopeInput } from '../anime-description/anime-
 import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
 import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
-import { AnimeUpdatethemesIDsInput } from './anime-updatethemes-i-ds.input';
-import { AnimeUpdatedemographicIDsInput } from './anime-updatedemographic-i-ds.input';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
 import { RelatedAnimeCreateInput } from '../related-anime/related-anime-create.input';
 import { EpisodeCreateInput } from '../episode/episode-create.input';
@@ -39,14 +37,14 @@ export class AnimeUpdateManyMutationInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     banner?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => CoverUpdateEnvelopeInput, {nullable:true})
-    cover?: CoverUpdateEnvelopeInput;
+    @Field(() => AnimeCoverUpdateEnvelopeInput, {nullable:true})
+    cover?: AnimeCoverUpdateEnvelopeInput;
 
-    @Field(() => [CoverCreateInput], {nullable:true})
-    altCovers?: Array<CoverCreateInput>;
+    @Field(() => [AnimeCoverCreateInput], {nullable:true})
+    altCovers?: Array<AnimeCoverCreateInput>;
 
-    @Field(() => TitleUpdateEnvelopeInput, {nullable:true})
-    title?: TitleUpdateEnvelopeInput;
+    @Field(() => AnimeTitleUpdateEnvelopeInput, {nullable:true})
+    title?: AnimeTitleUpdateEnvelopeInput;
 
     @Field(() => EnumAnimeTypeFieldUpdateOperationsInput, {nullable:true})
     type?: EnumAnimeTypeFieldUpdateOperationsInput;
@@ -84,20 +82,11 @@ export class AnimeUpdateManyMutationInput {
     @Field(() => AnimeUpdategenreIDsInput, {nullable:true})
     genreIDs?: AnimeUpdategenreIDsInput;
 
-    @Field(() => AnimeUpdatethemesIDsInput, {nullable:true})
-    themesIDs?: AnimeUpdatethemesIDsInput;
-
-    @Field(() => AnimeUpdatedemographicIDsInput, {nullable:true})
-    demographicIDs?: AnimeUpdatedemographicIDsInput;
-
     @Field(() => AnimeUpdatestudioIDsInput, {nullable:true})
     studioIDs?: AnimeUpdatestudioIDsInput;
 
     @Field(() => [RelatedAnimeCreateInput], {nullable:true})
     related?: Array<RelatedAnimeCreateInput>;
-
-    @Field(() => [RelatedAnimeCreateInput], {nullable:true})
-    recommendations?: Array<RelatedAnimeCreateInput>;
 
     @Field(() => [EpisodeCreateInput], {nullable:true})
     episodes?: Array<EpisodeCreateInput>;

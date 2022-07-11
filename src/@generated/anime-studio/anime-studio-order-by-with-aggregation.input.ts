@@ -17,7 +17,7 @@ export class AnimeStudioOrderByWithAggregationInput {
     malId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    role?: keyof typeof SortOrder;
+    type?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     name?: keyof typeof SortOrder;

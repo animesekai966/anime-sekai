@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
+import { EnumAnimeGenreTypeFilter } from '../prisma/enum-anime-genre-type-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 
 @InputType()
@@ -24,6 +25,9 @@ export class AnimeGenreScalarWhereInput {
 
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
+
+    @Field(() => EnumAnimeGenreTypeFilter, {nullable:true})
+    type?: EnumAnimeGenreTypeFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
     animeIDs?: StringNullableListFilter;

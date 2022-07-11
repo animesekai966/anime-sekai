@@ -1,9 +1,9 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { CoverCreateEnvelopeInput } from '../cover/cover-create-envelope.input';
-import { CoverCreateInput } from '../cover/cover-create.input';
-import { TitleCreateEnvelopeInput } from '../title/title-create-envelope.input';
+import { AnimeCoverCreateEnvelopeInput } from '../anime-cover/anime-cover-create-envelope.input';
+import { AnimeCoverCreateInput } from '../anime-cover/anime-cover-create.input';
+import { AnimeTitleCreateEnvelopeInput } from '../anime-title/anime-title-create-envelope.input';
 import { AnimeType } from '../prisma/anime-type.enum';
 import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
 import { AgeRating } from '../prisma/age-rating.enum';
@@ -14,8 +14,6 @@ import { AnimeDescriptionCreateEnvelopeInput } from '../anime-description/anime-
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
-import { AnimeCreatethemesIDsInput } from './anime-createthemes-i-ds.input';
-import { AnimeCreatedemographicIDsInput } from './anime-createdemographic-i-ds.input';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
 import { RelatedAnimeCreateInput } from '../related-anime/related-anime-create.input';
 import { EpisodeCreateInput } from '../episode/episode-create.input';
@@ -39,14 +37,14 @@ export class AnimeCreateManyInput {
     @Field(() => String, {nullable:true})
     banner?: string;
 
-    @Field(() => CoverCreateEnvelopeInput, {nullable:false})
-    cover!: CoverCreateEnvelopeInput;
+    @Field(() => AnimeCoverCreateEnvelopeInput, {nullable:false})
+    cover!: AnimeCoverCreateEnvelopeInput;
 
-    @Field(() => [CoverCreateInput], {nullable:true})
-    altCovers?: Array<CoverCreateInput>;
+    @Field(() => [AnimeCoverCreateInput], {nullable:true})
+    altCovers?: Array<AnimeCoverCreateInput>;
 
-    @Field(() => TitleCreateEnvelopeInput, {nullable:false})
-    title!: TitleCreateEnvelopeInput;
+    @Field(() => AnimeTitleCreateEnvelopeInput, {nullable:false})
+    title!: AnimeTitleCreateEnvelopeInput;
 
     @Field(() => AnimeType, {nullable:true})
     type?: keyof typeof AnimeType;
@@ -84,20 +82,11 @@ export class AnimeCreateManyInput {
     @Field(() => AnimeCreategenreIDsInput, {nullable:true})
     genreIDs?: AnimeCreategenreIDsInput;
 
-    @Field(() => AnimeCreatethemesIDsInput, {nullable:true})
-    themesIDs?: AnimeCreatethemesIDsInput;
-
-    @Field(() => AnimeCreatedemographicIDsInput, {nullable:true})
-    demographicIDs?: AnimeCreatedemographicIDsInput;
-
     @Field(() => AnimeCreatestudioIDsInput, {nullable:true})
     studioIDs?: AnimeCreatestudioIDsInput;
 
     @Field(() => [RelatedAnimeCreateInput], {nullable:true})
     related?: Array<RelatedAnimeCreateInput>;
-
-    @Field(() => [RelatedAnimeCreateInput], {nullable:true})
-    recommendations?: Array<RelatedAnimeCreateInput>;
 
     @Field(() => [EpisodeCreateInput], {nullable:true})
     episodes?: Array<EpisodeCreateInput>;

@@ -13,8 +13,6 @@ export enum AnimeScalarFieldEnum {
     openings = "openings",
     endings = "endings",
     genreIDs = "genreIDs",
-    themesIDs = "themesIDs",
-    demographicIDs = "demographicIDs",
     studioIDs = "studioIDs"
 }
 

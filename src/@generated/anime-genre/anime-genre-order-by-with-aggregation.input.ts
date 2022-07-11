@@ -20,6 +20,9 @@ export class AnimeGenreOrderByWithAggregationInput {
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    type?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     animeIDs?: keyof typeof SortOrder;
 
     @Field(() => AnimeGenreCountOrderByAggregateInput, {nullable:true})

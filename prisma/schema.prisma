@@ -15,37 +15,57 @@ generator nestgraphql {
 }
 
 model Anime {
-  id              String             @id @default(uuid()) @map("_id")
-  malId           Int                @unique
-  anilistId       Int?
-  animeXId        String             @unique
-  banner          String?
-  cover           Cover
-  altCovers        Cover[]
-  title           Title
-  type            AnimeType          @default(TV)
-  startDate       FuzzyDate
-  endDate         FuzzyDate
-  duration        String
-  ageRating       AgeRating          @default(PG13)
-  score           AnimeScore
-  season          AnimeSeason
-  broadcast       AnimeBroadcast
-  description     AnimeDescription
-  openings        String[]
-  endings         String[]
-  genreIDs        String[]
-  themesIDs       String[]
-  demographicIDs  String[]
-  studioIDs       String[]
-  related         RelatedAnime[]
-  recommendations RelatedAnime[]
-  episodes        Episode[]
-  externalSites   ExternalSite[]
-  genres          AnimeGenre[]       @relation(fields: [genreIDs], references: [id])
-  themes          AnimeTheme[]       @relation(fields: [themesIDs], references: [id])
-  demographics    AnimeDemographic[] @relation(fields: [demographicIDs], references: [id])
-  studios         AnimeStudio[]      @relation(fields: [studioIDs], references: [id])
+  id            String           @id @default(uuid()) @map("_id")
+  malId         Int              @unique
+  anilistId     Int?
+  animeXId      String           @unique
+  banner        String?
+  cover         AnimeCover
+  altCovers     AnimeCover[]
+  title         AnimeTitle
+  type          AnimeType        @default(TV)
+  startDate     FuzzyDate
+  endDate       FuzzyDate
+  duration      String
+  ageRating     AgeRating        @default(PG13)
+  score         AnimeScore
+  season        AnimeSeason
+  broadcast     AnimeBroadcast
+  description   AnimeDescription
+  openings      String[]
+  endings       String[]
+  genreIDs      String[]
+  studioIDs     String[]
+  related       RelatedAnime[]
+  episodes      Episode[]
+  externalSites ExternalSite[]
+  studios       AnimeStudio[]    @relation(fields: [studioIDs], references: [id])
+  genres        AnimeGenre[]     @relation(fields: [genreIDs], references: [id])
+}
+
+model AnimeGenre {
+  id       String         @id @default(uuid()) @map("_id")
+  malId    Int            @unique
+  name     String
+  type     AnimeGenreType @default(GENRE)
+  animeIDs String[]
+  animes   Anime[]        @relation(fields: [animeIDs], references: [id])
+}
+
+model AnimeStudio {
+  id       String          @id @default(uuid()) @map("_id")
+  malId    Int             @unique
+  type     AnimeStudioType @default(STUDIO)
+  name     String
+  animeIDs String[]
+  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
+}
+
+enum AnimeGenreType {
+  GENRE
+  EXPLICIT_GENRE
+  THEME
+  DEMOGRAPHIC
 }
 
 type Episode {
@@ -68,67 +88,18 @@ type ExternalSite {
 }
 
 type RelatedAnime {
-  relation AnimeRelation @default(OTHER)
-  type     RelationType  @default(ANIME)
   malId    Int
+  relation RelationType       @default(OTHER)
+  type     RelationEntityType @default(ANIME)
 }
 
-enum RelationType {
-  ANIME
-  MANGA
-}
-
-enum AnimeRelation {
-  ADAPTATION
-  SEQUEL
-  PREQUEL
-  SIDE_STORY
-  SUMMARY
-  ALTERNATIVE
-  OTHER
-  RECOMMENDATIONS
-}
-
-model AnimeDemographic {
-  id       String          @id @default(uuid()) @map("_id")
-  malId    Int             @unique
-  name     String
-  animeIDs String[]
-  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
-}
-
-model AnimeGenre {
-  id       String          @id @default(uuid()) @map("_id")
-  malId    Int             @unique
-  name     String
-  animeIDs String[]
-  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
-}
-
-model AnimeTheme {
-  id       String          @id @default(uuid()) @map("_id")
-  malId    Int             @unique
-  name     String
-  animeIDs String[]
-  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
-}
-
-model AnimeStudio {
-  id       String          @id @default(uuid()) @map("_id")
-  malId    Int             @unique
-  role     AnimeStudioRole @default(STUDIO)
-  name     String
-  animeIDs String[]
-  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
-}
-
-type Cover {
+type AnimeCover {
   large  String
   medium String
   small  String
 }
 
-type Title {
+type AnimeTitle {
   english  String
   romaji   String
   synonyms String[]
@@ -155,20 +126,36 @@ type AnimeScoreType {
   scoredBy Int   @default(0)
 }
 
-enum AnimeStudioRole {
+enum RelationEntityType {
+  ANIME
+  MANGA
+}
+
+enum RelationType {
+  ADAPTATION
+  SEQUEL
+  PREQUEL
+  SIDE_STORY
+  SUMMARY
+  ALTERNATIVE
+  OTHER
+  RECOMMENDATION
+}
+
+enum AnimeStudioType {
   STUDIO
   PRODUCER
   LICENSER
 }
 
 enum BroadcastDays {
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
-  SUNDAY
+  MONDAYS
+  TUESDAYS
+  WEDNESDAYS
+  THURSDAYS
+  FRIDAYS
+  SATURDAYS
+  SUNDAYS
 }
 
 enum AnimeType {
@@ -183,7 +170,6 @@ enum AnimeStatus {
   AIRING
   FINSHIED
   NOT_RELEASED
-
 }
 
 enum AgeRating {
@@ -202,14 +188,14 @@ enum AnimeSeason {
   SPRING
 }
 
-type FuzzyDate {
-  year  Int
-  month Int?
-  day   Int?
-}
-
 enum ServerQuailty {
   FHD
   HD
   SD
+}
+
+type FuzzyDate {
+  year  Int
+  month Int?
+  day   Int?
 }

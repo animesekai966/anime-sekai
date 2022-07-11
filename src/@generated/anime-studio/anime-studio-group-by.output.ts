@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeStudioRole } from '../prisma/anime-studio-role.enum';
+import { AnimeStudioType } from '../prisma/anime-studio-type.enum';
 import { AnimeStudioCountAggregate } from './anime-studio-count-aggregate.output';
 import { AnimeStudioAvgAggregate } from './anime-studio-avg-aggregate.output';
 import { AnimeStudioSumAggregate } from './anime-studio-sum-aggregate.output';
@@ -17,8 +17,8 @@ export class AnimeStudioGroupBy {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => AnimeStudioRole, {nullable:false})
-    role!: keyof typeof AnimeStudioRole;
+    @Field(() => AnimeStudioType, {nullable:false})
+    type!: keyof typeof AnimeStudioType;
 
     @Field(() => String, {nullable:false})
     name!: string;

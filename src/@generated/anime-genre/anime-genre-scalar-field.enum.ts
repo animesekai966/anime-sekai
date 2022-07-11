@@ -4,6 +4,7 @@ export enum AnimeGenreScalarFieldEnum {
     id = "id",
     malId = "malId",
     name = "name",
+    type = "type",
     animeIDs = "animeIDs"
 }
 
