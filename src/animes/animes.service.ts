@@ -6,11 +6,7 @@ export class AnimesService {
     return `This action returns all animes`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} anime`;
   }
-}
-
-function scrapeService() {
-  
 }

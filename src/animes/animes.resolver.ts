@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Anime } from 'src/@generated/anime/anime.model';
 import { AnimesService } from './animes.service';
-import { Anime } from './animes.types';
 
 @Resolver(() => Anime)
 export class AnimesResolver {
@@ -12,7 +12,7 @@ export class AnimesResolver {
   }
 
   @Query(() => Anime, { name: 'anime' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id') id: string) {
     return this.animesService.findOne(id);
   }
 }
