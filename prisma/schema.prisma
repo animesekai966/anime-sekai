@@ -1,0 +1,210 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mongodb"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator nestgraphql {
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output   = "../src/@generated"
+}
+
+model Anime {
+  id             String             @id @default(uuid()) @map("_id")
+  malId          Int                @unique
+  anilistId      Int?
+  animeXId       String             @unique
+  cover          Cover
+  title          Title
+  type           AnimeType          @default(TV)
+  startDate      FuzzyDate
+  endDate        FuzzyDate
+  duration       String
+  ageRating      AgeRating          @default(PG13)
+  score          AnimeScore
+  season         AnimeSeason
+  broadcast      AnimeBroadcast
+  description    AnimeDescription
+  openings       String[]
+  endings        String[]
+  genreIDs       String[]
+  themesIDs      String[]
+  demographicIDs String[]
+  studioIDs      String[]
+  related        RelatedAnime[]
+  episodes       Episode[]
+  externalSites  ExternalSite[]
+  genres         AnimeGenre[]       @relation(fields: [genreIDs], references: [id])
+  themes         AnimeTheme[]       @relation(fields: [themesIDs], references: [id])
+  demographics   AnimeDemographic[] @relation(fields: [demographicIDs], references: [id])
+  studios        AnimeStudio[]      @relation(fields: [studioIDs], references: [id])
+}
+
+type Episode {
+  id      String          @default(uuid())
+  number  Float
+  filler  Boolean         @default(false)
+  servers EpisodeServer[]
+}
+
+type EpisodeServer {
+  url          String
+  quality      String
+  translatedBy String
+  dateAdded    DateTime @default(now())
+}
+
+type ExternalSite {
+  name String
+  url  String
+}
+
+type RelatedAnime {
+  relation AnimeRelation @default(OTHER)
+  type     RelationType  @default(ANIME)
+  malId    Int
+}
+
+enum RelationType {
+  ANIME
+  MANGA
+}
+
+enum AnimeRelation {
+  ADAPTATION
+  SEQUEL
+  PREQUEL
+  SIDE_STORY
+  SUMMARY
+  ALTERNATIVE
+  OTHER
+}
+
+model AnimeDemographic {
+  id       String          @id @default(uuid()) @map("_id")
+  malId    Int             @unique
+  role     AnimeStudioRole @default(STUDIO)
+  name     String
+  animeIDs String[]
+  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
+}
+
+model AnimeGenre {
+  id       String          @id @default(uuid()) @map("_id")
+  malId    Int             @unique
+  role     AnimeStudioRole @default(STUDIO)
+  name     String
+  animeIDs String[]
+  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
+}
+
+model AnimeTheme {
+  id       String          @id @default(uuid()) @map("_id")
+  malId    Int             @unique
+  role     AnimeStudioRole @default(STUDIO)
+  name     String
+  animeIDs String[]
+  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
+}
+
+model AnimeStudio {
+  id       String          @id @default(uuid()) @map("_id")
+  malId    Int             @unique
+  role     AnimeStudioRole @default(STUDIO)
+  name     String
+  animeIDs String[]
+  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
+}
+
+type Cover {
+  banner String?
+  large  String
+  medium String
+  small  String
+  alt    String[]
+}
+
+type Title {
+  english  String
+  romaji   String
+  synonyms String[]
+}
+
+type AnimeScore {
+  mal     AnimeScoreType
+  anilist AnimeScoreType
+}
+
+type AnimeDescription {
+  ar String
+  en String
+}
+
+type AnimeBroadcast {
+  day      BroadcastDays
+  time     String
+  timezone String
+}
+
+type AnimeScoreType {
+  score    Float @default(0)
+  scoredBy Int   @default(0)
+}
+
+enum AnimeStudioRole {
+  STUDIO
+  PRODUCER
+  LICENSER
+}
+
+enum BroadcastDays {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum AnimeType {
+  TV
+  ONA
+  OVA
+  SPECIAL
+  MOVIE
+}
+
+enum AnimeStatus {
+  AIRING
+  FINSHIED
+  NOT_RELEASED
+
+}
+
+enum AgeRating {
+  G
+  PG
+  PG13
+  R
+  RP
+  RX
+}
+
+enum AnimeSeason {
+  WINTER
+  FALL
+  SUMMER
+  SPRING
+}
+
+type FuzzyDate {
+  year  Int
+  month Int?
+  day   Int?
+}
