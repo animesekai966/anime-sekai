@@ -15,5 +15,5 @@ export class EpisodeServerObjectEqualityInput {
     translatedBy!: string;
 
     @Field(() => Date, {nullable:false})
-    dateAdded!: Date | string;
+    createdAt!: Date | string;
 }

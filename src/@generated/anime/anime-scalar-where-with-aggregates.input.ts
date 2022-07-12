@@ -8,6 +8,7 @@ import { EnumAnimeTypeWithAggregatesFilter } from '../prisma/enum-anime-type-wit
 import { EnumAgeRatingWithAggregatesFilter } from '../prisma/enum-age-rating-with-aggregates-filter.input';
 import { EnumAnimeSeasonWithAggregatesFilter } from '../prisma/enum-anime-season-with-aggregates-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
 
 @InputType()
 export class AnimeScalarWhereWithAggregatesInput {
@@ -59,4 +60,13 @@ export class AnimeScalarWhereWithAggregatesInput {
 
     @Field(() => StringNullableListFilter, {nullable:true})
     studioIDs?: StringNullableListFilter;
+
+    @Field(() => StringNullableListFilter, {nullable:true})
+    producerIDs?: StringNullableListFilter;
+
+    @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
+    createdAt?: DateTimeWithAggregatesFilter;
+
+    @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
+    updatedAt?: DateTimeWithAggregatesFilter;
 }

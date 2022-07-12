@@ -9,5 +9,8 @@ export class AnimeCount {
     studios?: number;
 
     @Field(() => Int, {nullable:false})
+    producers?: number;
+
+    @Field(() => Int, {nullable:false})
     genres?: number;
 }

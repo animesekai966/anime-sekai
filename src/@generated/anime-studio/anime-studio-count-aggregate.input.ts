@@ -11,9 +11,6 @@ export class AnimeStudioCountAggregateInput {
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    type?: true;
-
-    @Field(() => Boolean, {nullable:true})
     name?: true;
 
     @Field(() => Boolean, {nullable:true})

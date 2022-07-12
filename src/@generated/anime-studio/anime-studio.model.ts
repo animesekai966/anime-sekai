@@ -2,7 +2,6 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeStudioType } from '../prisma/anime-studio-type.enum';
 import { Anime } from '../anime/anime.model';
 import { AnimeStudioCount } from '../anime/anime-studio-count.output';
 
@@ -15,9 +14,6 @@ export class AnimeStudio {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => AnimeStudioType, {nullable:false,defaultValue:'STUDIO'})
-    type!: keyof typeof AnimeStudioType;
-
     @Field(() => String, {nullable:false})
     name!: string;
 
@@ -26,6 +22,9 @@ export class AnimeStudio {
 
     @Field(() => [Anime], {nullable:true})
     animes?: Array<Anime>;
+
+    @Field(() => [Anime], {nullable:true})
+    animesProduced?: Array<Anime>;
 
     @Field(() => AnimeStudioCount, {nullable:false})
     _count?: AnimeStudioCount;

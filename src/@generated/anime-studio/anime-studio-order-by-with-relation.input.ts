@@ -13,9 +13,6 @@ export class AnimeStudioOrderByWithRelationInput {
     malId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    type?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -23,4 +20,7 @@ export class AnimeStudioOrderByWithRelationInput {
 
     @Field(() => AnimeOrderByRelationAggregateInput, {nullable:true})
     animes?: AnimeOrderByRelationAggregateInput;
+
+    @Field(() => AnimeOrderByRelationAggregateInput, {nullable:true})
+    animesProduced?: AnimeOrderByRelationAggregateInput;
 }

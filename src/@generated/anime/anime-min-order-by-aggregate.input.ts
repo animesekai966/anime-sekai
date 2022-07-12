@@ -31,4 +31,10 @@ export class AnimeMinOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     season?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    updatedAt?: keyof typeof SortOrder;
 }

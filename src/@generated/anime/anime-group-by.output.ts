@@ -52,6 +52,15 @@ export class AnimeGroupBy {
     @Field(() => [String], {nullable:true})
     studioIDs?: Array<string>;
 
+    @Field(() => [String], {nullable:true})
+    producerIDs?: Array<string>;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date | string;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date | string;
+
     @Field(() => AnimeCountAggregate, {nullable:true})
     _count?: AnimeCountAggregate;
 

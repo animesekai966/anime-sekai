@@ -20,6 +20,7 @@ import { EpisodeObjectEqualityInput } from '../prisma/episode-object-equality.in
 import { ExternalSiteObjectEqualityInput } from '../prisma/external-site-object-equality.input';
 import { AnimeStudioListRelationFilter } from '../anime-studio/anime-studio-list-relation-filter.input';
 import { AnimeGenreListRelationFilter } from '../anime-genre/anime-genre-list-relation-filter.input';
+import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
 export class AnimeWhereInput {
@@ -96,6 +97,9 @@ export class AnimeWhereInput {
     @Field(() => StringNullableListFilter, {nullable:true})
     studioIDs?: StringNullableListFilter;
 
+    @Field(() => StringNullableListFilter, {nullable:true})
+    producerIDs?: StringNullableListFilter;
+
     @Field(() => [RelatedAnimeObjectEqualityInput], {nullable:true})
     related?: Array<RelatedAnimeObjectEqualityInput>;
 
@@ -108,6 +112,15 @@ export class AnimeWhereInput {
     @Field(() => AnimeStudioListRelationFilter, {nullable:true})
     studios?: AnimeStudioListRelationFilter;
 
+    @Field(() => AnimeStudioListRelationFilter, {nullable:true})
+    producers?: AnimeStudioListRelationFilter;
+
     @Field(() => AnimeGenreListRelationFilter, {nullable:true})
     genres?: AnimeGenreListRelationFilter;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    createdAt?: DateTimeFilter;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    updatedAt?: DateTimeFilter;
 }

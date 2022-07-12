@@ -17,5 +17,5 @@ export class EpisodeServerUpdateInput {
     translatedBy?: StringFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    dateAdded?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 }

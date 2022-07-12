@@ -45,5 +45,14 @@ export class AnimeCountAggregate {
     studioIDs!: number;
 
     @Field(() => Int, {nullable:false})
+    producerIDs!: number;
+
+    @Field(() => Int, {nullable:false})
+    createdAt!: number;
+
+    @Field(() => Int, {nullable:false})
+    updatedAt!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

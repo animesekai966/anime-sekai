@@ -17,12 +17,46 @@ export class AnimeXService {
       this.getAnimeInfo(animeObj.id),
     ]);
 
-    /*await this.prisma.anime.create({
+    await this.prisma.anime.create({
       data: {
         animeXId: xAnime.primary_key,
-        cover
+        malId: malAnime.mal_id,
+        title: {
+          english: malAnime.title_english,
+          romaji: malAnime.title_japanese,
+          synonyms: {
+            set: malAnime.title_synonyms,
+          },
+        },
+        cover: {
+          large: malAnime.images.jpg.large_image_url,
+          medium: malAnime.images.jpg.image_url,
+          small: malAnime.images.jpg.small_image_url,
+        },
+        description: {
+          ar: xAnime.story,
+          en: malAnime.synopsis,
+        },
+        broadcast: {
+          time: malAnime.broadcast.time,
+          timezone: malAnime.broadcast.timezone,
+          day: malAnime.broadcast.day.toUpperCase() as any,
+        },
+        duration: malAnime.duration,
+        score: {
+          mal: {
+            score: malAnime.score,
+            scoredBy: malAnime.scored_by,
+          },
+          anilist: {
+            score: malAnime.score,
+            scoredBy: malAnime.scored_by,
+          },
+        },
+        season: malAnime.season.toUpperCase() as any,
+        ageRating: malAnime
       },
-    });*/
+    });
   }
 
   async getAnimeList(page: number = 1): Promise<AnimeListEntity[]> {

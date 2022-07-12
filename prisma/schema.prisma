@@ -36,11 +36,24 @@ model Anime {
   endings       String[]
   genreIDs      String[]
   studioIDs     String[]
+  producerIDs   String[]
   related       RelatedAnime[]
   episodes      Episode[]
   externalSites ExternalSite[]
   studios       AnimeStudio[]    @relation(fields: [studioIDs], references: [id])
+  producers     AnimeStudio[]    @relation("producers", fields: [producerIDs], references: [id])
   genres        AnimeGenre[]     @relation(fields: [genreIDs], references: [id])
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model AnimeStudio {
+  id             String   @id @default(uuid()) @map("_id")
+  malId          Int      @unique
+  name           String
+  animeIDs       String[]
+  animes         Anime[]  @relation(fields: [animeIDs], references: [id])
+  animesProduced Anime[]  @relation("producers", fields: [animeIDs], references: [id])
 }
 
 model AnimeGenre {
@@ -50,15 +63,6 @@ model AnimeGenre {
   type     AnimeGenreType @default(GENRE)
   animeIDs String[]
   animes   Anime[]        @relation(fields: [animeIDs], references: [id])
-}
-
-model AnimeStudio {
-  id       String          @id @default(uuid()) @map("_id")
-  malId    Int             @unique
-  type     AnimeStudioType @default(STUDIO)
-  name     String
-  animeIDs String[]
-  animes   Anime[]         @relation(fields: [animeIDs], references: [id])
 }
 
 enum AnimeGenreType {
@@ -79,7 +83,7 @@ type EpisodeServer {
   url          String
   quality      ServerQuailty @default(SD)
   translatedBy String
-  dateAdded    DateTime      @default(now())
+  createdAt    DateTime      @default(now())
 }
 
 type ExternalSite {

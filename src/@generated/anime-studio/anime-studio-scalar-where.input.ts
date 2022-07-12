@@ -2,7 +2,6 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
-import { EnumAnimeStudioTypeFilter } from '../prisma/enum-anime-studio-type-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 
 @InputType()
@@ -22,9 +21,6 @@ export class AnimeStudioScalarWhereInput {
 
     @Field(() => IntFilter, {nullable:true})
     malId?: IntFilter;
-
-    @Field(() => EnumAnimeStudioTypeFilter, {nullable:true})
-    type?: EnumAnimeStudioTypeFilter;
 
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;

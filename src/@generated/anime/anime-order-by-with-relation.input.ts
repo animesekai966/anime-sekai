@@ -80,6 +80,9 @@ export class AnimeOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     studioIDs?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    producerIDs?: keyof typeof SortOrder;
+
     @Field(() => RelatedAnimeOrderByCompositeAggregateInput, {nullable:true})
     related?: RelatedAnimeOrderByCompositeAggregateInput;
 
@@ -92,6 +95,15 @@ export class AnimeOrderByWithRelationInput {
     @Field(() => AnimeStudioOrderByRelationAggregateInput, {nullable:true})
     studios?: AnimeStudioOrderByRelationAggregateInput;
 
+    @Field(() => AnimeStudioOrderByRelationAggregateInput, {nullable:true})
+    producers?: AnimeStudioOrderByRelationAggregateInput;
+
     @Field(() => AnimeGenreOrderByRelationAggregateInput, {nullable:true})
     genres?: AnimeGenreOrderByRelationAggregateInput;
+
+    @Field(() => SortOrder, {nullable:true})
+    createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    updatedAt?: keyof typeof SortOrder;
 }

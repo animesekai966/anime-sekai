@@ -1,8 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeStudioType } from '../prisma/anime-studio-type.enum';
 import { AnimeStudioCreateanimeIDsInput } from './anime-studio-createanime-i-ds.input';
+import { AnimeCreateNestedManyWithoutProducersInput } from '../anime/anime-create-nested-many-without-producers.input';
 
 @InputType()
 export class AnimeStudioCreateWithoutAnimesInput {
@@ -13,12 +13,12 @@ export class AnimeStudioCreateWithoutAnimesInput {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => AnimeStudioType, {nullable:true})
-    type?: keyof typeof AnimeStudioType;
-
     @Field(() => String, {nullable:false})
     name!: string;
 
     @Field(() => AnimeStudioCreateanimeIDsInput, {nullable:true})
     animeIDs?: AnimeStudioCreateanimeIDsInput;
+
+    @Field(() => AnimeCreateNestedManyWithoutProducersInput, {nullable:true})
+    animesProduced?: AnimeCreateNestedManyWithoutProducersInput;
 }

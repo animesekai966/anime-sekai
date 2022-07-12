@@ -18,11 +18,14 @@ import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
 import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
+import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
 import { RelatedAnimeCreateInput } from '../related-anime/related-anime-create.input';
 import { EpisodeCreateInput } from '../episode/episode-create.input';
 import { ExternalSiteCreateInput } from '../external-site/external-site-create.input';
 import { AnimeStudioUncheckedUpdateManyWithoutAnimesNestedInput } from '../anime-studio/anime-studio-unchecked-update-many-without-animes-nested.input';
+import { AnimeStudioUncheckedUpdateManyWithoutAnimesProducedNestedInput } from '../anime-studio/anime-studio-unchecked-update-many-without-animes-produced-nested.input';
 import { AnimeGenreUncheckedUpdateManyWithoutAnimesNestedInput } from '../anime-genre/anime-genre-unchecked-update-many-without-animes-nested.input';
+import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 
 @InputType()
 export class AnimeUncheckedUpdateInput {
@@ -87,6 +90,9 @@ export class AnimeUncheckedUpdateInput {
     @Field(() => AnimeUpdatestudioIDsInput, {nullable:true})
     studioIDs?: AnimeUpdatestudioIDsInput;
 
+    @Field(() => AnimeUpdateproducerIDsInput, {nullable:true})
+    producerIDs?: AnimeUpdateproducerIDsInput;
+
     @Field(() => [RelatedAnimeCreateInput], {nullable:true})
     related?: Array<RelatedAnimeCreateInput>;
 
@@ -99,6 +105,15 @@ export class AnimeUncheckedUpdateInput {
     @Field(() => AnimeStudioUncheckedUpdateManyWithoutAnimesNestedInput, {nullable:true})
     studios?: AnimeStudioUncheckedUpdateManyWithoutAnimesNestedInput;
 
+    @Field(() => AnimeStudioUncheckedUpdateManyWithoutAnimesProducedNestedInput, {nullable:true})
+    producers?: AnimeStudioUncheckedUpdateManyWithoutAnimesProducedNestedInput;
+
     @Field(() => AnimeGenreUncheckedUpdateManyWithoutAnimesNestedInput, {nullable:true})
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimesNestedInput;
+
+    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
+    createdAt?: DateTimeFieldUpdateOperationsInput;
+
+    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
+    updatedAt?: DateTimeFieldUpdateOperationsInput;
 }

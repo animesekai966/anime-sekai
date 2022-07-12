@@ -34,4 +34,10 @@ export class AnimeMinAggregate {
 
     @Field(() => AnimeSeason, {nullable:true})
     season?: keyof typeof AnimeSeason;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    updatedAt?: Date | string;
 }

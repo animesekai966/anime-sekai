@@ -15,5 +15,5 @@ export class EpisodeServer {
     translatedBy!: string;
 
     @Field(() => Date, {nullable:false})
-    dateAdded!: Date;
+    createdAt!: Date;
 }

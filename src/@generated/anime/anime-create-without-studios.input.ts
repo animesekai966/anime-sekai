@@ -15,9 +15,11 @@ import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
+import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
 import { RelatedAnimeCreateInput } from '../related-anime/related-anime-create.input';
 import { EpisodeCreateInput } from '../episode/episode-create.input';
 import { ExternalSiteCreateInput } from '../external-site/external-site-create.input';
+import { AnimeStudioCreateNestedManyWithoutAnimesProducedInput } from '../anime-studio/anime-studio-create-nested-many-without-animes-produced.input';
 import { AnimeGenreCreateNestedManyWithoutAnimesInput } from '../anime-genre/anime-genre-create-nested-many-without-animes.input';
 
 @InputType()
@@ -86,6 +88,9 @@ export class AnimeCreateWithoutStudiosInput {
     @Field(() => AnimeCreatestudioIDsInput, {nullable:true})
     studioIDs?: AnimeCreatestudioIDsInput;
 
+    @Field(() => AnimeCreateproducerIDsInput, {nullable:true})
+    producerIDs?: AnimeCreateproducerIDsInput;
+
     @Field(() => [RelatedAnimeCreateInput], {nullable:true})
     related?: Array<RelatedAnimeCreateInput>;
 
@@ -95,6 +100,15 @@ export class AnimeCreateWithoutStudiosInput {
     @Field(() => [ExternalSiteCreateInput], {nullable:true})
     externalSites?: Array<ExternalSiteCreateInput>;
 
+    @Field(() => AnimeStudioCreateNestedManyWithoutAnimesProducedInput, {nullable:true})
+    producers?: AnimeStudioCreateNestedManyWithoutAnimesProducedInput;
+
     @Field(() => AnimeGenreCreateNestedManyWithoutAnimesInput, {nullable:true})
     genres?: AnimeGenreCreateNestedManyWithoutAnimesInput;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    updatedAt?: Date | string;
 }

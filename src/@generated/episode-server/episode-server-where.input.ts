@@ -26,5 +26,5 @@ export class EpisodeServerWhereInput {
     translatedBy?: StringFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    dateAdded?: DateTimeFilter;
+    createdAt?: DateTimeFilter;
 }

@@ -84,6 +84,9 @@ export class Anime {
     @Field(() => [String], {nullable:true})
     studioIDs!: Array<string>;
 
+    @Field(() => [String], {nullable:true})
+    producerIDs!: Array<string>;
+
     @Field(() => [RelatedAnime], {nullable:true})
     related?: Array<RelatedAnime>;
 
@@ -96,8 +99,17 @@ export class Anime {
     @Field(() => [AnimeStudio], {nullable:true})
     studios?: Array<AnimeStudio>;
 
+    @Field(() => [AnimeStudio], {nullable:true})
+    producers?: Array<AnimeStudio>;
+
     @Field(() => [AnimeGenre], {nullable:true})
     genres?: Array<AnimeGenre>;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date;
 
     @Field(() => AnimeCount, {nullable:false})
     _count?: AnimeCount;

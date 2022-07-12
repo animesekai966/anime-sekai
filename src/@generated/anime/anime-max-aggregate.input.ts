@@ -30,4 +30,10 @@ export class AnimeMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     season?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    createdAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    updatedAt?: true;
 }
