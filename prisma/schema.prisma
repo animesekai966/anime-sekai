@@ -157,6 +157,7 @@ enum RelationType {
   CHARACTER
   ALTERNATIVE_SETTING
   SPIN_OFF
+  FULL_STORY
 }
 
 enum AnimeStudioType {

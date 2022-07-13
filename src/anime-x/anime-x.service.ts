@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { OrphanedTypesFactory } from '@nestjs/graphql/dist/schema-builder/factories/orphaned-types.factory';
 import axios, { AxiosRequestConfig } from 'axios';
 import { JikanService, MalFullAnime } from 'src/jikan.service';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -48,6 +47,7 @@ export class AnimeXService {
     private jikanService: JikanService,
   ) {}
 
+
   async scrapeAllAnimes() {
     for (let page = 1; page < 74; page++) {
       let animeListPage = await this.getAnimeList(page);
@@ -76,7 +76,7 @@ export class AnimeXService {
               log(
                 `Scraped ${animeListEntity.name} (${animeListEntity.slug}, ${malAnime.mal_id}) From AnimeX`,
               );
-              await this.saveAnime(xAnime, malAnime, allAnimeEps);
+              await this.createAnime(xAnime, malAnime, allAnimeEps);
               log(
                 `Saved ${animeListEntity.name} (${animeListEntity.slug}) To Db`,
               );
@@ -195,7 +195,7 @@ export class AnimeXService {
     });
   }
 
-  async saveAnime(
+  async createAnime(
     xAnime: AnimeInfoEntity,
     malAnime: MalFullAnime,
     allAnimeEps: any[],
