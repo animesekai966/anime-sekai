@@ -204,9 +204,9 @@ export class AnimeXService {
             scoredBy: malAnime.scored_by,
           },
         },
-        season:
-          malAnime.season?.toUpperCase?.() ||
-          (sesons[malAnime.aired.prop.from.day] as any),
+        season: (malAnime.season?.toUpperCase?.() ||
+          sesons[malAnime.aired.prop.from.day] ||
+          'FALL') as any,
         ageRating: malRatings[malAnime.rating],
         startDate: {
           day: malAnime.aired.prop.from.day,
