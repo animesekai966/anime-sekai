@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
 import { JikanService, MalFullAnime } from 'src/jikan.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { v4 } from 'uuid';
+
 const log = (...messages: any) =>
   true ? console.log('[SCRAPE]', ...messages) : '';
 let malRatings = {
@@ -47,15 +49,54 @@ export class AnimeXService {
     private jikanService: JikanService,
   ) {}
 
-  async checkForNewEps() {
-    for (let page = 1; page < 4; page++) {
+  @Cron('* 1 * * * *')
+  async checkForNewEpsAndSave() {
+    log('Looking for new eps in animeX');
+    for (let page = 1; page < 5; page++) {
       let animeNewestEps = await this.getLatestReleases(page);
-      for(let newEp of animeNewestEps) {
-        this.prisma.anime.f
+      for (let newEp of animeNewestEps) {
+        let anime = await this.prisma.anime.findUnique({
+          where: {
+            animeXId: newEp.content.slug,
+          },
+        });
+        let epExist = anime.episodes.find((ep) => ep.number == newEp.number);
+        if (!epExist) {
+          let epServers = await this.getAnimeEpServers(
+            newEp.content.slug,
+            newEp.number,
+          );
+          await this.prisma.anime.update({
+            where: {
+              animeXId: newEp.content.slug,
+            },
+            data: {
+              episodes: {
+                push: [
+                  {
+                    id: v4(),
+                    number: newEp.number,
+                    filler: !!newEp.filler,
+                    servers: epServers.map((server) => ({
+                      url: server.link,
+                      quality: animeXquality[server.quality || '1080p'],
+                      translatedBy: server.fansub,
+                      createdAt: new Date(),
+                    })),
+                  },
+                ],
+              },
+            },
+          });
+          log(`EP ${newEp.number} From ${newEp.content.name} Added To Db`);
+        } else {
+          log(`EP ${newEp.number} From ${newEp.content.name} Already In Db`);
+        }
       }
     }
   }
 
+  @Cron('* 5 * * * *')
   async checkForNewAnimes() {
     for (let page = 1; page < 74; page++) {
       let animeListPage = await this.getAnimeList(page);
@@ -75,6 +116,7 @@ export class AnimeXService {
           let animeExists = await this.prisma.anime.count({
             where: {
               animeXId: animeListEntity.slug,
+              malId: Number(animeListEntity.mal.match(/anime\/([0-9]+)/)[1]),
             },
           });
           if (!animeExists) {
@@ -152,7 +194,7 @@ export class AnimeXService {
     return (await this.fetch({ url: 'v3/anime-list/' + page })).data.data;
   }
 
-  async getLatestReleases(page: number = 1) {
+  async getLatestReleases(page: number = 1): Promise<NewestAnimeListEntity[]> {
     let offset = page * 20;
     return (await this.fetch({ url: 'v4/episodes/newest-episodes/' + offset }))
       .data.data;
@@ -370,4 +412,16 @@ interface AnimeInfoEntity {
   posters: string[];
   genres: { name: string }[];
   studios: { name: string }[];
+}
+
+interface NewestAnimeListEntity {
+  number: string;
+  last: number;
+  filler: number;
+  content: {
+    name: string;
+    slug: string;
+    poster: string;
+    mal_url: string;
+  };
 }
