@@ -115,7 +115,6 @@ export class AnimeXService {
           );
           let animeExists = await this.prisma.anime.count({
             where: {
-              animeXId: animeListEntity.slug,
               malId: Number(animeListEntity.mal.match(/anime\/([0-9]+)/)[1]),
             },
           });
