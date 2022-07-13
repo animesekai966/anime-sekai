@@ -38,6 +38,15 @@ export class AnimeOrderByWithAggregationInput {
     season?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    source?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    status?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    episodesCount?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     openings?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

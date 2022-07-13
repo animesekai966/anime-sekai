@@ -5,8 +5,8 @@ import { Int } from '@nestjs/graphql';
 @ObjectType()
 export class FuzzyDate {
 
-    @Field(() => Int, {nullable:false})
-    year!: number;
+    @Field(() => Int, {nullable:true})
+    year!: number | null;
 
     @Field(() => Int, {nullable:true})
     month!: number | null;

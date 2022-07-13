@@ -32,6 +32,15 @@ export class AnimeCountAggregateInput {
     season?: true;
 
     @Field(() => Boolean, {nullable:true})
+    source?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    status?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    episodesCount?: true;
+
+    @Field(() => Boolean, {nullable:true})
     openings?: true;
 
     @Field(() => Boolean, {nullable:true})

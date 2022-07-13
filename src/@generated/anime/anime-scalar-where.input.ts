@@ -7,6 +7,7 @@ import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { EnumAnimeTypeFilter } from '../prisma/enum-anime-type-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
+import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
@@ -48,6 +49,15 @@ export class AnimeScalarWhereInput {
 
     @Field(() => EnumAnimeSeasonFilter, {nullable:true})
     season?: EnumAnimeSeasonFilter;
+
+    @Field(() => StringFilter, {nullable:true})
+    source?: StringFilter;
+
+    @Field(() => EnumAnimeStatusFilter, {nullable:true})
+    status?: EnumAnimeStatusFilter;
+
+    @Field(() => IntNullableFilter, {nullable:true})
+    episodesCount?: IntNullableFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
     openings?: StringNullableListFilter;

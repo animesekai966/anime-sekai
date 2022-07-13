@@ -10,4 +10,7 @@ export class AnimeSumOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     anilistId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    episodesCount?: keyof typeof SortOrder;
 }

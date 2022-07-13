@@ -7,11 +7,13 @@ import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { AnimeCoverCompositeFilter } from '../prisma/anime-cover-composite-filter.input';
 import { AnimeCoverObjectEqualityInput } from '../prisma/anime-cover-object-equality.input';
 import { AnimeTitleCompositeFilter } from '../prisma/anime-title-composite-filter.input';
+import { AnimeTrailerNullableCompositeFilter } from '../prisma/anime-trailer-nullable-composite-filter.input';
 import { EnumAnimeTypeFilter } from '../prisma/enum-anime-type-filter.input';
 import { FuzzyDateCompositeFilter } from '../prisma/fuzzy-date-composite-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { AnimeScoreCompositeFilter } from '../prisma/anime-score-composite-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
+import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input';
 import { AnimeBroadcastCompositeFilter } from '../prisma/anime-broadcast-composite-filter.input';
 import { AnimeDescriptionCompositeFilter } from '../prisma/anime-description-composite-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
@@ -58,6 +60,9 @@ export class AnimeWhereInput {
     @Field(() => AnimeTitleCompositeFilter, {nullable:true})
     title?: AnimeTitleCompositeFilter;
 
+    @Field(() => AnimeTrailerNullableCompositeFilter, {nullable:true})
+    trailer?: AnimeTrailerNullableCompositeFilter;
+
     @Field(() => EnumAnimeTypeFilter, {nullable:true})
     type?: EnumAnimeTypeFilter;
 
@@ -78,6 +83,15 @@ export class AnimeWhereInput {
 
     @Field(() => EnumAnimeSeasonFilter, {nullable:true})
     season?: EnumAnimeSeasonFilter;
+
+    @Field(() => StringFilter, {nullable:true})
+    source?: StringFilter;
+
+    @Field(() => EnumAnimeStatusFilter, {nullable:true})
+    status?: EnumAnimeStatusFilter;
+
+    @Field(() => IntNullableFilter, {nullable:true})
+    episodesCount?: IntNullableFilter;
 
     @Field(() => AnimeBroadcastCompositeFilter, {nullable:true})
     broadcast?: AnimeBroadcastCompositeFilter;

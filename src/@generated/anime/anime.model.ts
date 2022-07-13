@@ -4,11 +4,13 @@ import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { AnimeCover } from '../anime-cover/anime-cover.model';
 import { AnimeTitle } from '../anime-title/anime-title.model';
+import { AnimeTrailer } from '../anime-trailer/anime-trailer.model';
 import { AnimeType } from '../prisma/anime-type.enum';
 import { FuzzyDate } from '../fuzzy-date/fuzzy-date.model';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeScore } from '../anime-score/anime-score.model';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeBroadcast } from '../anime-broadcast/anime-broadcast.model';
 import { AnimeDescription } from '../anime-description/anime-description.model';
 import { RelatedAnime } from '../related-anime/related-anime.model';
@@ -45,6 +47,9 @@ export class Anime {
     @Field(() => AnimeTitle, {nullable:false})
     title?: AnimeTitle;
 
+    @Field(() => AnimeTrailer, {nullable:true})
+    trailer?: AnimeTrailer | null;
+
     @Field(() => AnimeType, {nullable:false,defaultValue:'TV'})
     type!: keyof typeof AnimeType;
 
@@ -65,6 +70,15 @@ export class Anime {
 
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
+
+    @Field(() => String, {nullable:false})
+    source!: string;
+
+    @Field(() => AnimeStatus, {nullable:false,defaultValue:'FINISHED_AIRING'})
+    status!: keyof typeof AnimeStatus;
+
+    @Field(() => Int, {nullable:true})
+    episodesCount!: number | null;
 
     @Field(() => AnimeBroadcast, {nullable:false})
     broadcast?: AnimeBroadcast;

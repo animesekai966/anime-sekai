@@ -6,10 +6,13 @@ import { AnimeTitleCreatesynonymsInput } from './anime-title-createsynonyms.inpu
 export class AnimeTitleCreateInput {
 
     @Field(() => String, {nullable:false})
-    english!: string;
-
-    @Field(() => String, {nullable:false})
     romaji!: string;
+
+    @Field(() => String, {nullable:true})
+    english?: string;
+
+    @Field(() => String, {nullable:true})
+    native?: string;
 
     @Field(() => AnimeTitleCreatesynonymsInput, {nullable:true})
     synonyms?: AnimeTitleCreatesynonymsInput;

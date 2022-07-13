@@ -1,6 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { StringFilter } from '../prisma/string-filter.input';
+import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 
 @InputType()
 export class AnimeDescriptionWhereInput {
@@ -14,9 +14,9 @@ export class AnimeDescriptionWhereInput {
     @Field(() => [AnimeDescriptionWhereInput], {nullable:true})
     NOT?: Array<AnimeDescriptionWhereInput>;
 
-    @Field(() => StringFilter, {nullable:true})
-    ar?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    ar?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    en?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    en?: StringNullableFilter;
 }

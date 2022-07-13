@@ -5,10 +5,13 @@ import { ObjectType } from '@nestjs/graphql';
 export class AnimeTitle {
 
     @Field(() => String, {nullable:false})
-    english!: string;
-
-    @Field(() => String, {nullable:false})
     romaji!: string;
+
+    @Field(() => String, {nullable:true})
+    english!: string | null;
+
+    @Field(() => String, {nullable:true})
+    native!: string | null;
 
     @Field(() => [String], {nullable:true})
     synonyms!: Array<string>;

@@ -10,4 +10,7 @@ export class AnimeSumAggregate {
 
     @Field(() => Int, {nullable:true})
     anilistId?: number;
+
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 }

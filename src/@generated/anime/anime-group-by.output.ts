@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeType } from '../prisma/anime-type.enum';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeCountAggregate } from './anime-count-aggregate.output';
 import { AnimeAvgAggregate } from './anime-avg-aggregate.output';
 import { AnimeSumAggregate } from './anime-sum-aggregate.output';
@@ -39,6 +40,15 @@ export class AnimeGroupBy {
 
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
+
+    @Field(() => String, {nullable:false})
+    source!: string;
+
+    @Field(() => AnimeStatus, {nullable:false})
+    status!: keyof typeof AnimeStatus;
+
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 
     @Field(() => [String], {nullable:true})
     openings?: Array<string>;

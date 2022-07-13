@@ -5,12 +5,12 @@ import { BroadcastDays } from '../prisma/broadcast-days.enum';
 @InputType()
 export class AnimeBroadcastCreateInput {
 
-    @Field(() => BroadcastDays, {nullable:false})
-    day!: keyof typeof BroadcastDays;
+    @Field(() => BroadcastDays, {nullable:true})
+    day?: keyof typeof BroadcastDays;
 
-    @Field(() => String, {nullable:false})
-    time!: string;
+    @Field(() => String, {nullable:true})
+    time?: string;
 
-    @Field(() => String, {nullable:false})
-    timezone!: string;
+    @Field(() => String, {nullable:true})
+    timezone?: string;
 }

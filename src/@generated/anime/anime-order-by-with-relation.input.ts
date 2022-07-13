@@ -4,6 +4,7 @@ import { SortOrder } from '../prisma/sort-order.enum';
 import { AnimeCoverOrderByInput } from '../anime-cover/anime-cover-order-by.input';
 import { AnimeCoverOrderByCompositeAggregateInput } from '../anime-cover/anime-cover-order-by-composite-aggregate.input';
 import { AnimeTitleOrderByInput } from '../anime-title/anime-title-order-by.input';
+import { AnimeTrailerOrderByInput } from '../anime-trailer/anime-trailer-order-by.input';
 import { FuzzyDateOrderByInput } from '../fuzzy-date/fuzzy-date-order-by.input';
 import { AnimeScoreOrderByInput } from '../anime-score/anime-score-order-by.input';
 import { AnimeBroadcastOrderByInput } from '../anime-broadcast/anime-broadcast-order-by.input';
@@ -41,6 +42,9 @@ export class AnimeOrderByWithRelationInput {
     @Field(() => AnimeTitleOrderByInput, {nullable:true})
     title?: AnimeTitleOrderByInput;
 
+    @Field(() => AnimeTrailerOrderByInput, {nullable:true})
+    trailer?: AnimeTrailerOrderByInput;
+
     @Field(() => SortOrder, {nullable:true})
     type?: keyof typeof SortOrder;
 
@@ -61,6 +65,15 @@ export class AnimeOrderByWithRelationInput {
 
     @Field(() => SortOrder, {nullable:true})
     season?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    source?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    status?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    episodesCount?: keyof typeof SortOrder;
 
     @Field(() => AnimeBroadcastOrderByInput, {nullable:true})
     broadcast?: AnimeBroadcastOrderByInput;

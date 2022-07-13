@@ -4,11 +4,13 @@ import { Int } from '@nestjs/graphql';
 import { AnimeCoverCreateEnvelopeInput } from '../anime-cover/anime-cover-create-envelope.input';
 import { AnimeCoverCreateInput } from '../anime-cover/anime-cover-create.input';
 import { AnimeTitleCreateEnvelopeInput } from '../anime-title/anime-title-create-envelope.input';
+import { AnimeTrailerNullableCreateEnvelopeInput } from '../prisma/anime-trailer-nullable-create-envelope.input';
 import { AnimeType } from '../prisma/anime-type.enum';
 import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeScoreCreateEnvelopeInput } from '../anime-score/anime-score-create-envelope.input';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeBroadcastCreateEnvelopeInput } from '../anime-broadcast/anime-broadcast-create-envelope.input';
 import { AnimeDescriptionCreateEnvelopeInput } from '../anime-description/anime-description-create-envelope.input';
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
@@ -50,6 +52,9 @@ export class AnimeUncheckedCreateInput {
     @Field(() => AnimeTitleCreateEnvelopeInput, {nullable:false})
     title!: AnimeTitleCreateEnvelopeInput;
 
+    @Field(() => AnimeTrailerNullableCreateEnvelopeInput, {nullable:true})
+    trailer?: AnimeTrailerNullableCreateEnvelopeInput;
+
     @Field(() => AnimeType, {nullable:true})
     type?: keyof typeof AnimeType;
 
@@ -70,6 +75,15 @@ export class AnimeUncheckedCreateInput {
 
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
+
+    @Field(() => String, {nullable:false})
+    source!: string;
+
+    @Field(() => AnimeStatus, {nullable:true})
+    status?: keyof typeof AnimeStatus;
+
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 
     @Field(() => AnimeBroadcastCreateEnvelopeInput, {nullable:false})
     broadcast!: AnimeBroadcastCreateEnvelopeInput;

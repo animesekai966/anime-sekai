@@ -1,25 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
+let rateLimit = 3;
+setInterval(() => (rateLimit = 3), 1100);
 
 @Injectable()
 export class JikanService {
   async getFullAnime(malId: number): Promise<MalFullAnime> {
-    let [baseAnime, animePictures, animeRecommendations] = await Promise.all([
-      await axios
-        .get(`https://api.jikan.moe/v4/anime/${malId}/full`)
-        .then((req) => req.data.data),
-      await axios
-        .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
-        .then((req) => req.data.data),
-      await axios
-        .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
-        .then((req) => req.data.data),
-    ]);
-    return {
-      ...baseAnime,
-      altImages: animePictures,
-      recommendations: animeRecommendations,
-    };
+    try {
+      let [baseAnime, animePictures, animeRecommendations] = await Promise.all([
+        await axios
+          .get(`https://api.jikan.moe/v4/anime/${malId}/full`)
+          .then((req) => req.data.data),
+        await axios
+          .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
+          .then((req) => req.data.data),
+        await axios
+          .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
+          .then((req) => req.data.data),
+      ]);
+      rateLimit = 0;
+      return {
+        ...baseAnime,
+        altImages: animePictures,
+        recommendations: animeRecommendations,
+      };
+    } catch (err) {
+      await this.rateLimitReset();
+      return await this.getFullAnime(malId);
+    }
+  }
+
+  async rateLimitReset() {
+    return new Promise((resolve) => {
+      setInterval(function () {
+        if (rateLimit === 3) return resolve(clearInterval(this));
+      }, 250);
+    });
   }
 }
 
@@ -181,3 +197,5 @@ interface MalFullAnime {
     url: string;
   }[];
 }
+
+export { MalFullAnime };

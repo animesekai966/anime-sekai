@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeType } from '../prisma/anime-type.enum';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AnimeStatus } from '../prisma/anime-status.enum';
 
 @ObjectType()
 export class AnimeMinAggregate {
@@ -34,6 +35,15 @@ export class AnimeMinAggregate {
 
     @Field(() => AnimeSeason, {nullable:true})
     season?: keyof typeof AnimeSeason;
+
+    @Field(() => String, {nullable:true})
+    source?: string;
+
+    @Field(() => AnimeStatus, {nullable:true})
+    status?: keyof typeof AnimeStatus;
+
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

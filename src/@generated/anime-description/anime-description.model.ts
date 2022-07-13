@@ -4,9 +4,9 @@ import { ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class AnimeDescription {
 
-    @Field(() => String, {nullable:false})
-    ar!: string;
+    @Field(() => String, {nullable:true})
+    ar!: string | null;
 
-    @Field(() => String, {nullable:false})
-    en!: string;
+    @Field(() => String, {nullable:true})
+    en!: string | null;
 }

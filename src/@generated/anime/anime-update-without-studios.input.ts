@@ -7,11 +7,13 @@ import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-str
 import { AnimeCoverUpdateEnvelopeInput } from '../anime-cover/anime-cover-update-envelope.input';
 import { AnimeCoverCreateInput } from '../anime-cover/anime-cover-create.input';
 import { AnimeTitleUpdateEnvelopeInput } from '../anime-title/anime-title-update-envelope.input';
+import { AnimeTrailerNullableUpdateEnvelopeInput } from '../prisma/anime-trailer-nullable-update-envelope.input';
 import { EnumAnimeTypeFieldUpdateOperationsInput } from '../prisma/enum-anime-type-field-update-operations.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
 import { AnimeScoreUpdateEnvelopeInput } from '../anime-score/anime-score-update-envelope.input';
 import { EnumAnimeSeasonFieldUpdateOperationsInput } from '../prisma/enum-anime-season-field-update-operations.input';
+import { EnumAnimeStatusFieldUpdateOperationsInput } from '../prisma/enum-anime-status-field-update-operations.input';
 import { AnimeBroadcastUpdateEnvelopeInput } from '../anime-broadcast/anime-broadcast-update-envelope.input';
 import { AnimeDescriptionUpdateEnvelopeInput } from '../anime-description/anime-description-update-envelope.input';
 import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
@@ -50,6 +52,9 @@ export class AnimeUpdateWithoutStudiosInput {
     @Field(() => AnimeTitleUpdateEnvelopeInput, {nullable:true})
     title?: AnimeTitleUpdateEnvelopeInput;
 
+    @Field(() => AnimeTrailerNullableUpdateEnvelopeInput, {nullable:true})
+    trailer?: AnimeTrailerNullableUpdateEnvelopeInput;
+
     @Field(() => EnumAnimeTypeFieldUpdateOperationsInput, {nullable:true})
     type?: EnumAnimeTypeFieldUpdateOperationsInput;
 
@@ -70,6 +75,15 @@ export class AnimeUpdateWithoutStudiosInput {
 
     @Field(() => EnumAnimeSeasonFieldUpdateOperationsInput, {nullable:true})
     season?: EnumAnimeSeasonFieldUpdateOperationsInput;
+
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    source?: StringFieldUpdateOperationsInput;
+
+    @Field(() => EnumAnimeStatusFieldUpdateOperationsInput, {nullable:true})
+    status?: EnumAnimeStatusFieldUpdateOperationsInput;
+
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    episodesCount?: NullableIntFieldUpdateOperationsInput;
 
     @Field(() => AnimeBroadcastUpdateEnvelopeInput, {nullable:true})
     broadcast?: AnimeBroadcastUpdateEnvelopeInput;

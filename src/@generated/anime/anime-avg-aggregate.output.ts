@@ -10,4 +10,7 @@ export class AnimeAvgAggregate {
 
     @Field(() => Float, {nullable:true})
     anilistId?: number;
+
+    @Field(() => Float, {nullable:true})
+    episodesCount?: number;
 }

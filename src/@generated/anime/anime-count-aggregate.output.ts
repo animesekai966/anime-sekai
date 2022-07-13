@@ -33,6 +33,15 @@ export class AnimeCountAggregate {
     season!: number;
 
     @Field(() => Int, {nullable:false})
+    source!: number;
+
+    @Field(() => Int, {nullable:false})
+    status!: number;
+
+    @Field(() => Int, {nullable:false})
+    episodesCount!: number;
+
+    @Field(() => Int, {nullable:false})
     openings!: number;
 
     @Field(() => Int, {nullable:false})

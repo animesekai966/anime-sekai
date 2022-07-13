@@ -8,7 +8,7 @@ export class EpisodeServer {
     @Field(() => String, {nullable:false})
     url!: string;
 
-    @Field(() => ServerQuailty, {nullable:false,defaultValue:'SD'})
+    @Field(() => ServerQuailty, {nullable:false,defaultValue:'FHD'})
     quality!: keyof typeof ServerQuailty;
 
     @Field(() => String, {nullable:false})

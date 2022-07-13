@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import axios from 'axios';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -10,6 +10,14 @@ export class AnimeXController {
     private animeXService: AnimeXService,
     private prisma: PrismaService,
   ) {}
+
+  @Get('/scrape-all')
+  async dd(): Promise<any> {
+    this.animeXService.scrapeAllAnimes();
+
+    
+    return;
+  }
 }
 
 /*
