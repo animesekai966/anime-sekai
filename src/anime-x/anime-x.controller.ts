@@ -3,6 +3,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import axios from 'axios';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AnimeXService } from './anime-x.service';
+let scrapingState = false;
 
 @Controller('anime-x')
 export class AnimeXController {
@@ -13,10 +14,13 @@ export class AnimeXController {
 
   @Get('/scrape-all')
   async dd(): Promise<any> {
-    this.animeXService.scrapeAllAnimes();
+    if (!scrapingState) {
+      this.animeXService.scrapeAllAnimes();
+      scrapingState = true;
+      return 'Started Please Check The Console';
+    }
 
-    
-    return;
+    return 'Already Running err(1)';
   }
 }
 

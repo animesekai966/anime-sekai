@@ -156,6 +156,7 @@ enum RelationType {
   RECOMMENDATION
   CHARACTER
   ALTERNATIVE_SETTING
+  SPIN_OFF
 }
 
 enum AnimeStudioType {

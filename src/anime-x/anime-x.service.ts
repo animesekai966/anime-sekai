@@ -112,7 +112,7 @@ export class AnimeXService {
     let result = [];
     for (let ep of allAnimeEps) {
       let epServers = await this.getAnimeEpServers(animeId, Number(ep.number));
-      console.log(`[SCRAPING] EP ${ep.number} from ${animeId}`);
+      log(`EP ${ep.number} from ${animeId}`);
       result.push({
         id: v4(),
         number: Number(ep.number),
@@ -283,7 +283,7 @@ export class AnimeXService {
           .map((relation) =>
             relation.entry.map((entry) => ({
               malId: entry.mal_id,
-              relation: relation.relation.toUpperCase().replace(/ /g, '_'),
+              relation: relation.relation.toUpperCase().replace(/ /g, '_').replace(/\-/g, '_'),
               type: 'ANIME',
             })),
           )
@@ -297,7 +297,7 @@ export class AnimeXService {
         episodes: allAnimeEps as any,
       },
     };
-    console.log(createObj);
+    //console.log(createObj);
     return await this.prisma.anime.create(createObj);
   }
 }
