@@ -47,8 +47,16 @@ export class AnimeXService {
     private jikanService: JikanService,
   ) {}
 
+  async checkForNewEps() {
+    for (let page = 1; page < 4; page++) {
+      let animeNewestEps = await this.getLatestReleases(page);
+      for(let newEp of animeNewestEps) {
+        this.prisma.anime.f
+      }
+    }
+  }
 
-  async scrapeAllAnimes() {
+  async checkForNewAnimes() {
     for (let page = 1; page < 74; page++) {
       let animeListPage = await this.getAnimeList(page);
       log(

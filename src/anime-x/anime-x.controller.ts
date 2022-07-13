@@ -15,7 +15,7 @@ export class AnimeXController {
   @Get('/scrape-all')
   async dd(): Promise<any> {
     if (!scrapingState) {
-      this.animeXService.scrapeAllAnimes();
+      this.animeXService.checkForNewAnimes();
       scrapingState = true;
       return 'Started Please Check The Console';
     }
