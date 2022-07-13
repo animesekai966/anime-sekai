@@ -22,6 +22,7 @@ export class JikanService {
         recommendations: animeRecommendations,
       };
     } catch (err) {
+      console.log(err.message);
       await this.rateLimitReset();
       return await this.getFullAnime(malId);
     }
