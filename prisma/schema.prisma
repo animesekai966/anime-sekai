@@ -154,6 +154,7 @@ enum RelationType {
   OTHER
   PARENT_STORY
   RECOMMENDATION
+  CHARACTER
 }
 
 enum AnimeStudioType {
