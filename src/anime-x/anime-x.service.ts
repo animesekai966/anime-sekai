@@ -64,14 +64,21 @@ export class AnimeXService {
           log(
             `Trying to Scrape ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
           );
-          let { allAnimeEps, malAnime, xAnime } = await this.getFullAnime(
-            animeListEntity.slug,
-          );
-          log(
-            `Scraped ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
-          );
-          await this.saveAnime(xAnime, malAnime, allAnimeEps);
-          log(`Saved ${animeListEntity.name} (${animeListEntity.slug}) To Db`);
+          let animeData = await this.getFullAnime(animeListEntity.slug);
+          if (animeData) {
+            let { allAnimeEps, malAnime, xAnime } = animeData;
+            log(
+              `Scraped ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+            );
+            await this.saveAnime(xAnime, malAnime, allAnimeEps);
+            log(
+              `Saved ${animeListEntity.name} (${animeListEntity.slug}) To Db`,
+            );
+          } else {
+            log(
+              `Skipping (Not An Anime) ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+            );
+          }
         } else {
           log(
             `Skipping (Already In Db) ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
@@ -144,9 +151,20 @@ export class AnimeXService {
     animeId: string,
     epNum: number,
   ): Promise<AnimeEpServerEntity[]> {
-    return (
-      await this.fetch({ url: 'v4/episodes/' + animeId + '/play/' + epNum })
-    ).data.data['wlinks'];
+    try {
+      return (
+        await this.fetch({ url: 'v4/episodes/' + animeId + '/play/' + epNum })
+      ).data.data['wlinks'];
+    } catch {
+      await this.rateLimitReset();
+      return this.getAnimeEpServers(animeId, epNum);
+    }
+  }
+
+  async rateLimitReset() {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 1500);
+    });
   }
 
   async fetch(settings: AxiosRequestConfig) {
