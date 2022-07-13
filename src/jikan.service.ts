@@ -6,15 +6,9 @@ export class JikanService {
   async getFullAnime(malId: number): Promise<MalFullAnime> {
     try {
       let [baseAnime, animePictures, animeRecommendations] = await Promise.all([
-        await axios
-          .get(`https://api.jikan.moe/v4/anime/${malId}/full`)
-          .then((req) => req.data.data),
-        await axios
-          .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
-          .then((req) => req.data.data),
-        await axios
-          .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
-          .then((req) => req.data.data),
+        this.getAnimeFull(malId),
+        this.getAnimePics(malId),
+        this.getAnimeRecs(malId),
       ]);
       return {
         ...baseAnime,
@@ -23,14 +17,46 @@ export class JikanService {
       };
     } catch (err) {
       console.log(err.message);
-      await this.rateLimitReset();
       return await this.getFullAnime(malId);
+    }
+  }
+
+  async getAnimeFull(malId: string | number) {
+    try {
+      return await axios
+        .get(`https://api.jikan.moe/v4/anime/${malId}/full`)
+        .then((req) => req.data.data);
+    } catch {
+      await this.rateLimitReset();
+      return this.getAnimeFull(malId);
+    }
+  }
+
+  async getAnimePics(malId: string | number) {
+    try {
+      return await axios
+        .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
+        .then((req) => req.data.data);
+    } catch {
+      await this.rateLimitReset();
+      return this.getAnimePics(malId);
+    }
+  }
+
+  async getAnimeRecs(malId: string | number) {
+    try {
+      return await axios
+        .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
+        .then((req) => req.data.data);
+    } catch {
+      await this.rateLimitReset();
+      return this.getAnimeRecs(malId);
     }
   }
 
   async rateLimitReset() {
     return new Promise((resolve) => {
-      setTimeout(resolve, 1000);
+      setTimeout(resolve, 1500);
     });
   }
 }
