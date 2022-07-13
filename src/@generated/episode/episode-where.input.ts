@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { FloatFilter } from '../prisma/float-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EpisodeServerObjectEqualityInput } from '../prisma/episode-server-object-equality.input';
 
@@ -20,8 +19,8 @@ export class EpisodeWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => FloatFilter, {nullable:true})
-    number?: FloatFilter;
+    @Field(() => StringFilter, {nullable:true})
+    number?: StringFilter;
 
     @Field(() => BoolFilter, {nullable:true})
     filler?: BoolFilter;

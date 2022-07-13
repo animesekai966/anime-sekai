@@ -82,7 +82,7 @@ enum AnimeGenreType {
 
 type Episode {
   id      String          @default(uuid())
-  number  Float
+  number  String
   filler  Boolean         @default(false)
   servers EpisodeServer[]
 }

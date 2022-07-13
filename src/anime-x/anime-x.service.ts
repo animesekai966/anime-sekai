@@ -55,34 +55,41 @@ export class AnimeXService {
         `Scraped Page ${page} Got (${animeListPage.length}) Of AnimeX anime list`,
       );
       for (let animeListEntity of animeListPage) {
-        log(
-          `Trying to Scrape ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
-        );
-        let animeExists = await this.prisma.anime.count({
-          where: {
-            animeXId: animeListEntity.slug,
-          },
-        });
-        if (!animeExists) {
-          let animeData = await this.getFullAnime(animeListEntity.slug);
-          if (animeData) {
-            let { allAnimeEps, malAnime, xAnime } = animeData;
-            log(
-              `Scraped ${animeListEntity.name} (${animeListEntity.slug}, ${malAnime.mal_id}) From AnimeX`,
-            );
-            await this.saveAnime(xAnime, malAnime, allAnimeEps);
-            log(
-              `Saved ${animeListEntity.name} (${animeListEntity.slug}) To Db`,
-            );
-          } else {
-            log(
-              `Skipping (Not An Anime) ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
-            );
-          }
+        if (
+          !animeListEntity.mal ||
+          animeListEntity.mal == null ||
+          !animeListEntity.mal.includes('https://myanimelist.net/')
+        ) {
         } else {
           log(
-            `Skipping (Already In Db) ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+            `Trying to Scrape ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
           );
+          let animeExists = await this.prisma.anime.count({
+            where: {
+              animeXId: animeListEntity.slug,
+            },
+          });
+          if (!animeExists) {
+            let animeData = await this.getFullAnime(animeListEntity.slug);
+            if (animeData) {
+              let { allAnimeEps, malAnime, xAnime } = animeData;
+              log(
+                `Scraped ${animeListEntity.name} (${animeListEntity.slug}, ${malAnime.mal_id}) From AnimeX`,
+              );
+              await this.saveAnime(xAnime, malAnime, allAnimeEps);
+              log(
+                `Saved ${animeListEntity.name} (${animeListEntity.slug}) To Db`,
+              );
+            } else {
+              log(
+                `Skipping (Not An Anime) ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+              );
+            }
+          } else {
+            log(
+              `Skipping (Already In Db) ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+            );
+          }
         }
       }
     }
@@ -94,7 +101,12 @@ export class AnimeXService {
     allAnimeEps: any[];
   }> {
     let xAnime = await this.getAnimeInfo(animeId);
-    if (!xAnime.mal) return;
+    if (
+      !xAnime.mal ||
+      xAnime.mal == null ||
+      !xAnime.mal.includes('https://myanimelist.net/')
+    )
+      return;
     log(`Scraped AnimeXInfo`);
     let malAnime = await this.jikanService.getFullAnime(
       Number(xAnime.mal.match(/anime\/([0-9]+)/)[1]),
@@ -111,11 +123,11 @@ export class AnimeXService {
     let allAnimeEps = await this.getAnimeEps(animeId);
     let result = [];
     for (let ep of allAnimeEps) {
-      let epServers = await this.getAnimeEpServers(animeId, Number(ep.number));
+      let epServers = await this.getAnimeEpServers(animeId, ep.number);
       log(`EP ${ep.number} from ${animeId}`);
       result.push({
         id: v4(),
-        number: Number(ep.number),
+        number: ep.number,
         filler: !!ep.filler,
         servers: epServers.map((server) => ({
           url: server.link,
@@ -149,13 +161,14 @@ export class AnimeXService {
 
   async getAnimeEpServers(
     animeId: string,
-    epNum: number,
+    epNum: string,
   ): Promise<AnimeEpServerEntity[]> {
     try {
       return (
         await this.fetch({ url: 'v4/episodes/' + animeId + '/play/' + epNum })
       ).data.data['wlinks'];
-    } catch {
+    } catch (err) {
+      console.log(err.message);
       await this.rateLimitReset();
       return this.getAnimeEpServers(animeId, epNum);
     }
