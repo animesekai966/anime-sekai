@@ -15,6 +15,7 @@ generator nestgraphql {
 }
 
 model Anime {
+  @@map("editedAnime")
   id            String           @id @default(uuid()) @map("_id")
   malId         Int              @unique
   anilistId     Int?
