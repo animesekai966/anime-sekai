@@ -55,20 +55,20 @@ export class AnimeXService {
         `Scraped Page ${page} Got (${animeListPage.length}) Of AnimeX anime list`,
       );
       for (let animeListEntity of animeListPage) {
+        log(
+          `Trying to Scrape ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+        );
         let animeExists = await this.prisma.anime.count({
           where: {
             animeXId: animeListEntity.slug,
           },
         });
         if (!animeExists) {
-          log(
-            `Trying to Scrape ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
-          );
           let animeData = await this.getFullAnime(animeListEntity.slug);
           if (animeData) {
             let { allAnimeEps, malAnime, xAnime } = animeData;
             log(
-              `Scraped ${animeListEntity.name} (${animeListEntity.slug}) From AnimeX`,
+              `Scraped ${animeListEntity.name} (${animeListEntity.slug}, ${malAnime.mal_id}) From AnimeX`,
             );
             await this.saveAnime(xAnime, malAnime, allAnimeEps);
             log(
@@ -283,7 +283,10 @@ export class AnimeXService {
           .map((relation) =>
             relation.entry.map((entry) => ({
               malId: entry.mal_id,
-              relation: relation.relation.toUpperCase().replace(/ /g, '_').replace(/\-/g, '_'),
+              relation: relation.relation
+                .toUpperCase()
+                .replace(/ /g, '_')
+                .replace(/\-/g, '_'),
               type: 'ANIME',
             })),
           )

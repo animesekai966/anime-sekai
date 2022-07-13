@@ -34,9 +34,11 @@ export class JikanService {
 
   async getAnimePics(malId: string | number) {
     try {
-      return await axios
-        .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
-        .then((req) => req.data.data);
+      return (
+        (await axios
+          .get(`https://api.jikan.moe/v4/anime/${malId}/pictures`)
+          .then((req) => req.data.data)) || []
+      );
     } catch {
       await this.rateLimitReset();
       return this.getAnimePics(malId);
