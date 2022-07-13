@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
-let rateLimit = 3;
-setInterval(() => (rateLimit = 3), 1100);
 
 @Injectable()
 export class JikanService {
@@ -18,7 +16,6 @@ export class JikanService {
           .get(`https://api.jikan.moe/v4/anime/${malId}/recommendations`)
           .then((req) => req.data.data),
       ]);
-      rateLimit = 0;
       return {
         ...baseAnime,
         altImages: animePictures,
@@ -32,9 +29,7 @@ export class JikanService {
 
   async rateLimitReset() {
     return new Promise((resolve) => {
-      setInterval(function () {
-        if (rateLimit === 3) return resolve(clearInterval(this));
-      }, 250);
+      setTimeout(resolve, 1000);
     });
   }
 }
