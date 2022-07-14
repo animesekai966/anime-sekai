@@ -15,48 +15,57 @@ generator nestgraphql {
 }
 
 model Anime {
-  id            String           @id @default(uuid()) @map("_id")
-  malId         Int              @unique
-  anilistId     Int?
-  animeXId      String           @unique
-  banner        String?
-  cover         AnimeCover
-  altCovers     AnimeCover[]
-  title         AnimeTitle
-  trailer       AnimeTrailer?
-  type          AnimeType        @default(TV)
-  startDate     FuzzyDate
-  endDate       FuzzyDate
-  duration      String
-  ageRating     AgeRating        @default(PG13)
-  score         AnimeScore
-  season        AnimeSeason
-  source        String
-  status        AnimeStatus      @default(FINISHED_AIRING)
-  episodesCount Int?
-  broadcast     AnimeBroadcast
-  description   AnimeDescription
-  openings      String[]
-  endings       String[]
-  genreIDs      String[]
-  studioIDs     String[]
-  producerIDs   String[]
-  related       RelatedAnime[]
-  episodes      Episode[]
-  externalSites ExternalSite[]
-  studios       AnimeStudio[]    @relation(fields: [studioIDs], references: [id])
-  producers     AnimeStudio[]    @relation("producers", fields: [producerIDs], references: [id])
-  genres        AnimeGenre[]     @relation(fields: [genreIDs], references: [id])
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
+  id                String           @id @default(uuid()) @map("_id")
+  malId             Int              @unique
+  anilistId         Int?             @unique
+  animeXId          String           @unique
+  animeifyId        String?          @unique
+  animeSlayerId     String?          @unique
+  xsAnimeId         String?          @unique
+  banner            String?
+  cover             AnimeCover
+  altCovers         AnimeCover[]
+  title             AnimeTitle
+  trailer           AnimeTrailer?
+  type              AnimeType        @default(TV)
+  startDate         FuzzyDate
+  endDate           FuzzyDate
+  duration          String
+  ageRating         AgeRating        @default(PG13)
+  score             AnimeScore
+  season            AnimeSeason
+  source            String
+  status            AnimeStatus      @default(FINISHED_AIRING)
+  episodesCount     Int?
+  broadcast         AnimeBroadcast
+  description       AnimeDescription
+  openings          String[]
+  endings           String[]
+  related           RelatedAnime[]
+  episodes          Episode[]
+  externalSites     ExternalSite[]
+  studios           AnimeStudio[]    @relation(fields: [studioIDs], references: [id])
+  producers         AnimeStudio[]    @relation("producers", fields: [producerIDs], references: [id])
+  genres            AnimeGenre[]     @relation(fields: [genreIDs], references: [id])
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  episodesUpdatedAt DateTime
+  /// @HideField({ output: true, input: true })
+  genreIDs          String[]
+  /// @HideField({ output: true, input: true })
+  studioIDs         String[]
+  /// @HideField({ output: true, input: true })
+  producerIDs       String[]
 }
 
 model AnimeStudio {
   id             String   @id @default(uuid()) @map("_id")
   malId          Int      @unique
   name           String
-  animeIDs       String[]
   animes         Anime[]  @relation(fields: [animeIDs], references: [id])
+  /// @HideField({ output: true, input: true })
+  animeIDs       String[]
+  /// @HideField({ output: true, input: true })
   animesProduced Anime[]  @relation("producers", fields: [animeIDs], references: [id])
 }
 
@@ -65,8 +74,9 @@ model AnimeGenre {
   malId    Int            @unique
   name     String
   type     AnimeGenreType @default(GENRE)
-  animeIDs String[]
   animes   Anime[]        @relation(fields: [animeIDs], references: [id])
+  /// @HideField({ output: true, input: true })
+  animeIDs String[]
 }
 
 type AnimeTrailer {
@@ -81,10 +91,11 @@ enum AnimeGenreType {
 }
 
 type Episode {
-  id      String          @default(uuid())
-  number  String
-  filler  Boolean         @default(false)
-  servers EpisodeServer[]
+  id        String          @default(uuid())
+  number    String
+  filler    Boolean         @default(false)
+  servers   EpisodeServer[]
+  createdAt DateTime
 }
 
 type EpisodeServer {

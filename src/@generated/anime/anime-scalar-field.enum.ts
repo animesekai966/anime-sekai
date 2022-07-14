@@ -19,7 +19,8 @@ export enum AnimeScalarFieldEnum {
     studioIDs = "studioIDs",
     producerIDs = "producerIDs",
     createdAt = "createdAt",
-    updatedAt = "updatedAt"
+    updatedAt = "updatedAt",
+    episodesUpdatedAt = "episodesUpdatedAt"
 }
 
 

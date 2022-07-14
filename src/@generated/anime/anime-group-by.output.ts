@@ -71,6 +71,9 @@ export class AnimeGroupBy {
     @Field(() => Date, {nullable:false})
     updatedAt!: Date | string;
 
+    @Field(() => Date, {nullable:false})
+    episodesUpdatedAt!: Date | string;
+
     @Field(() => AnimeCountAggregate, {nullable:true})
     _count?: AnimeCountAggregate;
 

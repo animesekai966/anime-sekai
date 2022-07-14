@@ -62,5 +62,8 @@ export class AnimeCountAggregateInput {
     updatedAt?: true;
 
     @Field(() => Boolean, {nullable:true})
+    episodesUpdatedAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }

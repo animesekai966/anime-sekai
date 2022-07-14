@@ -16,4 +16,7 @@ export class Episode {
 
     @Field(() => [EpisodeServer], {nullable:true})
     servers?: Array<EpisodeServer>;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date;
 }

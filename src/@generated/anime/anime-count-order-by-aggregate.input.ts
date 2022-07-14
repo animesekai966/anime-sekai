@@ -61,4 +61,7 @@ export class AnimeCountOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    episodesUpdatedAt?: keyof typeof SortOrder;
 }

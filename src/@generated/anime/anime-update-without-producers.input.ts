@@ -126,4 +126,7 @@ export class AnimeUpdateWithoutProducersInput {
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
+
+    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
+    episodesUpdatedAt?: DateTimeFieldUpdateOperationsInput;
 }

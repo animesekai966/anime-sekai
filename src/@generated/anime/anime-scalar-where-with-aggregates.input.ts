@@ -79,4 +79,7 @@ export class AnimeScalarWhereWithAggregatesInput {
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     updatedAt?: DateTimeWithAggregatesFilter;
+
+    @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
+    episodesUpdatedAt?: DateTimeWithAggregatesFilter;
 }

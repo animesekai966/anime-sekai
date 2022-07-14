@@ -9,6 +9,7 @@ import { AnimesModule } from './animes/animes.module';
 import { PrismaService } from './prisma/prisma.service';
 import { AnimeXModule } from './anime-x/anime-x.module';
 import { JikanService } from './jikan.service';
+import { MongoDBService } from './mongo-db/mongo-db.service';
 
 @Module({
   imports: [
@@ -20,11 +21,11 @@ import { JikanService } from './jikan.service';
     AnimesModule,
     ScheduleModule.forRoot(),
     AnimeXModule,
-    JikanService,
+    
     
   ],
   controllers: [AppController],
-  providers: [AppService, AnimeXService, PrismaService, JikanService],
-  exports: [JikanService]
+  providers: [AppService, AnimeXService, PrismaService, JikanService, MongoDBService],
+  exports: [JikanService],
 })
 export class AppModule {}

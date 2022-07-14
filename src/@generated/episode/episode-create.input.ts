@@ -16,4 +16,7 @@ export class EpisodeCreateInput {
 
     @Field(() => [EpisodeServerCreateInput], {nullable:true})
     servers?: Array<EpisodeServerCreateInput>;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date | string;
 }

@@ -16,4 +16,7 @@ export class EpisodeObjectEqualityInput {
 
     @Field(() => [EpisodeServerObjectEqualityInput], {nullable:true})
     servers?: Array<EpisodeServerObjectEqualityInput>;
+
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date | string;
 }

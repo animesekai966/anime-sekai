@@ -61,6 +61,10 @@ export class JikanService {
       setTimeout(resolve, 1500);
     });
   }
+
+  malUrlToId(malStr: string) {
+    return Number(malStr.match(/anime\/([0-9]+)/)[1]);
+  }
 }
 
 interface MalFullAnime {

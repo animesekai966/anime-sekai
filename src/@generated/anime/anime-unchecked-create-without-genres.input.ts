@@ -125,4 +125,7 @@ export class AnimeUncheckedCreateWithoutGenresInput {
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
+
+    @Field(() => Date, {nullable:false})
+    episodesUpdatedAt!: Date | string;
 }

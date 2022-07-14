@@ -46,4 +46,7 @@ export class AnimeMaxOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    episodesUpdatedAt?: keyof typeof SortOrder;
 }

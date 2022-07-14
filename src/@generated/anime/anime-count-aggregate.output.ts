@@ -63,5 +63,8 @@ export class AnimeCountAggregate {
     updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
+    episodesUpdatedAt!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

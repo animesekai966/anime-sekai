@@ -125,6 +125,9 @@ export class Anime {
     @Field(() => Date, {nullable:false})
     updatedAt!: Date;
 
+    @Field(() => Date, {nullable:false})
+    episodesUpdatedAt!: Date;
+
     @Field(() => AnimeCount, {nullable:false})
     _count?: AnimeCount;
 }

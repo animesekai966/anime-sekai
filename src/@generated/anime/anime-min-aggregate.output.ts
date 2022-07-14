@@ -50,4 +50,7 @@ export class AnimeMinAggregate {
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    episodesUpdatedAt?: Date | string;
 }

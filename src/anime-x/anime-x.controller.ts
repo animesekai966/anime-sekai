@@ -1,8 +1,10 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import axios from 'axios';
+import { MongoDBService } from 'src/mongo-db/mongo-db.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AnimeXService } from './anime-x.service';
+
 let scrapingState = false;
 
 @Controller('anime-x')
@@ -10,17 +12,17 @@ export class AnimeXController {
   constructor(
     private animeXService: AnimeXService,
     private prisma: PrismaService,
+    private mongoDBService: MongoDBService,
   ) {}
 
-  @Get('/scrape-all')
-  async dd(): Promise<any> {
-    if (!scrapingState) {
-      this.animeXService.checkForNewAnimes();
-      scrapingState = true;
-      return 'Started Please Check The Console';
-    }
+  @Get('/search')
+  async search(@Query('query') query: string) {
+    return await this.mongoDBService.search(query);
+  }
 
-    return 'Already Running err(1)';
+  @Get('/test')
+  async dd(): Promise<any> {
+    this.animeXService.checkForNewEpsAndSave()
   }
 }
 

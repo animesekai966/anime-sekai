@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EpisodeServerObjectEqualityInput } from '../prisma/episode-server-object-equality.input';
+import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
 export class EpisodeWhereInput {
@@ -27,4 +28,7 @@ export class EpisodeWhereInput {
 
     @Field(() => [EpisodeServerObjectEqualityInput], {nullable:true})
     servers?: Array<EpisodeServerObjectEqualityInput>;
+
+    @Field(() => DateTimeFilter, {nullable:true})
+    createdAt?: DateTimeFilter;
 }
