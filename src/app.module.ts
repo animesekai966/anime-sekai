@@ -4,10 +4,8 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
-import { AnimeXService } from './anime-x/anime-x.service';
 import { AnimesModule } from './animes/animes.module';
 import { PrismaService } from './prisma/prisma.service';
-import { AnimeXModule } from './anime-x/anime-x.module';
 import { JikanService } from './jikan.service';
 import { MongoDBService } from './mongo-db/mongo-db.service';
 
@@ -20,12 +18,9 @@ import { MongoDBService } from './mongo-db/mongo-db.service';
     }),
     AnimesModule,
     ScheduleModule.forRoot(),
-    AnimeXModule,
-    
-    
   ],
   controllers: [AppController],
-  providers: [AppService, AnimeXService, PrismaService, JikanService, MongoDBService],
+  providers: [AppService, , PrismaService, JikanService, MongoDBService],
   exports: [JikanService],
 })
 export class AppModule {}

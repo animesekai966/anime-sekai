@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { AnimeStudioCreateanimeIDsInput } from './anime-studio-createanime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeStudioCreateManyInput {
@@ -15,6 +16,6 @@ export class AnimeStudioCreateManyInput {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => AnimeStudioCreateanimeIDsInput, {nullable:true})
+    @HideField()
     animeIDs?: AnimeStudioCreateanimeIDsInput;
 }

@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { AnimeGenreCountOrderByAggregateInput } from './anime-genre-count-order-by-aggregate.input';
 import { AnimeGenreAvgOrderByAggregateInput } from './anime-genre-avg-order-by-aggregate.input';
 import { AnimeGenreMaxOrderByAggregateInput } from './anime-genre-max-order-by-aggregate.input';
@@ -22,7 +23,7 @@ export class AnimeGenreOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     type?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animeIDs?: keyof typeof SortOrder;
 
     @Field(() => AnimeGenreCountOrderByAggregateInput, {nullable:true})

@@ -1,0 +1,248 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mongodb"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator nestgraphql {
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output   = "../src/@generated"
+}
+
+model Anime {
+  id                  String           @id @default(uuid()) @map("_id")
+  malId               Int              @unique
+  anilistId           Int              @unique
+  animeXId            String           @unique
+  animeifyId          String           @unique
+  animeSlayerId       String           @unique
+  xsAnimeId           String           @unique
+  banner              String?
+  cover               AnimeCover
+  altCovers           AnimeCover[]
+  title               AnimeTitle
+  trailer             AnimeTrailer?
+  type                AnimeType        @default(TV)
+  startDate           FuzzyDate
+  endDate             FuzzyDate
+  duration            String
+  ageRating           AgeRating        @default(PG13)
+  score               AnimeScore
+  season              AnimeSeason
+  source              String
+  status              AnimeStatus      @default(FINISHED_AIRING)
+  episodesCount       Int              @default(0)
+  broadcast           AnimeBroadcast
+  description         AnimeDescription
+  openings            String[]
+  endings             String[]
+  related             RelatedAnime[]
+  animeXEpisodes      Episode[]
+  animeifyEpisodes    Episode[]
+  xsAnimeEpisodes     Episode[]
+  animeSlayerEpisodes Episode[]
+  externalSites       ExternalSite[]
+  studios             AnimeStudio[]    @relation(fields: [studioIDs], references: [id])
+  producers           AnimeStudio[]    @relation("producers", fields: [producerIDs], references: [id])
+  genres              AnimeGenre[]     @relation(fields: [genreIDs], references: [id])
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  episodesUpdatedAt   DateTime
+  isAdult             Boolean
+  countryOfOrigin     String
+  /// @HideField({ output: true, input: true })
+  genreIDs            String[]
+  /// @HideField({ output: true, input: true })
+  studioIDs           String[]
+  /// @HideField({ output: true, input: true })
+  producerIDs         String[]
+}
+
+model AnimeStudio {
+  id             String   @id @default(uuid()) @map("_id")
+  malId          Int      @unique
+  name           String   @unique
+  animes         Anime[]  @relation(fields: [animeIDs], references: [id])
+  /// @HideField({ output: true, input: true })
+  animeIDs       String[]
+  /// @HideField({ output: true, input: true })
+  animesProduced Anime[]  @relation("producers", fields: [animeIDs], references: [id])
+}
+
+model AnimeGenre {
+  id       String         @id @default(uuid()) @map("_id")
+  malId    Int            @unique
+  name     String         @unique
+  type     AnimeGenreType @default(GENRE)
+  animes   Anime[]        @relation(fields: [animeIDs], references: [id])
+  /// @HideField({ output: true, input: true })
+  animeIDs String[]
+}
+
+type AnimeTrailer {
+  youtubeId String?
+}
+
+type Episode {
+  id        String          @default(uuid())
+  number    String
+  filler    Boolean         @default(false)
+  servers   EpisodeServer[]
+  createdAt DateTime
+}
+
+type EpisodeServer {
+  url          String
+  quality      ServerQuailty @default(FHD)
+  translatedBy String
+  createdAt    DateTime      @default(now())
+}
+
+type ExternalSite {
+  name     String
+  url      String
+  type     ExternalSiteType @default(INFO)
+  icon     String
+  color    String
+  language String
+}
+
+type RelatedAnime {
+  malId    Int
+  relation RelationType       @default(OTHER)
+  type     RelationEntityType @default(ANIME)
+}
+
+type AnimeCover {
+  large  String
+  medium String
+  small  String
+  color  String
+}
+
+type AnimeTitle {
+  romaji   String
+  english  String?
+  native   String?
+  synonyms String[]
+}
+
+type AnimeScore {
+  mal     AnimeScoreType
+  anilist AnimeScoreType
+}
+
+type AnimeDescription {
+  ar String?
+  en String?
+}
+
+type AnimeBroadcast {
+  day      BroadcastDays?
+  time     String?
+  timezone String?
+}
+
+type AnimeScoreType {
+  score    Float @default(0)
+  scoredBy Int   @default(0)
+}
+
+enum ExternalSiteType {
+  INFO
+  STREAMING
+  SOCIAL
+}
+
+enum RelationEntityType {
+  ANIME
+  MANGA
+}
+
+enum AnimeGenreType {
+  GENRE
+  EXPLICIT_GENRE
+  THEME
+  DEMOGRAPHIC
+}
+
+enum RelationType {
+  ADAPTATION
+  SEQUEL
+  PREQUEL
+  SIDE_STORY
+  SUMMARY
+  ALTERNATIVE_VERSION
+  OTHER
+  PARENT_STORY
+  RECOMMENDATION
+  CHARACTER
+  ALTERNATIVE_SETTING
+  SPIN_OFF
+  FULL_STORY
+  COMPILATION
+  CONTAINS
+}
+
+enum AnimeStudioType {
+  STUDIO
+  PRODUCER
+  LICENSER
+}
+
+enum BroadcastDays {
+  MONDAYS
+  TUESDAYS
+  WEDNESDAYS
+  THURSDAYS
+  FRIDAYS
+  SATURDAYS
+  SUNDAYS
+}
+
+enum AnimeType {
+  TV
+  ONA
+  OVA
+  SPECIAL
+  MOVIE
+}
+
+enum AnimeStatus {
+  FINISHED_AIRING
+  CURRENTLY_AIRING
+  NOT_YET_AIRED
+}
+
+enum AgeRating {
+  G
+  PG
+  PG13
+  R
+  RP
+  RX
+}
+
+enum AnimeSeason {
+  WINTER
+  FALL
+  SUMMER
+  SPRING
+}
+
+enum ServerQuailty {
+  FHD
+  HD
+  SD
+}
+
+type FuzzyDate {
+  year  Int?
+  month Int?
+  day   Int?
+}

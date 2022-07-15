@@ -10,6 +10,8 @@ import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input'
 import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { BoolNullableFilter } from '../prisma/bool-nullable-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeScalarWhereInput {
@@ -34,6 +36,15 @@ export class AnimeScalarWhereInput {
 
     @Field(() => StringFilter, {nullable:true})
     animeXId?: StringFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    animeifyId?: StringNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    animeSlayerId?: StringNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    xsAnimeId?: StringNullableFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     banner?: StringNullableFilter;
@@ -65,15 +76,6 @@ export class AnimeScalarWhereInput {
     @Field(() => StringNullableListFilter, {nullable:true})
     endings?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
-    genreIDs?: StringNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
-    studioIDs?: StringNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
-    producerIDs?: StringNullableListFilter;
-
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
 
@@ -82,4 +84,19 @@ export class AnimeScalarWhereInput {
 
     @Field(() => DateTimeFilter, {nullable:true})
     episodesUpdatedAt?: DateTimeFilter;
+
+    @Field(() => BoolNullableFilter, {nullable:true})
+    isAdult?: BoolNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    countryOfOrigin?: StringNullableFilter;
+
+    @HideField()
+    genreIDs?: StringNullableListFilter;
+
+    @HideField()
+    studioIDs?: StringNullableListFilter;
+
+    @HideField()
+    producerIDs?: StringNullableListFilter;
 }

@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { AnimeStudioCreateanimeIDsInput } from './anime-studio-createanime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeCreateNestedManyWithoutProducersInput } from '../anime/anime-create-nested-many-without-producers.input';
 
 @InputType()
@@ -16,9 +17,9 @@ export class AnimeStudioCreateWithoutAnimesInput {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => AnimeStudioCreateanimeIDsInput, {nullable:true})
+    @HideField()
     animeIDs?: AnimeStudioCreateanimeIDsInput;
 
-    @Field(() => AnimeCreateNestedManyWithoutProducersInput, {nullable:true})
+    @HideField()
     animesProduced?: AnimeCreateNestedManyWithoutProducersInput;
 }

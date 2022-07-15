@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
 import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeStudioScalarWhereWithAggregatesInput {
@@ -25,6 +26,6 @@ export class AnimeStudioScalarWhereWithAggregatesInput {
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     name?: StringWithAggregatesFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     animeIDs?: StringNullableListFilter;
 }

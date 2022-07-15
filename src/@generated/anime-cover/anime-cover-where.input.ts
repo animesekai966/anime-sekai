@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
+import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 
 @InputType()
 export class AnimeCoverWhereInput {
@@ -22,4 +23,7 @@ export class AnimeCoverWhereInput {
 
     @Field(() => StringFilter, {nullable:true})
     small?: StringFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    color?: StringNullableFilter;
 }

@@ -10,4 +10,7 @@ export class AnimeGenreWhereUniqueInput {
 
     @Field(() => Int, {nullable:true})
     malId?: number;
+
+    @Field(() => String, {nullable:true})
+    name?: string;
 }

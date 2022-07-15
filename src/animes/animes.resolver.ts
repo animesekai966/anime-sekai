@@ -14,9 +14,7 @@ import {
 export class AnimesResolver {
   constructor(private readonly animesService: AnimesService) {}
   @Query(() => Anime, { name: 'anime' })
-  findOne(@Args('where') where: AnimeWhereUniqueInput) {
-    return this.animesService.findOne(where);
-  }
+  findOne(@Args('where') where: AnimeWhereUniqueInput) {}
 
   @Query(() => AnimePage, { name: 'animesPage' })
   findAll(
@@ -25,12 +23,5 @@ export class AnimesResolver {
     @Args('pagination', { nullable: true }) pagination: AnimePageInput,
     @Args('textSearch', { nullable: true })
     textSearch: AnimePageTextSearchInput,
-  ) {
-    return this.animesService.createAnimePage(
-      where,
-      orderBy,
-      pagination,
-      textSearch,
-    );
-  }
+  ) {}
 }

@@ -2,8 +2,9 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
-import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { AnimeListRelationFilter } from '../anime/anime-list-relation-filter.input';
+import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeStudioWhereInput {
@@ -26,12 +27,12 @@ export class AnimeStudioWhereInput {
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
-    animeIDs?: StringNullableListFilter;
-
     @Field(() => AnimeListRelationFilter, {nullable:true})
     animes?: AnimeListRelationFilter;
 
-    @Field(() => AnimeListRelationFilter, {nullable:true})
+    @HideField()
+    animeIDs?: StringNullableListFilter;
+
+    @HideField()
     animesProduced?: AnimeListRelationFilter;
 }

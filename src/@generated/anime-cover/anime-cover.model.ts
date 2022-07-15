@@ -12,4 +12,7 @@ export class AnimeCover {
 
     @Field(() => String, {nullable:false})
     small!: string;
+
+    @Field(() => String, {nullable:true})
+    color!: string | null;
 }

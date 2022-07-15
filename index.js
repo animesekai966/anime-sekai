@@ -1,3 +1,4 @@
+/*
 const file = require('./Anime.json');
 const fs = require('fs');
 let newFile = file.map((anime) => {
@@ -18,3 +19,8 @@ let newFile = file.map((anime) => {
 console.log(newFile.length)
 
 fs.writeFileSync('./newAnime.json', JSON.stringify(newFile));
+*/
+
+const ms = require('ms');
+
+console.log(ms("24 min") / 1000 / 60)

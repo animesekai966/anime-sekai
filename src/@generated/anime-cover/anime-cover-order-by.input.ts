@@ -13,4 +13,7 @@ export class AnimeCoverOrderByInput {
 
     @Field(() => SortOrder, {nullable:true})
     small?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    color?: keyof typeof SortOrder;
 }

@@ -12,4 +12,7 @@ export class AnimeCoverObjectEqualityInput {
 
     @Field(() => String, {nullable:false})
     small!: string;
+
+    @Field(() => String, {nullable:true})
+    color?: string;
 }

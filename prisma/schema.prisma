@@ -15,111 +15,59 @@ generator nestgraphql {
 }
 
 model Anime {
-  id                String           @id @default(uuid()) @map("_id")
-  malId             Int              @unique
-  anilistId         Int?             @unique
-  animeXId          String           @unique
-  animeifyId        String?          @unique
-  animeSlayerId     String?          @unique
-  xsAnimeId         String?          @unique
-  banner            String?
-  cover             AnimeCover
-  altCovers         AnimeCover[]
-  title             AnimeTitle
-  trailer           AnimeTrailer?
-  type              AnimeType        @default(TV)
-  startDate         FuzzyDate
-  endDate           FuzzyDate
-  duration          String
-  ageRating         AgeRating        @default(PG13)
-  score             AnimeScore
-  season            AnimeSeason
-  source            String
-  status            AnimeStatus      @default(FINISHED_AIRING)
-  episodesCount     Int?
-  broadcast         AnimeBroadcast
-  description       AnimeDescription
-  openings          String[]
-  endings           String[]
-  related           RelatedAnime[]
-  episodes          Episode[]
-  externalSites     ExternalSite[]
-  studios           AnimeStudio[]    @relation(fields: [studioIDs], references: [id])
-  producers         AnimeStudio[]    @relation("producers", fields: [producerIDs], references: [id])
-  genres            AnimeGenre[]     @relation(fields: [genreIDs], references: [id])
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  episodesUpdatedAt DateTime
-  /// @HideField({ output: true, input: true })
-  genreIDs          String[]
-  /// @HideField({ output: true, input: true })
-  studioIDs         String[]
-  /// @HideField({ output: true, input: true })
-  producerIDs       String[]
+  id              String              @id @default(uuid()) @map("_id")
+  slug            String              @unique
+  malId           Int                 @unique
+  anilistId       Int                 @unique
+  animeifyId      String              @unique
+  animeSlayerId   Int                 @unique
+  xsAnimeId       String              @unique
+  animeBlkomId    String              @unique
+  //-------------------------------------//
+  banner          String?
+  cover           AnimeCoverImage
+  title           AnimeTitle
+  format          AnimeFormat         @default(TV)
+  status          AnimeStatus         @default(RELEASING)
+  description     AnimeDescription
+  startDate       FuzzyDate
+  endDate         FuzzyDate
+  season          AnimeSeason
+  episodesCount   Int
+  duration        Int
+  countryOfOrigin String
+  isLicensed      Boolean
+  isAdult         Boolean
+  source          AnimeSource
+  trailer         AnimeTrailer
+  score           AnimeScoreProviders
+  openings        String[]
+  endings         String[]
+  genres          Genre[]             @relation(references: [id], fields: [genreIDs])
+  producers       Studio[]            @relation("producedAnimes", references: [id], fields: [producerIDs])
+  studios         Studio[]            @relation("animatedAnimes", references: [id], fields: [studioIDs])
+  updatedAt       DateTime            @updatedAt
+  createdAt       DateTime            @default(now())
+  producerIDs     String[]
+  studioIDs       String[]
+  genreIDs        String[]
 }
 
-model AnimeStudio {
-  id             String   @id @default(uuid()) @map("_id")
-  malId          Int      @unique
-  name           String
-  animes         Anime[]  @relation(fields: [animeIDs], references: [id])
-  /// @HideField({ output: true, input: true })
-  animeIDs       String[]
-  /// @HideField({ output: true, input: true })
-  animesProduced Anime[]  @relation("producers", fields: [animeIDs], references: [id])
+type AnimeScoreProviders {
+  mal     AnimeScoreProvider
+  anilist AnimeScoreProvider
 }
 
-model AnimeGenre {
-  id       String         @id @default(uuid()) @map("_id")
-  malId    Int            @unique
-  name     String
-  type     AnimeGenreType @default(GENRE)
-  animes   Anime[]        @relation(fields: [animeIDs], references: [id])
-  /// @HideField({ output: true, input: true })
-  animeIDs String[]
+type AnimeScoreProvider {
+  score    Float
+  scoredBy Int
 }
 
-type AnimeTrailer {
-  youtubeId String?
-}
-
-enum AnimeGenreType {
-  GENRE
-  EXPLICIT_GENRE
-  THEME
-  DEMOGRAPHIC
-}
-
-type Episode {
-  id        String          @default(uuid())
-  number    String
-  filler    Boolean         @default(false)
-  servers   EpisodeServer[]
-  createdAt DateTime
-}
-
-type EpisodeServer {
-  url          String
-  quality      ServerQuailty @default(FHD)
-  translatedBy String
-  createdAt    DateTime      @default(now())
-}
-
-type ExternalSite {
-  name String
-  url  String
-}
-
-type RelatedAnime {
-  malId    Int
-  relation RelationType       @default(OTHER)
-  type     RelationEntityType @default(ANIME)
-}
-
-type AnimeCover {
+type AnimeCoverImage {
   large  String
   medium String
   small  String
+  color  String?
 }
 
 type AnimeTitle {
@@ -129,98 +77,127 @@ type AnimeTitle {
   synonyms String[]
 }
 
-type AnimeScore {
-  mal     AnimeScoreType
-  anilist AnimeScoreType
-}
-
 type AnimeDescription {
   ar String?
   en String?
 }
 
-type AnimeBroadcast {
-  day      BroadcastDays?
-  time     String?
-  timezone String?
+type AnimeTrailer {
+  url       String?
+  thumbnail String?
 }
 
-type AnimeScoreType {
-  score    Float @default(0)
-  scoredBy Int   @default(0)
-}
-
-enum RelationEntityType {
-  ANIME
-  MANGA
-}
-
-enum RelationType {
+enum AnimeRelation {
   ADAPTATION
-  SEQUEL
   PREQUEL
+  SEQUEL
+  PARENT
   SIDE_STORY
-  SUMMARY
-  ALTERNATIVE_VERSION
-  OTHER
-  PARENT_STORY
-  RECOMMENDATION
   CHARACTER
-  ALTERNATIVE_SETTING
+  SUMMARY
+  ALTERNATIVE
   SPIN_OFF
-  FULL_STORY
-}
-
-enum AnimeStudioType {
-  STUDIO
-  PRODUCER
-  LICENSER
-}
-
-enum BroadcastDays {
-  MONDAYS
-  TUESDAYS
-  WEDNESDAYS
-  THURSDAYS
-  FRIDAYS
-  SATURDAYS
-  SUNDAYS
-}
-
-enum AnimeType {
-  TV
-  ONA
-  OVA
-  SPECIAL
-  MOVIE
+  OTHER
+  SOURCE
+  COMPILATION
+  CONTAINS
 }
 
 enum AnimeStatus {
-  FINISHED_AIRING
-  CURRENTLY_AIRING
-  NOT_YET_AIRED
-}
-
-enum AgeRating {
-  G
-  PG
-  PG13
-  R
-  RP
-  RX
+  RELEASING
+  NOT_YET_RELEASED
+  FINISHED
+  CANCELLED
+  HIATUS
 }
 
 enum AnimeSeason {
   WINTER
-  FALL
-  SUMMER
   SPRING
+  SUMMER
+  FALL
 }
 
-enum ServerQuailty {
-  FHD
-  HD
-  SD
+enum AnimeFormat {
+  TV
+  TV_SHORT
+  MOVIE
+  SPECIAL
+  OVA
+  ONA
+  MUSIC
+  MANGA
+  NOVEL
+  ONE_SHOT
+}
+
+enum AnimeSource {
+  ORIGINAL
+  MANGA
+  LIGHT_NOVEL
+  VISUAL_NOVEL
+  VIDEO_GAME
+  OTHER
+  NOVEL
+  DOUJINSHI
+  ANIME
+  WEB_NOVEL
+  LIVE_ACTION
+  GAME
+  COMIC
+  MULTIMEDIA_PROJECT
+  PICTURE_BOOK
+}
+
+model Studio {
+  id               String   @id @default(uuid()) @map("_id")
+  malId            Int      @unique
+  name             String   @unique
+  animatedAnimes   Anime[]  @relation("animatedAnimes", references: [id], fields: [animatedAnimeIDs])
+  producedAnimes   Anime[]  @relation("producedAnimes", references: [id], fields: [animatedAnimeIDs])
+  animatedAnimeIDs String[]
+  producedAnimeIDs String[]
+}
+
+model Genre {
+  id       String    @id @default(uuid()) @map("_id")
+  malId    Int       @unique
+  name     String
+  type     GenreType @default(GENRE)
+  animes   Anime[]   @relation(references: [id], fields: [animeIDs])
+  animeIDs String[]
+}
+
+model Staff {
+  id String @id @default(uuid()) @map("_id")
+
+
+}
+
+model Character {
+  id String @id @default(uuid()) @map("_id")
+
+
+}
+
+enum CharacterRole {
+  MAIN
+  SUPPORTING
+  BACKGROUND
+}
+
+enum GenreType {
+  GENRE
+  EXPLICIT_GENRE
+  THEME
+  DEMOGRAPHIC
+}
+
+enum Sources {
+  ANIMEX
+  ANIMEIFY
+  XSANIME
+  ANIMESLAYER
 }
 
 type FuzzyDate {

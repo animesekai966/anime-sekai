@@ -3,8 +3,9 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { EnumAnimeGenreTypeFilter } from '../prisma/enum-anime-genre-type-filter.input';
-import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { AnimeListRelationFilter } from '../anime/anime-list-relation-filter.input';
+import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeGenreWhereInput {
@@ -30,9 +31,9 @@ export class AnimeGenreWhereInput {
     @Field(() => EnumAnimeGenreTypeFilter, {nullable:true})
     type?: EnumAnimeGenreTypeFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
-    animeIDs?: StringNullableListFilter;
-
     @Field(() => AnimeListRelationFilter, {nullable:true})
     animes?: AnimeListRelationFilter;
+
+    @HideField()
+    animeIDs?: StringNullableListFilter;
 }
