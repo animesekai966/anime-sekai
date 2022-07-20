@@ -20,4 +20,3 @@ console.log(newFile.length)
 
 fs.writeFileSync('./newAnime.json', JSON.stringify(newFile));
 */
-
