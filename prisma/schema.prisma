@@ -15,20 +15,21 @@ generator nestgraphql {
 }
 
 model Anime {
-  id              String              @id @default(uuid()) @map("_id")
-  slug            String              @unique
-  malId           Int                 @unique
-  anilistId       Int                 @unique
-  animeifyId      String              @unique
-  animeSlayerId   Int                 @unique
-  xsAnimeId       String              @unique
-  animeBlkomId    String              @unique
+  id              String               @id @default(uuid()) @map("_id")
+  slug            String               @unique
+  malId           Int?                 @unique
+  anilistId       Int?                 @unique
+  animeSlayerId   Int?                 @unique
+  xsAnimeId       String?              @unique
+  animeXId        String?              @unique
+  animeBlkomId    String?              @unique
   //-------------------------------------//
   banner          String?
   cover           AnimeCoverImage
+  altCovers       AnimeCoverImage[]
   title           AnimeTitle
-  format          AnimeFormat         @default(TV)
-  status          AnimeStatus         @default(RELEASING)
+  format          AnimeFormat          @default(TV)
+  status          AnimeStatus          @default(RELEASING)
   description     AnimeDescription
   startDate       FuzzyDate
   endDate         FuzzyDate
@@ -43,14 +44,22 @@ model Anime {
   score           AnimeScoreProviders
   openings        String[]
   endings         String[]
-  genres          Genre[]             @relation(references: [id], fields: [genreIDs])
-  producers       Studio[]            @relation("producedAnimes", references: [id], fields: [producerIDs])
-  studios         Studio[]            @relation("animatedAnimes", references: [id], fields: [studioIDs])
-  updatedAt       DateTime            @updatedAt
-  createdAt       DateTime            @default(now())
+  genres          Genre[]              @relation(references: [id], fields: [genreIDs])
+  producers       Studio[]             @relation("producedAnimes", references: [id], fields: [producerIDs])
+  studios         Studio[]             @relation("animatedAnimes", references: [id], fields: [studioIDs])
+  characters      CharactersOnAnimes[] @relation()
+  related         AnimeRelationType
+  updatedAt       DateTime             @updatedAt
+  createdAt       DateTime             @default(now())
   producerIDs     String[]
   studioIDs       String[]
   genreIDs        String[]
+}
+
+type AnimeRelationType {
+  type      AnimeRelation
+  malId     Int
+  anilistId Int?
 }
 
 type AnimeScoreProviders {
@@ -101,6 +110,7 @@ enum AnimeRelation {
   SOURCE
   COMPILATION
   CONTAINS
+
 }
 
 enum AnimeStatus {
@@ -169,15 +179,77 @@ model Genre {
 }
 
 model Staff {
-  id String @id @default(uuid()) @map("_id")
+  id          String               @id @default(uuid()) @map("_id")
+  malId       Int?                 @unique
+  anilistId   Int?                 @unique
+  language    String
+  image       StaffImage
+  name        StaffName
+  age         Int?
+  gender      String?
+  yearsActive Int[]
+  homeTown    String[]
+  bloodType   String
+  dateOfBirth FuzzyDate
+  dateOfDeath FuzzyDate
+  animes      CharactersOnAnimes[] @relation()
+}
 
+type StaffName {
+  first       String?
+  middle      String?
+  last        String?
+  full        String?
+  native      String?
+  alternative String[]
 
 }
 
+type StaffImage {
+  large  String
+  medium String
+  small  String
+}
+
 model Character {
-  id String @id @default(uuid()) @map("_id")
+  id          String               @id @default(uuid()) @map("_id")
+  malId       Int?                 @unique
+  anilistId   Int?                 @unique
+  name        CharacterName
+  image       CharacterImage
+  description String?
+  age         String?
+  gender      String?
+  bloodType   String?
+  dateOfBirth FuzzyDate
+  animes      CharactersOnAnimes[] @relation()
+}
 
+model CharactersOnAnimes {
+  id          String        @id @default(uuid()) @map("_id")
+  role        CharacterRole @default(MAIN)
+  character   Character     @relation(references: [id], fields: [characterId])
+  staff       Staff         @relation(references: [id], fields: [staffId])
+  anime       Anime         @relation(references: [id], fields: [animeId])
+  characterId String
+  staffId     String
+  animeId     String
+}
 
+type CharacterImage {
+  large  String
+  medium String
+  small  String
+}
+
+type CharacterName {
+  first              String?
+  middle             String?
+  last               String?
+  full               String?
+  native             String?
+  alternative        String[]
+  alternativeSpoiler String[]
 }
 
 enum CharacterRole {

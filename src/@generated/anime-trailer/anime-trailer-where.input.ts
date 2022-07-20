@@ -15,5 +15,8 @@ export class AnimeTrailerWhereInput {
     NOT?: Array<AnimeTrailerWhereInput>;
 
     @Field(() => StringNullableFilter, {nullable:true})
-    youtubeId?: StringNullableFilter;
+    url?: StringNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    thumbnail?: StringNullableFilter;
 }

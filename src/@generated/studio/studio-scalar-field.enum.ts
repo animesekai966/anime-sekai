@@ -1,7 +1,11 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum StudioScalarFieldEnum {
-    id = "id"
+    id = "id",
+    malId = "malId",
+    name = "name",
+    animatedAnimeIDs = "animatedAnimeIDs",
+    producedAnimeIDs = "producedAnimeIDs"
 }
 
 

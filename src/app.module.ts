@@ -6,8 +6,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AnimesModule } from './animes/animes.module';
 import { PrismaService } from './prisma/prisma.service';
-import { JikanService } from './jikan.service';
-import { MongoDBService } from './mongo-db/mongo-db.service';
+import { AnimeSlayerService } from './anime-slayer/anime-slayer.service';
+import { AnimeXService } from './anime-x/anime-x.service';
+import { AnimeBlkomService } from './anime-blkom/anime-blkom.service';
+import { JikanService } from './jikan/jikan.service';
+import { AnilistService } from './anilist/anilist.service';
 
 @Module({
   imports: [
@@ -20,7 +23,15 @@ import { MongoDBService } from './mongo-db/mongo-db.service';
     ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, , PrismaService, JikanService, MongoDBService],
-  exports: [JikanService],
+  providers: [
+    AppService,
+    PrismaService,
+    AnimeSlayerService,
+    AnimeXService,
+    AnimeBlkomService,
+    JikanService,
+    AnilistService,
+  ],
+  exports: [],
 })
 export class AppModule {}

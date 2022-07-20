@@ -5,5 +5,8 @@ import { InputType } from '@nestjs/graphql';
 export class AnimeTrailerCreateInput {
 
     @Field(() => String, {nullable:true})
-    youtubeId?: string;
+    url?: string;
+
+    @Field(() => String, {nullable:true})
+    thumbnail?: string;
 }

@@ -1,29 +1,25 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeCoverCreateEnvelopeInput } from '../anime-cover/anime-cover-create-envelope.input';
-import { AnimeCoverCreateInput } from '../anime-cover/anime-cover-create.input';
+import { AnimeCoverImageCreateEnvelopeInput } from '../anime-cover-image/anime-cover-image-create-envelope.input';
+import { AnimeCoverImageCreateInput } from '../anime-cover-image/anime-cover-image-create.input';
 import { AnimeTitleCreateEnvelopeInput } from '../anime-title/anime-title-create-envelope.input';
-import { AnimeTrailerNullableCreateEnvelopeInput } from '../prisma/anime-trailer-nullable-create-envelope.input';
-import { AnimeType } from '../prisma/anime-type.enum';
-import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
-import { AgeRating } from '../prisma/age-rating.enum';
-import { AnimeScoreCreateEnvelopeInput } from '../anime-score/anime-score-create-envelope.input';
-import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
-import { AnimeBroadcastCreateEnvelopeInput } from '../anime-broadcast/anime-broadcast-create-envelope.input';
 import { AnimeDescriptionCreateEnvelopeInput } from '../anime-description/anime-description-create-envelope.input';
+import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
+import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AnimeSource } from '../prisma/anime-source.enum';
+import { AnimeTrailerCreateEnvelopeInput } from '../anime-trailer/anime-trailer-create-envelope.input';
+import { AnimeScoreProvidersCreateEnvelopeInput } from '../anime-score-providers/anime-score-providers-create-envelope.input';
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
-import { RelatedAnimeCreateInput } from '../related-anime/related-anime-create.input';
-import { EpisodeCreateInput } from '../episode/episode-create.input';
-import { ExternalSiteCreateInput } from '../external-site/external-site-create.input';
-import { AnimeStudioUncheckedCreateNestedManyWithoutAnimesInput } from '../anime-studio/anime-studio-unchecked-create-nested-many-without-animes.input';
-import { AnimeGenreUncheckedCreateNestedManyWithoutAnimesInput } from '../anime-genre/anime-genre-unchecked-create-nested-many-without-animes.input';
-import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
-import { HideField } from '@nestjs/graphql';
-import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
+import { GenreUncheckedCreateNestedManyWithoutAnimesInput } from '../genre/genre-unchecked-create-nested-many-without-animes.input';
+import { StudioUncheckedCreateNestedManyWithoutAnimatedAnimesInput } from '../studio/studio-unchecked-create-nested-many-without-animated-animes.input';
+import { CharactersOnAnimesUncheckedCreateNestedManyWithoutAnimeInput } from '../characters-on-animes/characters-on-animes-unchecked-create-nested-many-without-anime.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
+import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
+import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
 
 @InputType()
 export class AnimeUncheckedCreateWithoutProducersInput {
@@ -31,41 +27,47 @@ export class AnimeUncheckedCreateWithoutProducersInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => String, {nullable:false})
+    slug!: string;
+
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
+    @Field(() => Int, {nullable:false})
+    anilistId!: number;
 
     @Field(() => String, {nullable:false})
-    animeXId!: string;
+    animeifyId!: string;
 
-    @Field(() => String, {nullable:true})
-    animeifyId?: string;
+    @Field(() => Int, {nullable:false})
+    animeSlayerId!: number;
 
-    @Field(() => String, {nullable:true})
-    animeSlayerId?: string;
+    @Field(() => String, {nullable:false})
+    xsAnimeId!: string;
 
-    @Field(() => String, {nullable:true})
-    xsAnimeId?: string;
+    @Field(() => String, {nullable:false})
+    animeBlkomId!: string;
 
     @Field(() => String, {nullable:true})
     banner?: string;
 
-    @Field(() => AnimeCoverCreateEnvelopeInput, {nullable:false})
-    cover!: AnimeCoverCreateEnvelopeInput;
+    @Field(() => AnimeCoverImageCreateEnvelopeInput, {nullable:false})
+    cover!: AnimeCoverImageCreateEnvelopeInput;
 
-    @Field(() => [AnimeCoverCreateInput], {nullable:true})
-    altCovers?: Array<AnimeCoverCreateInput>;
+    @Field(() => [AnimeCoverImageCreateInput], {nullable:true})
+    altCovers?: Array<AnimeCoverImageCreateInput>;
 
     @Field(() => AnimeTitleCreateEnvelopeInput, {nullable:false})
     title!: AnimeTitleCreateEnvelopeInput;
 
-    @Field(() => AnimeTrailerNullableCreateEnvelopeInput, {nullable:true})
-    trailer?: AnimeTrailerNullableCreateEnvelopeInput;
+    @Field(() => AnimeFormat, {nullable:true})
+    format?: keyof typeof AnimeFormat;
 
-    @Field(() => AnimeType, {nullable:true})
-    type?: keyof typeof AnimeType;
+    @Field(() => AnimeStatus, {nullable:true})
+    status?: keyof typeof AnimeStatus;
+
+    @Field(() => AnimeDescriptionCreateEnvelopeInput, {nullable:false})
+    description!: AnimeDescriptionCreateEnvelopeInput;
 
     @Field(() => FuzzyDateCreateEnvelopeInput, {nullable:false})
     startDate!: FuzzyDateCreateEnvelopeInput;
@@ -73,32 +75,32 @@ export class AnimeUncheckedCreateWithoutProducersInput {
     @Field(() => FuzzyDateCreateEnvelopeInput, {nullable:false})
     endDate!: FuzzyDateCreateEnvelopeInput;
 
-    @Field(() => String, {nullable:false})
-    duration!: string;
-
-    @Field(() => AgeRating, {nullable:true})
-    ageRating?: keyof typeof AgeRating;
-
-    @Field(() => AnimeScoreCreateEnvelopeInput, {nullable:false})
-    score!: AnimeScoreCreateEnvelopeInput;
-
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
 
+    @Field(() => Int, {nullable:false})
+    episodesCount!: number;
+
+    @Field(() => Int, {nullable:false})
+    duration!: number;
+
     @Field(() => String, {nullable:false})
-    source!: string;
+    countryOfOrigin!: string;
 
-    @Field(() => AnimeStatus, {nullable:true})
-    status?: keyof typeof AnimeStatus;
+    @Field(() => Boolean, {nullable:false})
+    isLicensed!: boolean;
 
-    @Field(() => Int, {nullable:true})
-    episodesCount?: number;
+    @Field(() => Boolean, {nullable:false})
+    isAdult!: boolean;
 
-    @Field(() => AnimeBroadcastCreateEnvelopeInput, {nullable:false})
-    broadcast!: AnimeBroadcastCreateEnvelopeInput;
+    @Field(() => AnimeSource, {nullable:false})
+    source!: keyof typeof AnimeSource;
 
-    @Field(() => AnimeDescriptionCreateEnvelopeInput, {nullable:false})
-    description!: AnimeDescriptionCreateEnvelopeInput;
+    @Field(() => AnimeTrailerCreateEnvelopeInput, {nullable:false})
+    trailer!: AnimeTrailerCreateEnvelopeInput;
+
+    @Field(() => AnimeScoreProvidersCreateEnvelopeInput, {nullable:false})
+    score!: AnimeScoreProvidersCreateEnvelopeInput;
 
     @Field(() => AnimeCreateopeningsInput, {nullable:true})
     openings?: AnimeCreateopeningsInput;
@@ -106,51 +108,27 @@ export class AnimeUncheckedCreateWithoutProducersInput {
     @Field(() => AnimeCreateendingsInput, {nullable:true})
     endings?: AnimeCreateendingsInput;
 
-    @Field(() => [RelatedAnimeCreateInput], {nullable:true})
-    related?: Array<RelatedAnimeCreateInput>;
+    @Field(() => GenreUncheckedCreateNestedManyWithoutAnimesInput, {nullable:true})
+    genres?: GenreUncheckedCreateNestedManyWithoutAnimesInput;
 
-    @Field(() => [EpisodeCreateInput], {nullable:true})
-    animeXEpisodes?: Array<EpisodeCreateInput>;
+    @Field(() => StudioUncheckedCreateNestedManyWithoutAnimatedAnimesInput, {nullable:true})
+    studios?: StudioUncheckedCreateNestedManyWithoutAnimatedAnimesInput;
 
-    @Field(() => [EpisodeCreateInput], {nullable:true})
-    animeifyEpisodes?: Array<EpisodeCreateInput>;
-
-    @Field(() => [EpisodeCreateInput], {nullable:true})
-    xsAnimeEpisodes?: Array<EpisodeCreateInput>;
-
-    @Field(() => [EpisodeCreateInput], {nullable:true})
-    animeSlayerEpisodes?: Array<EpisodeCreateInput>;
-
-    @Field(() => [ExternalSiteCreateInput], {nullable:true})
-    externalSites?: Array<ExternalSiteCreateInput>;
-
-    @Field(() => AnimeStudioUncheckedCreateNestedManyWithoutAnimesInput, {nullable:true})
-    studios?: AnimeStudioUncheckedCreateNestedManyWithoutAnimesInput;
-
-    @Field(() => AnimeGenreUncheckedCreateNestedManyWithoutAnimesInput, {nullable:true})
-    genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimesInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
+    @Field(() => CharactersOnAnimesUncheckedCreateNestedManyWithoutAnimeInput, {nullable:true})
+    characters?: CharactersOnAnimesUncheckedCreateNestedManyWithoutAnimeInput;
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
-    @Field(() => Date, {nullable:false})
-    episodesUpdatedAt!: Date | string;
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
 
-    @Field(() => Boolean, {nullable:true})
-    isAdult?: boolean;
+    @Field(() => AnimeCreateproducerIDsInput, {nullable:true})
+    producerIDs?: AnimeCreateproducerIDsInput;
 
-    @Field(() => String, {nullable:true})
-    countryOfOrigin?: string;
-
-    @HideField()
-    genreIDs?: AnimeCreategenreIDsInput;
-
-    @HideField()
+    @Field(() => AnimeCreatestudioIDsInput, {nullable:true})
     studioIDs?: AnimeCreatestudioIDsInput;
 
-    @HideField()
-    producerIDs?: AnimeCreateproducerIDsInput;
+    @Field(() => AnimeCreategenreIDsInput, {nullable:true})
+    genreIDs?: AnimeCreategenreIDsInput;
 }

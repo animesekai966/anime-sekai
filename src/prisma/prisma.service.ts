@@ -12,4 +12,29 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       await app.close();
     });
   }
+
+  async searchAnime(query: string, limit: number = 50) {
+    this.$runCommandRaw({
+      aggregate: 'Anime',
+      pipeline: [
+        {
+          $search: {
+            index: 'default',
+            text: {
+              query: query,
+              path: {
+                wildcard: '*',
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            score: { $meta: 'searchScore' },
+          },
+        },
+        { $limit: limit },
+      ],
+    });
+  }
 }

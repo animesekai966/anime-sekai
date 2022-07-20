@@ -21,6 +21,3 @@ console.log(newFile.length)
 fs.writeFileSync('./newAnime.json', JSON.stringify(newFile));
 */
 
-const ms = require('ms');
-
-console.log(ms("24 min") / 1000 / 60)

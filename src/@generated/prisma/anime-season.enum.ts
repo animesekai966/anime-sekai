@@ -2,9 +2,9 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum AnimeSeason {
     WINTER = "WINTER",
-    FALL = "FALL",
+    SPRING = "SPRING",
     SUMMER = "SUMMER",
-    SPRING = "SPRING"
+    FALL = "FALL"
 }
 
 

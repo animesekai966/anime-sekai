@@ -6,6 +6,8 @@ import { GenreOrderByWithRelationInput } from './genre-order-by-with-relation.in
 import { GenreWhereUniqueInput } from './genre-where-unique.input';
 import { Int } from '@nestjs/graphql';
 import { GenreCountAggregateInput } from './genre-count-aggregate.input';
+import { GenreAvgAggregateInput } from './genre-avg-aggregate.input';
+import { GenreSumAggregateInput } from './genre-sum-aggregate.input';
 import { GenreMinAggregateInput } from './genre-min-aggregate.input';
 import { GenreMaxAggregateInput } from './genre-max-aggregate.input';
 
@@ -30,6 +32,12 @@ export class GenreAggregateArgs {
 
     @Field(() => GenreCountAggregateInput, {nullable:true})
     _count?: GenreCountAggregateInput;
+
+    @Field(() => GenreAvgAggregateInput, {nullable:true})
+    _avg?: GenreAvgAggregateInput;
+
+    @Field(() => GenreSumAggregateInput, {nullable:true})
+    _sum?: GenreSumAggregateInput;
 
     @Field(() => GenreMinAggregateInput, {nullable:true})
     _min?: GenreMinAggregateInput;

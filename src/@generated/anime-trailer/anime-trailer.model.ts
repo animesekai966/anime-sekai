@@ -5,5 +5,8 @@ import { ObjectType } from '@nestjs/graphql';
 export class AnimeTrailer {
 
     @Field(() => String, {nullable:true})
-    youtubeId!: string | null;
+    url!: string | null;
+
+    @Field(() => String, {nullable:true})
+    thumbnail!: string | null;
 }

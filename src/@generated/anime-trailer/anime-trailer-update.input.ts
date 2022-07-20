@@ -6,5 +6,8 @@ import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-str
 export class AnimeTrailerUpdateInput {
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    youtubeId?: NullableStringFieldUpdateOperationsInput;
+    url?: NullableStringFieldUpdateOperationsInput;
+
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    thumbnail?: NullableStringFieldUpdateOperationsInput;
 }

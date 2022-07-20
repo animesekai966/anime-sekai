@@ -1,9 +1,11 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum AnimeStatus {
-    FINISHED_AIRING = "FINISHED_AIRING",
-    CURRENTLY_AIRING = "CURRENTLY_AIRING",
-    NOT_YET_AIRED = "NOT_YET_AIRED"
+    RELEASING = "RELEASING",
+    NOT_YET_RELEASED = "NOT_YET_RELEASED",
+    FINISHED = "FINISHED",
+    CANCELLED = "CANCELLED",
+    HIATUS = "HIATUS"
 }
 
 

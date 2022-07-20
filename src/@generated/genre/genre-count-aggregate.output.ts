@@ -9,5 +9,17 @@ export class GenreCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
+    malId!: number;
+
+    @Field(() => Int, {nullable:false})
+    name!: number;
+
+    @Field(() => Int, {nullable:false})
+    type!: number;
+
+    @Field(() => Int, {nullable:false})
+    animeIDs!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

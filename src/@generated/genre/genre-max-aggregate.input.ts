@@ -6,4 +6,13 @@ export class GenreMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     id?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    malId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    name?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    type?: true;
 }

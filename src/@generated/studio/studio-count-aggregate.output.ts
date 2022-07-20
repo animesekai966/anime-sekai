@@ -9,5 +9,17 @@ export class StudioCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
+    malId!: number;
+
+    @Field(() => Int, {nullable:false})
+    name!: number;
+
+    @Field(() => Int, {nullable:false})
+    animatedAnimeIDs!: number;
+
+    @Field(() => Int, {nullable:false})
+    producedAnimeIDs!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

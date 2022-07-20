@@ -6,5 +6,8 @@ import { SortOrder } from '../prisma/sort-order.enum';
 export class AnimeTrailerOrderByInput {
 
     @Field(() => SortOrder, {nullable:true})
-    youtubeId?: keyof typeof SortOrder;
+    url?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    thumbnail?: keyof typeof SortOrder;
 }
