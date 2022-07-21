@@ -11,8 +11,8 @@ export class AnimeBlkomController {
     private discord: DiscordService,
   ) {}
 
-  @Get("anime-list")
-  async animeList(@Query("page") page: number) {
-    return this.blkomService.getAnimeList(page);
+  @Get("/anime")
+  getAnime(@Query("slug") slug: string) {
+    return this.blkomService.getAnime(slug)
   }
 }

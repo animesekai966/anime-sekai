@@ -49,6 +49,7 @@ model Anime {
   studios         Studio[]             @relation("animatedAnimes", references: [id], fields: [studioIDs])
   characters      CharactersOnAnimes[] @relation()
   related         AnimeRelationType
+  episodes        Episode[]
   updatedAt       DateTime             @updatedAt
   createdAt       DateTime             @default(now())
   producerIDs     String[]
@@ -56,10 +57,20 @@ model Anime {
   genreIDs        String[]
 }
 
+model Episode {
+  id     String @id @default(uuid()) @map("_id")
+  anime  Anime  @relation(references: [id], fields: [animeId])
+  number Int
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  animeId   String
+}
+
 type AnimeRelationType {
-  type      AnimeRelation
   malId     Int
   anilistId Int?
+  type      AnimeRelation
 }
 
 type AnimeScoreProviders {
@@ -110,7 +121,6 @@ enum AnimeRelation {
   SOURCE
   COMPILATION
   CONTAINS
-
 }
 
 enum AnimeStatus {
@@ -202,7 +212,6 @@ type StaffName {
   full        String?
   native      String?
   alternative String[]
-
 }
 
 type StaffImage {

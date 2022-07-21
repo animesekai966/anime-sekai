@@ -1,13 +1,11 @@
 import { Controller, Get, Param, Res } from "@nestjs/common";
 import axios from "axios";
 import { Response } from "express";
-import { AppService } from "./app.service";
 import { DiscordService } from "./discord/discord.service";
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService,
     private discord: DiscordService,
   ) {}
 

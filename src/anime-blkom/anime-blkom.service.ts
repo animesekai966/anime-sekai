@@ -14,26 +14,42 @@ export class AnimeBlkomService {
       httpsAgent: new https.Agent({ keepAlive: true }),
     });
   }
+
   async getLatest(page = 0): Promise<LatestAnimeEntity[]> {
     let { data } = await this.fetch({ url: "/get-videos?page=" + page });
     return data;
   }
 
-  async getAnimeList(page = 0): Promise<AnimeListEntity[]> {
-    let fetch = this.fetch;
-    let pageData: { rawUrl: string; mal: string }[] = [];
-    let { data } = await fetch({ url: "/anime-list?page=" + page++ });
+  async getAnime(slug: string) {
+    let { data } = await this.fetch({ url: "/anime/" + slug });
     let $ = load(data);
-    $(`div.content.ratable > div.content-inner`).each(function () {
+    let animeData = {
+      mal: String($(`div.cta-btns > div > a.blue.cta`).attr("href")).trim(),
+      poster: `https://animeblkom.net${$(`div.poster > img`).attr("data-original")}`,
+      title:  String($(`div.name.col-xs-12 > span > h1`).text()).replace(/\(.+\)/g, "").trim(),
+      type:  String($(`div.name.col-xs-12 > span > h1 > small`).text()).replace(/\(|\)/g, "").trim().toUpperCase(),
+      score: Number($(`div.pull-right.story-column > div > div.col-xs-12.col-sm-3.dropdown.rating-container > button > span`).text()?.trim()),
+      story: String($(`div.col-xs-12.story-container > div.story > p`).text()).trim(),
+      episodesCount: String($(`div.info-table > div:nth-child(1) > span.info`).text()).trim(),
+      rating: String($(`div.info-table > div:nth-child(2) > span.info`).text()).trim(),
+      startDate: new Date($(`div.info-table > div:nth-child(3) > span.info`).text()?.trim()),
+      statusAr: String($(`div.info-table > div:nth-child(4) > span.info`).text()).trim(),
+      studio: String($(`div.info-cards > div:nth-child(1) > span.info.col-x-8 > a`).text()).trim(),
+      episodes: []
+    };
+
+    $(`div.pull-right.list-column > div > ul.episodes-links > li.episode-link`).each(function () {
       let $ = load(this);
-      pageData.push({
-        rawUrl: $(`div.poster > a`).attr("href"),
-      } as any);
-    });
-    return pageData as any;
+      let url = $(`a`).attr("href")?.trim()
+      animeData.episodes.push({
+        url,
+        rawNumber: Number(url.match(/watch\/.+\/([0-9]+)/)[1]),
+        number: String($(`a > span:nth-child(3)`).text()).trim(),
+      })
+    })
+
+    return animeData
   }
-
-
 }
 
 /*  TYPES  */
@@ -50,21 +66,7 @@ export interface LatestAnimeEntity {
   views: number;
 }
 
-export interface AnimeListEntity {
-  mal: string;
-  rawUrl: string;
-  url: string;
-  poster: string;
-  content_name: string;
-  content_genres: { genre_name_ar: string; genre_name_url: string }[];
-  content_year: number;
-  content_rating: string;
-  content_episodes: number;
-  content_score: number;
-  content_type_name_ar: string;
-  content_studio: string | null;
-  content_studio_url: string | null;
-}
+export interface AnimeEntity {}
 
 /*
 
