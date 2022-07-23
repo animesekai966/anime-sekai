@@ -12,7 +12,19 @@ export class AnimeBlkomController {
   ) {}
 
   @Get("/anime")
-  getAnime(@Query("slug") slug: string) {
-    return this.blkomService.getAnime(slug)
+  getAnime(@Query("slug") slug: string, @Query("episodes") episodes: boolean) {
+    return this.blkomService.getAnime(slug, episodes);
   }
+
+  @Get("get-latest")
+  getLatest(@Query("page") page: number = 0) {
+    return this.blkomService.getLatest(page);
+  }
+
+  @Get("anime-list")
+  getAnimeList(@Query("page") page: number = 0) {
+    return this.blkomService.getAnimeList(page);
+  }
+
+  
 }

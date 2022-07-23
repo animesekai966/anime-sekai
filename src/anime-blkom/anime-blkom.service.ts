@@ -1,54 +1,166 @@
 import { Injectable } from "@nestjs/common";
 import { load } from "cheerio/lib/slim";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import * as https from "https";
 import * as http from "http";
+const fetchServers = [
+  "https://blkomFetch.sekai9666.repl.co",
+  "https://blkomFetch1.sekai9666.repl.co",
+  "https://blkomFetch2.sekai9666.repl.co",
+  "https://blkomFetch3.sekai9666.repl.co",
+  "https://blkomFetch4.sekai9666.repl.co",
+  "https://blkomFetch5.sekai9666.repl.co",
+  "https://blkomFetch6.sekai9666.repl.co",
+  "https://blkomFetch7.sekai9666.repl.co",
+  "https://blkomFetch8.sekai9666.repl.co",
+  "https://blkomFetch9.sekai9666.repl.co",
+  "https://blkomFetch10.sekai9666.repl.co",
+];
 
 @Injectable()
 export class AnimeBlkomService {
-  fetch: AxiosInstance;
+  axios: AxiosInstance;
   constructor() {
-    this.fetch = axios.create({
+    this.axios = axios.create({
       baseURL: "https://animeblkom.net",
       httpAgent: new http.Agent({ keepAlive: true }),
       httpsAgent: new https.Agent({ keepAlive: true }),
+      headers: {
+        "x-requested-with": "XMLHttpRequest",
+      },
     });
   }
 
-  async getLatest(page = 0): Promise<LatestAnimeEntity[]> {
-    let { data } = await this.fetch({ url: "/get-videos?page=" + page });
-    return data;
+  async getAnimeList(page = 0): Promise<AnimeEntity[]> {
+    let { data } = await this.axios({ url: "/anime-list?page=" + page++ });
+    let slugs: string[] = [];
+    let $ = load(data);
+    $(`div.poster > a`).each((_, el) => {
+      slugs.push(
+        String(el.attributes.find((att) => att.name === "href")?.value)
+          .replace(/\/(anime|watch)\//, "")
+          .replace(/\//g, ""),
+      );
+    });
+
+    return Promise.all(
+      slugs.map(async (slug) => {
+        let content = await this.getAnime(slug, false);
+        return content;
+      }),
+    );
   }
 
-  async getAnime(slug: string) {
-    let { data } = await this.fetch({ url: "/anime/" + slug });
-    let $ = load(data);
-    let animeData = {
-      mal: String($(`div.cta-btns > div > a.blue.cta`).attr("href")).trim(),
-      poster: `https://animeblkom.net${$(`div.poster > img`).attr("data-original")}`,
-      title:  String($(`div.name.col-xs-12 > span > h1`).text()).replace(/\(.+\)/g, "").trim(),
-      type:  String($(`div.name.col-xs-12 > span > h1 > small`).text()).replace(/\(|\)/g, "").trim().toUpperCase(),
-      score: Number($(`div.pull-right.story-column > div > div.col-xs-12.col-sm-3.dropdown.rating-container > button > span`).text()?.trim()),
-      story: String($(`div.col-xs-12.story-container > div.story > p`).text()).trim(),
-      episodesCount: String($(`div.info-table > div:nth-child(1) > span.info`).text()).trim(),
-      rating: String($(`div.info-table > div:nth-child(2) > span.info`).text()).trim(),
-      startDate: new Date($(`div.info-table > div:nth-child(3) > span.info`).text()?.trim()),
-      statusAr: String($(`div.info-table > div:nth-child(4) > span.info`).text()).trim(),
-      studio: String($(`div.info-cards > div:nth-child(1) > span.info.col-x-8 > a`).text()).trim(),
-      episodes: []
-    };
+  async getLatest(page = 0): Promise<LatestAnimeEntity[]> {
+    let { data } = await this.axios({ url: "/get-videos?page=" + page });
+    return Promise.all(
+      data.map(async (obj: LatestAnimeEntity) => {
+        let content = await this.getAnime(obj.content_name_url, false);
+        return {
+          ...obj,
+          content,
+        };
+      }),
+    );
+  }
 
-    $(`div.pull-right.list-column > div > ul.episodes-links > li.episode-link`).each(function () {
-      let $ = load(this);
-      let url = $(`a`).attr("href")?.trim()
-      animeData.episodes.push({
-        url,
-        rawNumber: Number(url.match(/watch\/.+\/([0-9]+)/)[1]),
-        number: String($(`a > span:nth-child(3)`).text()).trim(),
-      })
-    })
+  async getAnimeEpServers(slug: string, ep = 1) {
+    try {
+      let { data } = await this.axios({ url: "/watch/" + slug + "/" + ep });
+      let servers = [];
+      let $ = load(data);
+      $(`span.server`).each((_, el) => {
+        let $$ = load(el);
+        let server = {
+          name: $$("a").text()?.trim(),
+          translatedBy: $$().css(),
+          url: $$("a").attr("data-src"),
+        };
+        if (server.name === "Blkom") servers.push(server);
+      });
 
-    return animeData
+      console.log(`[EP SCRAPER] ${ep}`);
+      return servers;
+    } catch (err) {
+      return await this.getAnimeEpServers(slug, ep);
+    }
+  }
+
+  async getAnime(slug: string, eps = false): Promise<AnimeEntity> {
+    try {
+      let { data } = await this.axios({ url: "/anime/" + slug });
+      let $ = load(data);
+      let animeData = {
+        mal: String($(`div.cta-btns > div > a.blue.cta`).attr("href")).trim(),
+        poster: `https://animeblkom.net${$(`div.poster > img`).attr(
+          "data-original",
+        )}`,
+        title: String($(`div.name.col-xs-12 > span > h1`).text())
+          .replace(/\(.+\)/g, "")
+          .trim(),
+        type: String($(`div.name.col-xs-12 > span > h1 > small`).text())
+          .replace(/\(|\)/g, "")
+          .trim()
+          .toUpperCase(),
+        score: Number(
+          $(
+            `div.pull-right.story-column > div > div.col-xs-12.col-sm-3.dropdown.rating-container > button > span`,
+          )
+            .text()
+            ?.trim(),
+        ),
+        story: String(
+          $(`div.col-xs-12.story-container > div.story > p`).text(),
+        ).trim(),
+        episodesCount: String(
+          $(`div.info-table > div:nth-child(1) > span.info`).text(),
+        ).trim(),
+        rating: String(
+          $(`div.info-table > div:nth-child(2) > span.info`).text(),
+        ).trim(),
+        startDate: new Date(
+          $(`div.info-table > div:nth-child(3) > span.info`).text()?.trim(),
+        ),
+        statusAr: String(
+          $(`div.info-table > div:nth-child(4) > span.info`).text(),
+        ).trim(),
+        studio: String(
+          $(`div.info-cards > div:nth-child(1) > span.info.col-x-8 > a`).text(),
+        ).trim(),
+        episodes: [],
+        isOnMal: false,
+      };
+
+      if (animeData.mal) animeData.isOnMal = true;
+
+      if (eps) {
+        $(
+          `div.pull-right.list-column > div > ul.episodes-links > li.episode-link`,
+        )
+          //@ts-ignore
+          .each(async (_, el) => {
+            let $ = load(el);
+            let url = $(`a`).attr("href")?.trim();
+            let rawNumber = Number(url.match(/watch\/.+\/([0-9]+)/)[1]);
+            animeData.episodes.push({
+              url,
+              rawNumber,
+              number: String($(`a > span:nth-child(3)`).text()).trim(),
+            });
+          });
+
+        animeData.episodes = await Promise.all(
+          animeData.episodes.map(async (ep) => ({
+            ...ep,
+            servers: await this.getAnimeEpServers(slug, ep.rawNumber),
+          })),
+        );
+      }
+
+      return animeData;
+    } catch (err) {
+      return this.getAnime(slug, eps);
+    }
   }
 }
 
@@ -64,9 +176,33 @@ export interface LatestAnimeEntity {
   type_name_ar: string;
   poster: string;
   views: number;
+  content?: AnimeEntity;
 }
 
-export interface AnimeEntity {}
+export interface AnimeEntity {
+  mal: string;
+  poster: string;
+  title: string;
+  type: string;
+  score: number;
+  story: string;
+  episodesCount: string;
+  rating: string;
+  startDate: Date;
+  statusAr: string;
+  studio: string;
+  episodes: {
+    url: string;
+    rawNumber: number;
+    number: string;
+    servers: {
+      name: string;
+      translatedBy: string;
+      url: string;
+    }[];
+  }[];
+  isOnMal: boolean;
+}
 
 /*
 

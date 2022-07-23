@@ -58,13 +58,45 @@ model Anime {
 }
 
 model Episode {
-  id     String @id @default(uuid()) @map("_id")
-  anime  Anime  @relation(references: [id], fields: [animeId])
-  number Int
-
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+  id        String          @id @default(uuid()) @map("_id")
+  anime     Anime           @relation(references: [id], fields: [animeId])
+  number    Int
+  name      String
+  servers   Server[]
+  source    AnimeSources    @default(ANIME_BLKOM)
+  filler    Boolean         @default(false)
+  last      Boolean         @default(false)
+  language  EpisodeLanguage @default(AR)
+  updatedAt DateTime        @updatedAt
+  createdAt DateTime        @default(now())
   animeId   String
+}
+
+enum EpisodeLanguage {
+  AR
+  EN
+}
+
+enum AnimeSources {
+  ANIME_X
+  ANIME_BLKOM
+  XS_ANIME
+  ANIME_SLAYER
+}
+
+type Server {
+  id           String        @default(uuid()) @map("_id")
+  name         String
+  translatedBy String
+  quality      ServerQuality @default(FHD)
+  url          String
+}
+
+enum ServerQuality {
+  FHD
+  HD
+  SD
+  LD
 }
 
 type AnimeRelationType {
