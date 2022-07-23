@@ -12,10 +12,8 @@ export class AnimeXService {
       httpAgent: new http.Agent({ keepAlive: true }),
       httpsAgent: new https.Agent({ keepAlive: true }),
       headers: {
-        "x-requested-with": "XMLHttpRequest",
-        auth: "3fc09d4110a3942c16cf0000879c83f3e6593579",
-        auth2: "IiQ6ThfhaS91BGuARDzEe6IdqTgQL1mTIyrSyKf6AQqBZc8ykCiwJpn",
-        version_name: "1.4.0",
+        AUTH: "3fc09d4110a3942c16cf0000879c83f3e6593579",
+        AUTH2: "IiQ6ThfhaS91BGuARDzEe6IdqTgQL1mTIyrSyKf6AQqBZc8ykCiwJpn",
         "user-agent":
           "AnimeX/1.4.0; Dalvik/2.1.0 (Linux; U; Android 7.1.2; SM-N975F Build/N2G48H)",
       },
@@ -48,7 +46,63 @@ export class AnimeXService {
     return data;
   }
 
-  async getAnime(slug: string) {}
+  async getAnime({
+    mal,
+    slug,
+    fetchServers = false,
+  }: {
+    mal?: string;
+    slug?: string;
+    fetchServers?: boolean;
+  }): Promise<AnimeEntity> {
+    let {
+      data: { data },
+    } = await this.axios({
+      url: slug
+        ? `v3/anime/${slug}/info?related=true`
+        : `v4/anime/mal/info?mal_url=${mal}`,
+    });
+
+    console.log(data);
+
+    return {
+      ...data,
+      episodes: await this.getAnimeEps(data.primary_key, fetchServers),
+    };
+  }
+
+  async getAnimeEps(
+    slug: string,
+    fetchServers = false,
+  ): Promise<AnimeEpEntity[]> {
+    try {
+      let {
+        data: { data },
+      } = await this.axios({ url: `v4/episodes/${slug}` });
+
+      return await Promise.all(
+        data.map(async (ep: any) => {
+          return {
+            number: ep.number,
+            last: !!ep.last,
+            filler: !!ep.filler,
+            servers: fetchServers
+              ? await this.getAnimeEpServers(slug, ep.number)
+              : [],
+          };
+        }),
+      );
+    } catch {
+      return await this.getAnimeEps(slug, fetchServers);
+    }
+  }
+
+  async getAnimeEpServers(slug: string, epNum: string) {
+    let {
+      data: { data },
+    } = await this.axios({ url: `v4/episodes/${slug}/play/` + epNum });
+    return data.wlinks;
+  }
 }
 
 export interface LatestAnimeEntity {
@@ -73,4 +127,37 @@ export interface AnimeListEntity {
   type: string;
   released_at: string;
   posters: string[];
+}
+
+export interface AnimeEntity {
+  primary_key: string;
+  name: string;
+  vid_count: string;
+  rate: string;
+  story: string;
+  age: string;
+  state: string;
+  mal: string;
+  type: string;
+  released_at: string;
+  duration: string | null;
+  season: string;
+  posters: string[];
+  genres: {
+    name: string;
+  }[];
+  studios: {
+    name: string;
+  }[];
+  related: {
+    data: AnimeListEntity[];
+  };
+  episodes: AnimeEpEntity[];
+}
+
+export interface AnimeEpEntity {
+  number: string;
+  last: boolean;
+  filler: boolean;
+  servers: { link: string; server: string; fansub: string; quality: string }[];
 }
