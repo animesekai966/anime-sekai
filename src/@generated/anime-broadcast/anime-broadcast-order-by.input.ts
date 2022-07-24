@@ -13,4 +13,7 @@ export class AnimeBroadcastOrderByInput {
 
     @Field(() => SortOrder, {nullable:true})
     timezone?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    string?: keyof typeof SortOrder;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Client, Intents, Snowflake, TextChannel } from "discord.js";
 const allNums = "0123456789";
-const allChar = "a03dx95om1";
+const allChar = "9876543210";
 
 @Injectable()
 export class DiscordService extends Client {

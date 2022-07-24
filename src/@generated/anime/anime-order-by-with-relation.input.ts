@@ -11,6 +11,9 @@ import { AnimeScoreProvidersOrderByInput } from '../anime-score-providers/anime-
 import { GenreOrderByRelationAggregateInput } from '../genre/genre-order-by-relation-aggregate.input';
 import { StudioOrderByRelationAggregateInput } from '../studio/studio-order-by-relation-aggregate.input';
 import { CharactersOnAnimesOrderByRelationAggregateInput } from '../characters-on-animes/characters-on-animes-order-by-relation-aggregate.input';
+import { AnimeRelationTypeOrderByInput } from '../anime-relation-type/anime-relation-type-order-by.input';
+import { EpisodeOrderByRelationAggregateInput } from '../episode/episode-order-by-relation-aggregate.input';
+import { AnimeBroadcastOrderByInput } from '../anime-broadcast/anime-broadcast-order-by.input';
 
 @InputType()
 export class AnimeOrderByWithRelationInput {
@@ -28,13 +31,13 @@ export class AnimeOrderByWithRelationInput {
     anilistId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    animeifyId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     animeSlayerId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     xsAnimeId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    animeXId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     animeBlkomId?: keyof typeof SortOrder;
@@ -110,6 +113,15 @@ export class AnimeOrderByWithRelationInput {
 
     @Field(() => CharactersOnAnimesOrderByRelationAggregateInput, {nullable:true})
     characters?: CharactersOnAnimesOrderByRelationAggregateInput;
+
+    @Field(() => AnimeRelationTypeOrderByInput, {nullable:true})
+    related?: AnimeRelationTypeOrderByInput;
+
+    @Field(() => EpisodeOrderByRelationAggregateInput, {nullable:true})
+    episodes?: EpisodeOrderByRelationAggregateInput;
+
+    @Field(() => AnimeBroadcastOrderByInput, {nullable:true})
+    broadcast?: AnimeBroadcastOrderByInput;
 
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;

@@ -41,6 +41,7 @@
     "express": "4.17.1",
     "got": "^12.1.0",
     "graphql": "^16.5.0",
+    "graphql-formatter": "^1.0.3",
     "graphql-type-json": "^0.3.2",
     "graphql-ws": "^5.9.1",
     "htmlparser2": "^8.0.1",

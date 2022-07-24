@@ -49,10 +49,12 @@ export class AnimeXService {
   async getAnime({
     mal,
     slug,
+    fetchEps = false,
     fetchServers = false,
   }: {
     mal?: string;
     slug?: string;
+    fetchEps?: boolean;
     fetchServers?: boolean;
   }): Promise<AnimeEntity> {
     let {
@@ -63,11 +65,11 @@ export class AnimeXService {
         : `v4/anime/mal/info?mal_url=${mal}`,
     });
 
-    console.log(data);
-
     return {
       ...data,
-      episodes: await this.getAnimeEps(data.primary_key, fetchServers),
+      episodes: fetchEps
+        ? await this.getAnimeEps(data.primary_key, fetchServers)
+        : [],
     };
   }
 

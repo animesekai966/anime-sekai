@@ -31,6 +31,7 @@ specifiers:
   express: 4.17.1
   got: ^12.1.0
   graphql: ^16.5.0
+  graphql-formatter: ^1.0.3
   graphql-type-json: ^0.3.2
   graphql-ws: ^5.9.1
   htmlparser2: ^8.0.1
@@ -75,6 +76,7 @@ dependencies:
   express: 4.17.1
   got: 12.1.0
   graphql: 16.5.0
+  graphql-formatter: 1.0.3
   graphql-type-json: 0.3.2_graphql@16.5.0
   graphql-ws: 5.9.1_graphql@16.5.0
   htmlparser2: 8.0.1
@@ -3995,6 +3997,10 @@ packages:
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
+
+  /graphql-formatter/1.0.3:
+    resolution: {integrity: sha512-glUCD5GkxPUpPjzRPDDJ8ZD+g37m5bq8QP2BxVfyozilfQEPhpYCKN3kycJ+/wC2I13fv54ccYG663eumtHmQA==}
+    dev: false
 
   /graphql-tag/2.12.6_graphql@16.5.0:
     resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}

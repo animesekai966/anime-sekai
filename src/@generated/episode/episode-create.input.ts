@@ -1,6 +1,10 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { EpisodeServerCreateInput } from '../episode-server/episode-server-create.input';
+import { AnimeCreateNestedOneWithoutEpisodesInput } from '../anime/anime-create-nested-one-without-episodes.input';
+import { Int } from '@nestjs/graphql';
+import { ServerCreateInput } from '../server/server-create.input';
+import { AnimeSources } from '../prisma/anime-sources.enum';
+import { EpisodeLanguage } from '../prisma/episode-language.enum';
 
 @InputType()
 export class EpisodeCreateInput {
@@ -8,15 +12,33 @@ export class EpisodeCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => AnimeCreateNestedOneWithoutEpisodesInput, {nullable:false})
+    anime!: AnimeCreateNestedOneWithoutEpisodesInput;
+
+    @Field(() => Int, {nullable:false})
+    number!: number;
+
     @Field(() => String, {nullable:false})
-    number!: string;
+    name!: string;
+
+    @Field(() => [ServerCreateInput], {nullable:true})
+    servers?: Array<ServerCreateInput>;
+
+    @Field(() => AnimeSources, {nullable:true})
+    source?: keyof typeof AnimeSources;
 
     @Field(() => Boolean, {nullable:true})
     filler?: boolean;
 
-    @Field(() => [EpisodeServerCreateInput], {nullable:true})
-    servers?: Array<EpisodeServerCreateInput>;
+    @Field(() => Boolean, {nullable:true})
+    last?: boolean;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date | string;
+    @Field(() => EpisodeLanguage, {nullable:true})
+    language?: keyof typeof EpisodeLanguage;
+
+    @Field(() => Date, {nullable:true})
+    updatedAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
 }

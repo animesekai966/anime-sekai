@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { IntFilter } from '../prisma/int-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { AnimeCoverImageCompositeFilter } from '../prisma/anime-cover-image-composite-filter.input';
 import { AnimeCoverImageObjectEqualityInput } from '../prisma/anime-cover-image-object-equality.input';
@@ -11,6 +11,7 @@ import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input'
 import { AnimeDescriptionCompositeFilter } from '../prisma/anime-description-composite-filter.input';
 import { FuzzyDateCompositeFilter } from '../prisma/fuzzy-date-composite-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
+import { IntFilter } from '../prisma/int-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
 import { AnimeTrailerCompositeFilter } from '../prisma/anime-trailer-composite-filter.input';
@@ -19,6 +20,9 @@ import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.
 import { GenreListRelationFilter } from '../genre/genre-list-relation-filter.input';
 import { StudioListRelationFilter } from '../studio/studio-list-relation-filter.input';
 import { CharactersOnAnimesListRelationFilter } from '../characters-on-animes/characters-on-animes-list-relation-filter.input';
+import { AnimeRelationTypeCompositeFilter } from '../prisma/anime-relation-type-composite-filter.input';
+import { EpisodeListRelationFilter } from '../episode/episode-list-relation-filter.input';
+import { AnimeBroadcastCompositeFilter } from '../prisma/anime-broadcast-composite-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
@@ -39,23 +43,23 @@ export class AnimeWhereInput {
     @Field(() => StringFilter, {nullable:true})
     slug?: StringFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    malId?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    malId?: IntNullableFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    anilistId?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    anilistId?: IntNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    animeifyId?: StringFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    animeSlayerId?: IntNullableFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    animeSlayerId?: IntFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    xsAnimeId?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    xsAnimeId?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    animeXId?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    animeBlkomId?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    animeBlkomId?: StringNullableFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     banner?: StringNullableFilter;
@@ -128,6 +132,15 @@ export class AnimeWhereInput {
 
     @Field(() => CharactersOnAnimesListRelationFilter, {nullable:true})
     characters?: CharactersOnAnimesListRelationFilter;
+
+    @Field(() => AnimeRelationTypeCompositeFilter, {nullable:true})
+    related?: AnimeRelationTypeCompositeFilter;
+
+    @Field(() => EpisodeListRelationFilter, {nullable:true})
+    episodes?: EpisodeListRelationFilter;
+
+    @Field(() => AnimeBroadcastCompositeFilter, {nullable:true})
+    broadcast?: AnimeBroadcastCompositeFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     updatedAt?: DateTimeFilter;

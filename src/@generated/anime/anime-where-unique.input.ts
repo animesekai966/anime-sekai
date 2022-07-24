@@ -17,14 +17,14 @@ export class AnimeWhereUniqueInput {
     @Field(() => Int, {nullable:true})
     anilistId?: number;
 
-    @Field(() => String, {nullable:true})
-    animeifyId?: string;
-
     @Field(() => Int, {nullable:true})
     animeSlayerId?: number;
 
     @Field(() => String, {nullable:true})
     xsAnimeId?: string;
+
+    @Field(() => String, {nullable:true})
+    animeXId?: string;
 
     @Field(() => String, {nullable:true})
     animeBlkomId?: string;

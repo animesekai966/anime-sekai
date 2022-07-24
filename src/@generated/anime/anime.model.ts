@@ -15,6 +15,9 @@ import { AnimeScoreProviders } from '../anime-score-providers/anime-score-provid
 import { Genre } from '../genre/genre.model';
 import { Studio } from '../studio/studio.model';
 import { CharactersOnAnimes } from '../characters-on-animes/characters-on-animes.model';
+import { AnimeRelationType } from '../anime-relation-type/anime-relation-type.model';
+import { Episode } from '../episode/episode.model';
+import { AnimeBroadcast } from '../anime-broadcast/anime-broadcast.model';
 import { AnimeCount } from './anime-count.output';
 
 @ObjectType()
@@ -26,23 +29,23 @@ export class Anime {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:false})
-    malId!: number;
+    @Field(() => Int, {nullable:true})
+    malId!: number | null;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId!: number | null;
 
-    @Field(() => String, {nullable:false})
-    animeifyId!: string;
+    @Field(() => Int, {nullable:true})
+    animeSlayerId!: number | null;
 
-    @Field(() => Int, {nullable:false})
-    animeSlayerId!: number;
+    @Field(() => String, {nullable:true})
+    xsAnimeId!: string | null;
 
-    @Field(() => String, {nullable:false})
-    xsAnimeId!: string;
+    @Field(() => String, {nullable:true})
+    animeXId!: string | null;
 
-    @Field(() => String, {nullable:false})
-    animeBlkomId!: string;
+    @Field(() => String, {nullable:true})
+    animeBlkomId!: string | null;
 
     @Field(() => String, {nullable:true})
     banner!: string | null;
@@ -115,6 +118,15 @@ export class Anime {
 
     @Field(() => [CharactersOnAnimes], {nullable:true})
     characters?: Array<CharactersOnAnimes>;
+
+    @Field(() => AnimeRelationType, {nullable:false})
+    related?: AnimeRelationType;
+
+    @Field(() => [Episode], {nullable:true})
+    episodes?: Array<Episode>;
+
+    @Field(() => AnimeBroadcast, {nullable:false})
+    broadcast?: AnimeBroadcast;
 
     @Field(() => Date, {nullable:false})
     updatedAt!: Date;

@@ -18,13 +18,13 @@ export class AnimeMaxOrderByAggregateInput {
     anilistId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    animeifyId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     animeSlayerId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     xsAnimeId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    animeXId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     animeBlkomId?: keyof typeof SortOrder;

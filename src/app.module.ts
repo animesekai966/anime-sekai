@@ -13,6 +13,7 @@ import { AnilistService } from "./anilist/anilist.service";
 import { AnimeBlkomController } from "./anime-blkom/anime-blkom.controller";
 import { DiscordService } from "./discord/discord.service";
 import { AnimeXController } from './anime-x/anime-x.controller';
+import { AnimeSlayerController } from './anime-slayer/anime-slayer.controller';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { AnimeXController } from './anime-x/anime-x.controller';
     AnimesModule,
     ScheduleModule.forRoot(),
   ],
-  controllers: [AppController, AnimeBlkomController, AnimeXController],
+  controllers: [AppController, AnimeBlkomController, AnimeXController, AnimeSlayerController],
   providers: [
     PrismaService,
     AnimeSlayerService,

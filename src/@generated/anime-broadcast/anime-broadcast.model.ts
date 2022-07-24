@@ -1,16 +1,19 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
-import { BroadcastDays } from '../prisma/broadcast-days.enum';
+import { AnimeBroadcastDays } from '../anime/anime-broadcast-days.enum';
 
 @ObjectType()
 export class AnimeBroadcast {
 
-    @Field(() => BroadcastDays, {nullable:true})
-    day!: keyof typeof BroadcastDays | null;
+    @Field(() => AnimeBroadcastDays, {nullable:false})
+    day!: keyof typeof AnimeBroadcastDays;
 
-    @Field(() => String, {nullable:true})
-    time!: string | null;
+    @Field(() => String, {nullable:false})
+    time!: string;
 
-    @Field(() => String, {nullable:true})
-    timezone!: string | null;
+    @Field(() => String, {nullable:false})
+    timezone!: string;
+
+    @Field(() => String, {nullable:false})
+    string!: string;
 }

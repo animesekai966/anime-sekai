@@ -2,13 +2,18 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum AnimeRelation {
     ADAPTATION = "ADAPTATION",
-    SEQUEL = "SEQUEL",
     PREQUEL = "PREQUEL",
+    SEQUEL = "SEQUEL",
+    PARENT = "PARENT",
     SIDE_STORY = "SIDE_STORY",
+    CHARACTER = "CHARACTER",
     SUMMARY = "SUMMARY",
     ALTERNATIVE = "ALTERNATIVE",
+    SPIN_OFF = "SPIN_OFF",
     OTHER = "OTHER",
-    RECOMMENDATION = "RECOMMENDATION"
+    SOURCE = "SOURCE",
+    COMPILATION = "COMPILATION",
+    CONTAINS = "CONTAINS"
 }
 
 

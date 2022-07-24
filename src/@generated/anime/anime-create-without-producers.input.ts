@@ -17,6 +17,9 @@ import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { GenreCreateNestedManyWithoutAnimesInput } from '../genre/genre-create-nested-many-without-animes.input';
 import { StudioCreateNestedManyWithoutAnimatedAnimesInput } from '../studio/studio-create-nested-many-without-animated-animes.input';
 import { CharactersOnAnimesCreateNestedManyWithoutAnimeInput } from '../characters-on-animes/characters-on-animes-create-nested-many-without-anime.input';
+import { AnimeRelationTypeCreateEnvelopeInput } from '../anime-relation-type/anime-relation-type-create-envelope.input';
+import { EpisodeCreateNestedManyWithoutAnimeInput } from '../episode/episode-create-nested-many-without-anime.input';
+import { AnimeBroadcastCreateEnvelopeInput } from '../anime-broadcast/anime-broadcast-create-envelope.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
@@ -30,23 +33,23 @@ export class AnimeCreateWithoutProducersInput {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:false})
-    malId!: number;
+    @Field(() => Int, {nullable:true})
+    malId?: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId?: number;
 
-    @Field(() => String, {nullable:false})
-    animeifyId!: string;
+    @Field(() => Int, {nullable:true})
+    animeSlayerId?: number;
 
-    @Field(() => Int, {nullable:false})
-    animeSlayerId!: number;
+    @Field(() => String, {nullable:true})
+    xsAnimeId?: string;
 
-    @Field(() => String, {nullable:false})
-    xsAnimeId!: string;
+    @Field(() => String, {nullable:true})
+    animeXId?: string;
 
-    @Field(() => String, {nullable:false})
-    animeBlkomId!: string;
+    @Field(() => String, {nullable:true})
+    animeBlkomId?: string;
 
     @Field(() => String, {nullable:true})
     banner?: string;
@@ -116,6 +119,15 @@ export class AnimeCreateWithoutProducersInput {
 
     @Field(() => CharactersOnAnimesCreateNestedManyWithoutAnimeInput, {nullable:true})
     characters?: CharactersOnAnimesCreateNestedManyWithoutAnimeInput;
+
+    @Field(() => AnimeRelationTypeCreateEnvelopeInput, {nullable:false})
+    related!: AnimeRelationTypeCreateEnvelopeInput;
+
+    @Field(() => EpisodeCreateNestedManyWithoutAnimeInput, {nullable:true})
+    episodes?: EpisodeCreateNestedManyWithoutAnimeInput;
+
+    @Field(() => AnimeBroadcastCreateEnvelopeInput, {nullable:false})
+    broadcast!: AnimeBroadcastCreateEnvelopeInput;
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;

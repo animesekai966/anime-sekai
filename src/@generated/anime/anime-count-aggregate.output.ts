@@ -18,13 +18,13 @@ export class AnimeCountAggregate {
     anilistId!: number;
 
     @Field(() => Int, {nullable:false})
-    animeifyId!: number;
-
-    @Field(() => Int, {nullable:false})
     animeSlayerId!: number;
 
     @Field(() => Int, {nullable:false})
     xsAnimeId!: number;
+
+    @Field(() => Int, {nullable:false})
+    animeXId!: number;
 
     @Field(() => Int, {nullable:false})
     animeBlkomId!: number;

@@ -6,11 +6,12 @@ export class AnimeXController {
   constructor(private animeXService: AnimeXService) {}
 
   @Get("/anime")
-  getAnime(
-    @Query("mal") mal?: string,
-    @Query("slug") slug?: string,
-    @Query("fetchServers") fetchServers?: boolean,
-  ) {
-    return this.animeXService.getAnime({ mal, slug, fetchServers });
+  getAnime(@Query("mal") mal?: string, @Query("slug") slug?: string) {
+    return this.animeXService.getAnime({ mal, slug });
+  }
+
+  @Get("/anime-list")
+  getAnimeList(@Query("page") page: number) {
+    return this.animeXService.getAnimeList(page);
   }
 }

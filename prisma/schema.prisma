@@ -50,11 +50,29 @@ model Anime {
   characters      CharactersOnAnimes[] @relation()
   related         AnimeRelationType
   episodes        Episode[]
+  broadcast       AnimeBroadcast
   updatedAt       DateTime             @updatedAt
   createdAt       DateTime             @default(now())
   producerIDs     String[]
   studioIDs       String[]
   genreIDs        String[]
+}
+
+type AnimeBroadcast {
+  day      AnimeBroadcastDays
+  time     String
+  timezone String
+  string   String
+}
+
+enum AnimeBroadcastDays {
+  MONDAYS
+  TUESDAYS
+  WEDNESDAYS
+  THURSDAYS
+  FRIDAYS
+  SATURDAYS
+  SUNDAYS
 }
 
 model Episode {
@@ -63,7 +81,7 @@ model Episode {
   number    Int
   name      String
   servers   Server[]
-  source    AnimeSources    @default(ANIME_BLKOM)
+  source    AnimeSources    @default(ANIME_X)
   filler    Boolean         @default(false)
   last      Boolean         @default(false)
   language  EpisodeLanguage @default(AR)

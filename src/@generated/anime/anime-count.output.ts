@@ -16,4 +16,7 @@ export class AnimeCount {
 
     @Field(() => Int, {nullable:false})
     characters?: number;
+
+    @Field(() => Int, {nullable:false})
+    episodes?: number;
 }

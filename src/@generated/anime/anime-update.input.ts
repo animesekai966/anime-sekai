@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
-import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { AnimeCoverImageUpdateEnvelopeInput } from '../anime-cover-image/anime-cover-image-update-envelope.input';
 import { AnimeCoverImageCreateInput } from '../anime-cover-image/anime-cover-image-create.input';
@@ -11,6 +11,7 @@ import { EnumAnimeStatusFieldUpdateOperationsInput } from '../prisma/enum-anime-
 import { AnimeDescriptionUpdateEnvelopeInput } from '../anime-description/anime-description-update-envelope.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAnimeSeasonFieldUpdateOperationsInput } from '../prisma/enum-anime-season-field-update-operations.input';
+import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
 import { EnumAnimeSourceFieldUpdateOperationsInput } from '../prisma/enum-anime-source-field-update-operations.input';
 import { AnimeTrailerUpdateEnvelopeInput } from '../anime-trailer/anime-trailer-update-envelope.input';
@@ -21,6 +22,9 @@ import { GenreUpdateManyWithoutAnimesNestedInput } from '../genre/genre-update-m
 import { StudioUpdateManyWithoutProducedAnimesNestedInput } from '../studio/studio-update-many-without-produced-animes-nested.input';
 import { StudioUpdateManyWithoutAnimatedAnimesNestedInput } from '../studio/studio-update-many-without-animated-animes-nested.input';
 import { CharactersOnAnimesUpdateManyWithoutAnimeNestedInput } from '../characters-on-animes/characters-on-animes-update-many-without-anime-nested.input';
+import { AnimeRelationTypeUpdateEnvelopeInput } from '../anime-relation-type/anime-relation-type-update-envelope.input';
+import { EpisodeUpdateManyWithoutAnimeNestedInput } from '../episode/episode-update-many-without-anime-nested.input';
+import { AnimeBroadcastUpdateEnvelopeInput } from '../anime-broadcast/anime-broadcast-update-envelope.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
@@ -32,23 +36,23 @@ export class AnimeUpdateInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     slug?: StringFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    malId?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    malId?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    anilistId?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    anilistId?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    animeifyId?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    animeSlayerId?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    animeSlayerId?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    xsAnimeId?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    xsAnimeId?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    animeXId?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    animeBlkomId?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    animeBlkomId?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     banner?: NullableStringFieldUpdateOperationsInput;
@@ -121,6 +125,15 @@ export class AnimeUpdateInput {
 
     @Field(() => CharactersOnAnimesUpdateManyWithoutAnimeNestedInput, {nullable:true})
     characters?: CharactersOnAnimesUpdateManyWithoutAnimeNestedInput;
+
+    @Field(() => AnimeRelationTypeUpdateEnvelopeInput, {nullable:true})
+    related?: AnimeRelationTypeUpdateEnvelopeInput;
+
+    @Field(() => EpisodeUpdateManyWithoutAnimeNestedInput, {nullable:true})
+    episodes?: EpisodeUpdateManyWithoutAnimeNestedInput;
+
+    @Field(() => AnimeBroadcastUpdateEnvelopeInput, {nullable:true})
+    broadcast?: AnimeBroadcastUpdateEnvelopeInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;

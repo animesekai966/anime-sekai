@@ -17,13 +17,13 @@ export class AnimeMinAggregateInput {
     anilistId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    animeifyId?: true;
-
-    @Field(() => Boolean, {nullable:true})
     animeSlayerId?: true;
 
     @Field(() => Boolean, {nullable:true})
     xsAnimeId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    animeXId?: true;
 
     @Field(() => Boolean, {nullable:true})
     animeBlkomId?: true;

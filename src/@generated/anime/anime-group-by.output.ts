@@ -20,23 +20,23 @@ export class AnimeGroupBy {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:false})
-    malId!: number;
+    @Field(() => Int, {nullable:true})
+    malId?: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId?: number;
 
-    @Field(() => String, {nullable:false})
-    animeifyId!: string;
+    @Field(() => Int, {nullable:true})
+    animeSlayerId?: number;
 
-    @Field(() => Int, {nullable:false})
-    animeSlayerId!: number;
+    @Field(() => String, {nullable:true})
+    xsAnimeId?: string;
 
-    @Field(() => String, {nullable:false})
-    xsAnimeId!: string;
+    @Field(() => String, {nullable:true})
+    animeXId?: string;
 
-    @Field(() => String, {nullable:false})
-    animeBlkomId!: string;
+    @Field(() => String, {nullable:true})
+    animeBlkomId?: string;
 
     @Field(() => String, {nullable:true})
     banner?: string;

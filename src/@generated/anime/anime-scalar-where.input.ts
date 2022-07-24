@@ -1,11 +1,12 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { IntFilter } from '../prisma/int-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { EnumAnimeFormatFilter } from '../prisma/enum-anime-format-filter.input';
 import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
+import { IntFilter } from '../prisma/int-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
@@ -29,23 +30,23 @@ export class AnimeScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     slug?: StringFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    malId?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    malId?: IntNullableFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    anilistId?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    anilistId?: IntNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    animeifyId?: StringFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    animeSlayerId?: IntNullableFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    animeSlayerId?: IntFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    xsAnimeId?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    xsAnimeId?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    animeXId?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    animeBlkomId?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    animeBlkomId?: StringNullableFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     banner?: StringNullableFilter;
