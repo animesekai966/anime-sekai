@@ -24,7 +24,7 @@ model Anime {
   animeXId        String?              @unique
   animeBlkomId    String?              @unique
   //-------------------------------------//
-  banner          String?
+  banner          String? 
   cover           AnimeCoverImage
   altCovers       AnimeCoverImage[]
   title           AnimeTitle

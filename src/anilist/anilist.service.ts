@@ -4,6 +4,7 @@ import { AnimeLatestEntity } from "src/anime-slayer/anime-slayer.service";
 import * as https from "https";
 import * as http from "http";
 import { format } from "graphql-formatter";
+import { error } from "console";
 
 let malStatusToAnilist = {
   "Currently Airing": "RELEASING",
@@ -21,6 +22,73 @@ export class AnilistService {
       method: "post",
       baseURL: "https://graphql.anilist.co/",
     });
+  }
+
+  async getAsAnime(anime: {
+    anime_season: string;
+    anime_type: string;
+    anime_status: string;
+    anime_release_year: string;
+    anime_id: string;
+    anime_name: string;
+  }) {
+    try {
+      let queryTemplate = `query Query {`;
+      let animeFilterTemplate = `a{qn}: Media({seasonFilter} type: ANIME, {formatFilter} search: "{search}", {statusFilter} {yearFilter}) { id idMal }`;
+      let seasonFilterTemplate = `season: {season},`;
+      let formatFilterTemplate = "format: {format},";
+      let statusFilterTemplate = "status: {status},";
+      let yearFilterTemplate = 'startDate_like: "{year}%"';
+
+      let animeFilterTemplateWithFilters = animeFilterTemplate
+        .replace(
+          "{seasonFilter}",
+          !!anime.anime_season ? seasonFilterTemplate : "",
+        )
+        .replace(
+          "{formatFilter}",
+          false && !!anime.anime_type ? formatFilterTemplate : "",
+        )
+        .replace(
+          "{statusFilter}",
+          !!anime.anime_status ? statusFilterTemplate : "",
+        )
+        .replace(
+          "{yearFilter}",
+          !!anime.anime_release_year ? yearFilterTemplate : "",
+        );
+
+      let animeTemplate = animeFilterTemplateWithFilters
+        .replace("{qn}", `${anime.anime_id}`)
+        .replace("{season}", anime.anime_season?.toUpperCase())
+        .replace("{format}", anime.anime_type?.toUpperCase().replace(/ /g, "_"))
+        .replace("{search}", anime.anime_name)
+        .replace("{status}", malStatusToAnilist[anime.anime_status])
+        .replace("{year}", anime.anime_release_year);
+      queryTemplate += "\n" + animeTemplate;
+
+      queryTemplate += "\n}";
+
+      let query = queryTemplate;
+
+      console.log(query);
+      let {
+        data: { data },
+      } = await this.axios({
+        data: {
+          operationName: "Query",
+          query: query,
+        },
+      });
+
+      return {
+        malId: data[`a${anime.anime_id}`]?.idMal,
+        anilistId: data[`a${anime.anime_id}`]?.id,
+        ...anime,
+      };
+    } catch (err) {
+      console.log(err.response.data.errors)
+    }
   }
 
   async getAsAnimes(
@@ -83,6 +151,7 @@ export class AnilistService {
           .join("\n");
       }
 
+      console.log(query);
       let {
         data: { data },
       } = await this.axios({
@@ -100,6 +169,7 @@ export class AnilistService {
         }))
         .filter((anime) => anime.malId);
     } catch (err) {
+      console.log(err.response.data.errors);
       let linesToRemove = err.response.data.errors.map((err: any) => {
         let line = err.locations[0].line;
         return line - 1;
