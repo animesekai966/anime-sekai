@@ -5,7 +5,6 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ScheduleModule } from "@nestjs/schedule";
 import { AnimesModule } from "./animes/animes.module";
 import { PrismaService } from "./prisma/prisma.service";
-import { AnimeSlayerService } from "./anime-slayer/anime-slayer.service";
 import { AnimeXService } from "./anime-x/anime-x.service";
 import { AnimeBlkomService } from "./anime-blkom/anime-blkom.service";
 import { JikanService } from "./jikan/jikan.service";
@@ -13,7 +12,6 @@ import { AnilistService } from "./anilist/anilist.service";
 import { AnimeBlkomController } from "./anime-blkom/anime-blkom.controller";
 import { DiscordService } from "./discord/discord.service";
 import { AnimeXController } from './anime-x/anime-x.controller';
-import { AnimeSlayerController } from './anime-slayer/anime-slayer.controller';
 
 @Module({
   imports: [
@@ -25,10 +23,9 @@ import { AnimeSlayerController } from './anime-slayer/anime-slayer.controller';
     AnimesModule,
     ScheduleModule.forRoot(),
   ],
-  controllers: [AppController, AnimeBlkomController, AnimeXController, AnimeSlayerController],
+  controllers: [AppController, AnimeBlkomController, AnimeXController],
   providers: [
     PrismaService,
-    AnimeSlayerService,
     AnimeXService,
     AnimeBlkomService,
     JikanService,

@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance } from "axios";
-import { AnimeLatestEntity } from "src/anime-slayer/anime-slayer.service";
 import * as https from "https";
 import * as http from "http";
-import { format } from "graphql-formatter";
-import { error } from "console";
 
 let malStatusToAnilist = {
   "Currently Airing": "RELEASING",
@@ -24,157 +21,257 @@ export class AnilistService {
     });
   }
 
-  async getAsAnime(anime: {
-    anime_season: string;
-    anime_type: string;
-    anime_status: string;
-    anime_release_year: string;
-    anime_id: string;
-    anime_name: string;
+  async getAnimeDetails({
+    malId,
+    anilistId,
+  }: {
+    malId: number;
+    anilistId: number;
   }) {
-    try {
-      let queryTemplate = `query Query {`;
-      let animeFilterTemplate = `a{qn}: Media({seasonFilter} type: ANIME, {formatFilter} search: "{search}", {statusFilter} {yearFilter}) { id idMal }`;
-      let seasonFilterTemplate = `season: {season},`;
-      let formatFilterTemplate = "format: {format},";
-      let statusFilterTemplate = "status: {status},";
-      let yearFilterTemplate = 'startDate_like: "{year}%"';
+    let variables: { mediaId?: number; idMal?: number } = {};
+    anilistId ? (variables.mediaId = anilistId) : (variables.idMal = malId);
 
-      let animeFilterTemplateWithFilters = animeFilterTemplate
-        .replace(
-          "{seasonFilter}",
-          !!anime.anime_season ? seasonFilterTemplate : "",
-        )
-        .replace(
-          "{formatFilter}",
-          false && !!anime.anime_type ? formatFilterTemplate : "",
-        )
-        .replace(
-          "{statusFilter}",
-          !!anime.anime_status ? statusFilterTemplate : "",
-        )
-        .replace(
-          "{yearFilter}",
-          !!anime.anime_release_year ? yearFilterTemplate : "",
-        );
+    let {
+      data: {
+        data: { Media: data },
+      },
+    } = await this.axios({
+      data: {
+        query: `query Query($mediaId: Int, $idMal: Int) {
+          Media(id: $mediaId, idMal: $idMal) {
+            id
+            idMal
+            title {
+              romaji
+              english
+              native
+            }
+            type
+            format
+            status
+            description
+            startDate {
+              year
+              month
+              day
+            }
+            endDate {
+              year
+              month
+              day
+            }
+            season
+            seasonYear
+            episodes
+            duration
+            countryOfOrigin
+            isLicensed
+            source
+            hashtag
+            trailer {
+              id
+              site
+              thumbnail
+            }
+            updatedAt
+            coverImage {
+              extraLarge
+              large
+              medium
+              color
+            }
+            bannerImage
+            genres
+            synonyms
+            averageScore
+            meanScore
+            popularity
+            isLocked
+            trending
+            favourites
+            tags {
+              id
+              name
+              description
+              category
+              isAdult
+              isMediaSpoiler
+            }
+            relations {
+              edges {
+                id
+                relationType
+                node {
+                  id
+                  idMal
+                }
+              }
+            }
+            characters {
+              edges {
+                node {
+                  id
+                  name {
+                    first
+                    middle
+                    last
+                    full
+                    native
+                    alternative
+                    alternativeSpoiler
+                  }
+                  image {
+                    large
+                    medium
+                  }
+                  description
+                  gender
+                  dateOfBirth {
+                    year
+                    month
+                    day
+                  }
+                  age
+                  bloodType
+                }
+                id
+                role
+                voiceActorRoles {
+                  voiceActor {
+                    id
+                    name {
+                      first
+                      middle
+                      last
+                      full
+                      native
+                      alternative
+                    }
+                    languageV2
+                    image {
+                      large
+                      medium
+                    }
+                    description
+                    primaryOccupations
+                    gender
+                    dateOfBirth {
+                      year
+                      month
+                      day
+                    }
+                    dateOfDeath {
+                      year
+                      month
+                      day
+                    }
+                    age
+                    yearsActive
+                    homeTown
+                    bloodType
+                  }
+                }
+              }
+            }
+            staff {
+              edges {
+                id
+                node {
+                  id
+                  name {
+                    first
+                    middle
+                    last
+                    full
+                    native
+                  }
+                  languageV2
+                  image {
+                    large
+                    medium
+                  }
+                  description
+                  primaryOccupations
+                  gender
+                  dateOfBirth {
+                    year
+                    month
+                    day
+                  }
+                  dateOfDeath {
+                    year
+                    month
+                    day
+                  }
+                  age
+                  yearsActive
+                  homeTown
+                  bloodType
+                }
+                role
+              }
+            }
+            studios {
+              edges {
+                node {
+                  id
+                  name
+                  isAnimationStudio
+                }
+                id
+              }
+            }
+            isAdult
+            nextAiringEpisode {
+              id
+              airingAt
+              timeUntilAiring
+              episode
+            }
+            airingSchedule {
+              edges {
+                id
+                node {
+                  id
+                  airingAt
+                  timeUntilAiring
+                  episode
+                  mediaId
+                }
+              }
+            }
+            externalLinks {
+              id
+              url
+              site
+              siteId
+              type
+              language
+              color
+              icon
+            }
+            recommendations {
+              edges {
+                node {
+                  id
+                  rating
+                  userRating
+                  media {
+                    id
+                    idMal
+                  }
+                }
+              }
+            }
+          }
+        }
+        `,
+        variables,
+      },
+    });
 
-      let animeTemplate = animeFilterTemplateWithFilters
-        .replace("{qn}", `${anime.anime_id}`)
-        .replace("{season}", anime.anime_season?.toUpperCase())
-        .replace("{format}", anime.anime_type?.toUpperCase().replace(/ /g, "_"))
-        .replace("{search}", anime.anime_name)
-        .replace("{status}", malStatusToAnilist[anime.anime_status])
-        .replace("{year}", anime.anime_release_year);
-      queryTemplate += "\n" + animeTemplate;
+    //console.log(Media);
 
-      queryTemplate += "\n}";
-
-      let query = queryTemplate;
-
-      console.log(query);
-      let {
-        data: { data },
-      } = await this.axios({
-        data: {
-          operationName: "Query",
-          query: query,
-        },
-      });
-
-      return {
-        malId: data[`a${anime.anime_id}`]?.idMal,
-        anilistId: data[`a${anime.anime_id}`]?.id,
-        ...anime,
-      };
-    } catch (err) {
-      console.log(err.response.data.errors)
-    }
-  }
-
-  async getAsAnimes(
-    asAnimes: AnimeLatestEntity[],
-    linesToRemove: number[] = [],
-  ) {
-    try {
-      let queryTemplate = `query Query {`;
-      let animeFilterTemplate = `a{qn}: Media({seasonFilter} type: ANIME, {formatFilter} search: "{search}", {statusFilter} {yearFilter}) { id idMal }`;
-      let seasonFilterTemplate = `season: {season},`;
-      let formatFilterTemplate = "format: {format},";
-      let statusFilterTemplate = "status: {status},";
-      let yearFilterTemplate = 'startDate_like: "{year}%"';
-
-      for (let anime of asAnimes) {
-        /* console.log(
-        `{qn}: ${!!anime.anime_id}, {season}: ${!!anime.anime_season}, {format}: ${!!anime.anime_type}, {search}: ${!!anime.anime_name}, {status}: ${!!malStatusToAnilist[
-          anime.anime_status
-        ]}, {year}: ${!!anime.anime_release_year}`,
-      );*/
-
-        let animeFilterTemplateWithFilters = animeFilterTemplate
-          .replace(
-            "{seasonFilter}",
-            !!anime.anime_season ? seasonFilterTemplate : "",
-          )
-          .replace(
-            "{formatFilter}",
-            false && !!anime.anime_type ? formatFilterTemplate : "",
-          )
-          .replace(
-            "{statusFilter}",
-            !!anime.anime_status ? statusFilterTemplate : "",
-          )
-          .replace(
-            "{yearFilter}",
-            !!anime.anime_release_year ? yearFilterTemplate : "",
-          );
-
-        let animeTemplate = animeFilterTemplateWithFilters
-          .replace("{qn}", `${anime.anime_id}`)
-          .replace("{season}", anime.anime_season?.toUpperCase())
-          .replace(
-            "{format}",
-            anime.anime_type?.toUpperCase().replace(/ /g, "_"),
-          )
-          .replace("{search}", anime.anime_name)
-          .replace("{status}", malStatusToAnilist[anime.anime_status])
-          .replace("{year}", anime.anime_release_year);
-        queryTemplate += "\n" + animeTemplate;
-      }
-
-      queryTemplate += "\n}";
-
-      let query = queryTemplate;
-      if (linesToRemove.length > 0) {
-        query = query
-          .split("\n")
-          .filter((line, index) => !linesToRemove.includes(index))
-          .join("\n");
-      }
-
-      console.log(query);
-      let {
-        data: { data },
-      } = await this.axios({
-        data: {
-          operationName: "Query",
-          query: query,
-        },
-      });
-
-      return asAnimes
-        .map((anime) => ({
-          malId: data[`a${anime.anime_id}`]?.idMal,
-          anilistId: data[`a${anime.anime_id}`]?.id,
-          ...anime,
-        }))
-        .filter((anime) => anime.malId);
-    } catch (err) {
-      console.log(err.response.data.errors);
-      let linesToRemove = err.response.data.errors.map((err: any) => {
-        let line = err.locations[0].line;
-        return line - 1;
-      });
-      return await this.getAsAnimes(asAnimes, linesToRemove);
-    }
+    return data;
   }
 }
