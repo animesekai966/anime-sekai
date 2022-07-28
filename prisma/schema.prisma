@@ -111,8 +111,6 @@ type AnimeScoreProvider {
 
 type AnimeBroadcast {
     day      AnimeBroadcastDays
-    time     String
-    timezone String
     string   String
 }
 

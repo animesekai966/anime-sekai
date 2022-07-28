@@ -27,7 +27,7 @@ export class AnilistService {
   }: {
     malId?: number;
     anilistId?: number;
-  }) {
+  }): Promise<AnimeEntity> {
     try {
       let variables: { mediaId?: number; idMal?: number } = {};
       anilistId ? (variables.mediaId = anilistId) : (variables.idMal = malId);
@@ -278,4 +278,216 @@ export class AnilistService {
       return await this.getAnimeDetails({ malId, anilistId });
     }
   }
+}
+
+interface AnimeEntity {
+  id: number;
+  idMal: number;
+  title: {
+    romaji: string;
+    english: string;
+    native: string;
+  };
+  type: string;
+  format: string;
+  status: string;
+  description: string;
+  startDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  endDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  season: string;
+  seasonYear: number;
+  episodes: number;
+  duration: number;
+  countryOfOrigin: string;
+  isLicensed: boolean;
+  source: string;
+  hashtag: string;
+  trailer: {
+    id: string;
+    site: string;
+    thumbnail: string;
+  };
+  updatedAt: number;
+  coverImage: {
+    extraLarge: string;
+    large: string;
+    medium: string;
+    color: string;
+  };
+  bannerImage: string;
+  genres: string[];
+  synonyms: string[];
+  averageScore: number;
+  meanScore: number;
+  popularity: number;
+  isLocked: false;
+  trending: number;
+  favourites: number;
+  tags: {
+    id: number;
+    name: string;
+    description: string;
+    category: string;
+    isAdult: boolean;
+    isMediaSpoiler: boolean;
+  }[];
+  isAdult: boolean;
+  externalLinks: {
+    id: number;
+    url: string;
+    site: string;
+    siteId: number;
+    type: string;
+    language: string;
+    color: string;
+    icon: string;
+  }[];
+  relations: {
+    edges: {
+      id: number;
+      relationType: string;
+      node: {
+        id: number;
+        idMal: number;
+      };
+    }[];
+  };
+  characters: {
+    edges: {
+      node: {
+        id: number;
+        name: {
+          first: string;
+          middle: string;
+          last: string;
+          full: string;
+          native: string;
+          alternative: string[];
+          alternativeSpoiler: string[];
+        };
+        image: {
+          large: string;
+          medium: string;
+        };
+        description: string;
+        gender: string;
+        dateOfBirth: {
+          year: number;
+          month: number;
+          day: number;
+        };
+        age: string;
+        bloodType: string;
+      };
+      id: number;
+      role: string;
+      voiceActorRoles: {
+        voiceActor: {
+          id: number;
+          name: {
+            first: string;
+            middle: string;
+            last: string;
+            full: string;
+            native: string;
+            alternative: string[];
+          };
+          languageV2: string;
+          image: {
+            large: string;
+            medium: string;
+          };
+          description: string;
+          primaryOccupations: string[];
+          gender: string;
+          dateOfBirth: {
+            year: number;
+            month: number;
+            day: number;
+          };
+          dateOfDeath: {
+            year: number;
+            month: number;
+            day: number;
+          };
+          age: number;
+          yearsActive: any[];
+          homeTown: string;
+          bloodType: string;
+        };
+      }[];
+    }[];
+
+    staff: {
+      edges: {
+        id: number;
+        node: {
+          id: number;
+          name: {
+            first: string;
+            middle: string;
+            last: string;
+            full: string;
+            native: string;
+          };
+          languageV2: string;
+          image: {
+            large: string;
+            medium: string;
+          };
+          description: string;
+          primaryOccupations: string[];
+          gender: number;
+          dateOfBirth: {
+            year: number;
+            month: number;
+            day: number;
+          };
+          dateOfDeath: {
+            year: number;
+            month: number;
+            day: number;
+          };
+          age: number;
+          yearsActive: number[];
+          homeTown: string;
+          bloodType: string;
+        };
+        role: string;
+      }[];
+    };
+
+    studios: {
+      edges: {
+        node: {
+          id: number;
+          name: string;
+          isAnimationStudio: boolean;
+        };
+        id: number;
+      }[];
+    };
+
+    recommendations: {
+      edges: {
+        node: {
+          id: number;
+          rating: number;
+          userRating: string;
+          media: {
+            id: number;
+            idMal: number;
+          };
+        };
+      }[];
+    };
+  };
 }

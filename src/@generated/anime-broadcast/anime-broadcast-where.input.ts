@@ -19,11 +19,5 @@ export class AnimeBroadcastWhereInput {
     day?: EnumAnimeBroadcastDaysFilter;
 
     @Field(() => StringFilter, {nullable:true})
-    time?: StringFilter;
-
-    @Field(() => StringFilter, {nullable:true})
-    timezone?: StringFilter;
-
-    @Field(() => StringFilter, {nullable:true})
     string?: StringFilter;
 }

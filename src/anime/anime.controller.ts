@@ -18,19 +18,23 @@ export class AnimeController {
   @Get("/test")
   async test(@Query("malId") id: number) {
     let anilistDetails = await this.anilist.getAnimeDetails({ malId: id });
-    let malDetails = await this.jikan.anime.getFull(id);
+    let malDetails = await this.jikan.getAnimeRaw(id);
     let characters = await this.jikan.anime.getCharacters(id);
-    let altCovers =  await this.jikan.anime.getPictures(id);
+    let altCovers = await this.jikan.anime.getPictures(id);
     let recommendations = await this.jikan.anime.getRecommendations(id);
-    let 
+    let staff = await this.jikan.anime.getStaff(id);
 
     let anime = await this.prisma.anime.create({
-        data: {
-            title: {
-                english: 
-            }
+      data: {
+        title: {
+          ...anilistDetails.title,
+        },
+        countryOfOrigin: anilistDetails.countryOfOrigin,
+        broadcast: {
+            day
         }
-    })
+      },
+    });
     return anime;
   }
 }

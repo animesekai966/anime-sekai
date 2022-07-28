@@ -9,11 +9,5 @@ export class AnimeBroadcastObjectEqualityInput {
     day!: keyof typeof AnimeBroadcastDays;
 
     @Field(() => String, {nullable:false})
-    time!: string;
-
-    @Field(() => String, {nullable:false})
-    timezone!: string;
-
-    @Field(() => String, {nullable:false})
     string!: string;
 }

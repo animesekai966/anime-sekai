@@ -9,11 +9,5 @@ export class AnimeBroadcastOrderByInput {
     day?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    time?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    timezone?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     string?: keyof typeof SortOrder;
 }
