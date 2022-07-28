@@ -51,11 +51,13 @@ export class AnimeBlkomService {
     );
   }
 
-  async getLatest(page = 0): Promise<LatestAnimeEntity[]> {
+  async getLatest(page = 0, getContent = false): Promise<LatestAnimeEntity[]> {
     let { data } = await this.axios({ url: "/get-videos?page=" + page });
     return Promise.all(
       data.map(async (obj: LatestAnimeEntity) => {
-        let content = await this.getAnime(obj.content_name_url, false);
+        let content = getContent
+          ? await this.getAnime(obj.content_name_url, false)
+          : {};
         return {
           ...obj,
           content,
@@ -64,7 +66,7 @@ export class AnimeBlkomService {
     );
   }
 
-  async getAnimeEpServers(slug: string, ep = 1) {
+  async getAnimeEpServers(slug: string, ep = 1): Promise<AnimeEpServer[]> {
     try {
       let { data } = await this.axios({ url: "/watch/" + slug + "/" + ep });
       let servers = [];
@@ -73,7 +75,11 @@ export class AnimeBlkomService {
         let $$ = load(el);
         let server = {
           name: $$("a").text()?.trim(),
-          translatedBy: $$().css(),
+          translatedBy: $$("span")
+            .attr("class")
+            .replace(/server|active/g, "")
+            .replace(/\-/g, " ")
+            .trim(),
           url: $$("a").attr("data-src"),
         };
         if (server.name === "Blkom") servers.push(server);
@@ -84,6 +90,31 @@ export class AnimeBlkomService {
     } catch (err) {
       return await this.getAnimeEpServers(slug, ep);
     }
+  }
+
+  async getAnimeEpServersRawVideoUrl(blkomEmbedUrl: string) {
+    let { data } = await this.axios({ url: blkomEmbedUrl });
+    let $ = load(data);
+    let sources: {
+      url: string;
+      res: string;
+      type: string;
+    }[] = [];
+
+    $(`video > source`).each((_, el) => {
+      let srcTag = load(el)(`source`);
+      let obj: any = srcTag.attr();
+      sources.push({
+        ...obj,
+        serverUrl:
+          "http://localhost:3000/anime-blkom/stream?src=" +
+          obj.src +
+          "&embed=" +
+          blkomEmbedUrl,
+      });
+    });
+
+    return sources;
   }
 
   async getAnime(slug: string, eps = false): Promise<AnimeEntity> {
@@ -202,6 +233,12 @@ export interface AnimeEntity {
     }[];
   }[];
   isOnMal: boolean;
+}
+
+export interface AnimeEpServer {
+  name: string;
+  translatedBy: string;
+  url: string;
 }
 
 /*

@@ -15,14 +15,5 @@ export class StaffMaxAggregate {
     anilistId?: number;
 
     @Field(() => String, {nullable:true})
-    language?: string;
-
-    @Field(() => Int, {nullable:true})
-    age?: number;
-
-    @Field(() => String, {nullable:true})
-    gender?: string;
-
-    @Field(() => String, {nullable:true})
-    bloodType?: string;
+    info?: string;
 }

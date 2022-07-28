@@ -1,26 +1,20 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { StaffNameUpdatealternativeInput } from './staff-name-updatealternative.input';
+import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
+import { StaffNameUpdatealternatesInput } from './staff-name-updatealternates.input';
 
 @InputType()
 export class StaffNameUpdateInput {
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    first?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    english?: StringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    middle?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    native?: StringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    last?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    nativeFamily?: StringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    full?: NullableStringFieldUpdateOperationsInput;
-
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    native?: NullableStringFieldUpdateOperationsInput;
-
-    @Field(() => StaffNameUpdatealternativeInput, {nullable:true})
-    alternative?: StaffNameUpdatealternativeInput;
+    @Field(() => StaffNameUpdatealternatesInput, {nullable:true})
+    alternates?: StaffNameUpdatealternatesInput;
 }

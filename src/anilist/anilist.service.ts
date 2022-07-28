@@ -25,19 +25,20 @@ export class AnilistService {
     malId,
     anilistId,
   }: {
-    malId: number;
-    anilistId: number;
+    malId?: number;
+    anilistId?: number;
   }) {
-    let variables: { mediaId?: number; idMal?: number } = {};
-    anilistId ? (variables.mediaId = anilistId) : (variables.idMal = malId);
+    try {
+      let variables: { mediaId?: number; idMal?: number } = {};
+      anilistId ? (variables.mediaId = anilistId) : (variables.idMal = malId);
 
-    let {
-      data: {
-        data: { Media: data },
-      },
-    } = await this.axios({
-      data: {
-        query: `query Query($mediaId: Int, $idMal: Int) {
+      let {
+        data: {
+          data: { Media: data },
+        },
+      } = await this.axios({
+        data: {
+          query: `query Query($mediaId: Int, $idMal: Int) {
           Media(id: $mediaId, idMal: $idMal) {
             id
             idMal
@@ -266,12 +267,15 @@ export class AnilistService {
           }
         }
         `,
-        variables,
-      },
-    });
+          variables,
+        },
+      });
 
-    //console.log(Media);
+      //console.log(Media);
 
-    return data;
+      return data;
+    } catch (err) {
+      return await this.getAnimeDetails({ malId, anilistId });
+    }
   }
 }

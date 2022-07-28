@@ -14,14 +14,5 @@ export class StaffMinAggregateInput {
     anilistId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    language?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    age?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    gender?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    bloodType?: true;
+    info?: true;
 }

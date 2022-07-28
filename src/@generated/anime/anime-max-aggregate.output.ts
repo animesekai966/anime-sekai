@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 
 @ObjectType()
@@ -21,20 +22,11 @@ export class AnimeMaxAggregate {
     @Field(() => Int, {nullable:true})
     anilistId?: number;
 
-    @Field(() => Int, {nullable:true})
-    animeSlayerId?: number;
-
-    @Field(() => String, {nullable:true})
-    xsAnimeId?: string;
-
     @Field(() => String, {nullable:true})
     animeXId?: string;
 
     @Field(() => String, {nullable:true})
     animeBlkomId?: string;
-
-    @Field(() => String, {nullable:true})
-    banner?: string;
 
     @Field(() => AnimeFormat, {nullable:true})
     format?: keyof typeof AnimeFormat;
@@ -59,6 +51,9 @@ export class AnimeMaxAggregate {
 
     @Field(() => Boolean, {nullable:true})
     isAdult?: boolean;
+
+    @Field(() => AgeRating, {nullable:true})
+    rating?: keyof typeof AgeRating;
 
     @Field(() => AnimeSource, {nullable:true})
     source?: keyof typeof AnimeSource;

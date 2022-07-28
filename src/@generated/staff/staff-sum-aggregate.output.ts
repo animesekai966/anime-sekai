@@ -10,10 +10,4 @@ export class StaffSumAggregate {
 
     @Field(() => Int, {nullable:true})
     anilistId?: number;
-
-    @Field(() => Int, {nullable:true})
-    age?: number;
-
-    @Field(() => [Int], {nullable:true})
-    yearsActive?: Array<number>;
 }

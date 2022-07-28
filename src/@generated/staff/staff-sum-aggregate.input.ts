@@ -9,10 +9,4 @@ export class StaffSumAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     anilistId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    age?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    yearsActive?: true;
 }

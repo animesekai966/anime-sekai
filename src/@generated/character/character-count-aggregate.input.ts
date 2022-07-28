@@ -14,17 +14,5 @@ export class CharacterCountAggregateInput {
     anilistId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    description?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    age?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    gender?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    bloodType?: true;
-
-    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }

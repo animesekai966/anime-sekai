@@ -1,14 +1,12 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
-import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
-import { StaffImageUpdateEnvelopeInput } from '../staff-image/staff-image-update-envelope.input';
 import { StaffNameUpdateEnvelopeInput } from '../staff-name/staff-name-update-envelope.input';
-import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { StaffUpdateyearsActiveInput } from './staff-updateyears-active.input';
-import { StaffUpdatehomeTownInput } from './staff-updatehome-town.input';
-import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
-import { CharactersOnAnimesUpdateManyWithoutStaffNestedInput } from '../characters-on-animes/characters-on-animes-update-many-without-staff-nested.input';
+import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
+import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
+import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
+import { CharacterOnAnimeUpdateManyWithoutVoiceActorNestedInput } from '../character-on-anime/character-on-anime-update-many-without-voice-actor-nested.input';
+import { StaffOnAnimeUpdateManyWithoutStaffNestedInput } from '../staff-on-anime/staff-on-anime-update-many-without-staff-nested.input';
 
 @InputType()
 export class StaffUpdateInput {
@@ -19,36 +17,21 @@ export class StaffUpdateInput {
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     anilistId?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    language?: StringFieldUpdateOperationsInput;
-
-    @Field(() => StaffImageUpdateEnvelopeInput, {nullable:true})
-    image?: StaffImageUpdateEnvelopeInput;
-
     @Field(() => StaffNameUpdateEnvelopeInput, {nullable:true})
     name?: StaffNameUpdateEnvelopeInput;
 
-    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
-    age?: NullableIntFieldUpdateOperationsInput;
-
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    gender?: NullableStringFieldUpdateOperationsInput;
-
-    @Field(() => StaffUpdateyearsActiveInput, {nullable:true})
-    yearsActive?: StaffUpdateyearsActiveInput;
-
-    @Field(() => StaffUpdatehomeTownInput, {nullable:true})
-    homeTown?: StaffUpdatehomeTownInput;
+    @Field(() => ImageUpdateEnvelopeInput, {nullable:true})
+    image?: ImageUpdateEnvelopeInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    bloodType?: StringFieldUpdateOperationsInput;
+    info?: StringFieldUpdateOperationsInput;
 
-    @Field(() => FuzzyDateUpdateEnvelopeInput, {nullable:true})
-    dateOfBirth?: FuzzyDateUpdateEnvelopeInput;
+    @Field(() => DescriptionUpdateEnvelopeInput, {nullable:true})
+    description?: DescriptionUpdateEnvelopeInput;
 
-    @Field(() => FuzzyDateUpdateEnvelopeInput, {nullable:true})
-    dateOfDeath?: FuzzyDateUpdateEnvelopeInput;
+    @Field(() => CharacterOnAnimeUpdateManyWithoutVoiceActorNestedInput, {nullable:true})
+    characters?: CharacterOnAnimeUpdateManyWithoutVoiceActorNestedInput;
 
-    @Field(() => CharactersOnAnimesUpdateManyWithoutStaffNestedInput, {nullable:true})
-    animes?: CharactersOnAnimesUpdateManyWithoutStaffNestedInput;
+    @Field(() => StaffOnAnimeUpdateManyWithoutStaffNestedInput, {nullable:true})
+    animeRoles?: StaffOnAnimeUpdateManyWithoutStaffNestedInput;
 }

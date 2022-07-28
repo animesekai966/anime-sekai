@@ -6,5 +6,8 @@ import { Int } from '@nestjs/graphql';
 export class StaffCount {
 
     @Field(() => Int, {nullable:false})
-    animes?: number;
+    characters?: number;
+
+    @Field(() => Int, {nullable:false})
+    animeRoles?: number;
 }

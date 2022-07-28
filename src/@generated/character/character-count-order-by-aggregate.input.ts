@@ -13,16 +13,4 @@ export class CharacterCountOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     anilistId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    description?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    age?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    gender?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    bloodType?: keyof typeof SortOrder;
 }

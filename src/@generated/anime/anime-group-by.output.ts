@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 import { AnimeCountAggregate } from './anime-count-aggregate.output';
 import { AnimeAvgAggregate } from './anime-avg-aggregate.output';
@@ -20,26 +21,17 @@ export class AnimeGroupBy {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:true})
-    malId?: number;
+    @Field(() => Int, {nullable:false})
+    malId!: number;
 
     @Field(() => Int, {nullable:true})
     anilistId?: number;
-
-    @Field(() => Int, {nullable:true})
-    animeSlayerId?: number;
-
-    @Field(() => String, {nullable:true})
-    xsAnimeId?: string;
 
     @Field(() => String, {nullable:true})
     animeXId?: string;
 
     @Field(() => String, {nullable:true})
     animeBlkomId?: string;
-
-    @Field(() => String, {nullable:true})
-    banner?: string;
 
     @Field(() => AnimeFormat, {nullable:false})
     format!: keyof typeof AnimeFormat;
@@ -64,6 +56,9 @@ export class AnimeGroupBy {
 
     @Field(() => Boolean, {nullable:false})
     isAdult!: boolean;
+
+    @Field(() => AgeRating, {nullable:false})
+    rating!: keyof typeof AgeRating;
 
     @Field(() => AnimeSource, {nullable:false})
     source!: keyof typeof AnimeSource;

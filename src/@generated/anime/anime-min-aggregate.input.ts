@@ -17,19 +17,10 @@ export class AnimeMinAggregateInput {
     anilistId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    animeSlayerId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    xsAnimeId?: true;
-
-    @Field(() => Boolean, {nullable:true})
     animeXId?: true;
 
     @Field(() => Boolean, {nullable:true})
     animeBlkomId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    banner?: true;
 
     @Field(() => Boolean, {nullable:true})
     format?: true;
@@ -54,6 +45,9 @@ export class AnimeMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     isAdult?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    rating?: true;
 
     @Field(() => Boolean, {nullable:true})
     source?: true;

@@ -24,11 +24,13 @@ specifiers:
   axios: ^0.27.2
   cheerio: 1.0.0-rc.12
   class-transformer: ^0.5.1
+  cors: ^2.8.5
   discord.js: ^13.8.1
   eslint: ^8.19.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.2.1
   express: 4.17.1
+  express-http-proxy: ^1.6.3
   got: ^12.1.0
   graphql: ^16.5.0
   graphql-formatter: ^1.0.3
@@ -36,6 +38,7 @@ specifiers:
   graphql-ws: ^5.9.1
   htmlparser2: ^8.0.1
   jest: 28.0.3
+  jikan4.js: ^1.2.0
   meilisearch: ^0.27.0
   mongodb: ^4.8.0
   ms: ^2.1.3
@@ -72,14 +75,17 @@ dependencies:
   axios: 0.27.2
   cheerio: 1.0.0-rc.12
   class-transformer: 0.5.1
+  cors: 2.8.5
   discord.js: 13.8.1
   express: 4.17.1
+  express-http-proxy: 1.6.3
   got: 12.1.0
   graphql: 16.5.0
   graphql-formatter: 1.0.3
   graphql-type-json: 0.3.2_graphql@16.5.0
   graphql-ws: 5.9.1_graphql@16.5.0
   htmlparser2: 8.0.1
+  jikan4.js: 1.2.0
   meilisearch: 0.27.0
   mongodb: 4.8.0
   ms: 2.1.3
@@ -3037,6 +3043,17 @@ packages:
     dependencies:
       ms: 2.0.0
 
+  /debug/3.2.7:
+    resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.3
+    dev: false
+
   /debug/3.2.7_supports-color@5.5.0:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -3300,6 +3317,10 @@ packages:
       is-symbol: 1.0.4
     dev: false
 
+  /es6-promise/4.2.8:
+    resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
+    dev: false
+
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
@@ -3534,6 +3555,17 @@ packages:
       jest-message-util: 28.1.1
       jest-util: 28.1.1
     dev: true
+
+  /express-http-proxy/1.6.3:
+    resolution: {integrity: sha512-/l77JHcOUrDUX8V67E287VEUQT0lbm71gdGVoodnlWBziarYKgMcpqT7xvh/HM8Jv52phw8Bd8tY+a7QjOr7Yg==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      debug: 3.2.7
+      es6-promise: 4.2.8
+      raw-body: 2.5.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /express/4.17.1:
     resolution: {integrity: sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==}
@@ -4939,6 +4971,14 @@ packages:
       - ts-node
     dev: true
 
+  /jikan4.js/1.2.0:
+    resolution: {integrity: sha512-dYYo1Y4fL1agWbFxpRlFFgzpFkr2NdYvvNCaUj4OLLUUbytUl3T+nF8wxhGqYa3Mwrh/EEZ/3tduXoezxUwW+Q==}
+    engines: {node: '>=12.0.0', vscode: ^1.66.2}
+    dependencies:
+      parse-duration: 1.0.2
+      tslib: 1.14.1
+    dev: false
+
   /jmespath/0.16.0:
     resolution: {integrity: sha512-9FzQjJ7MATs1tSpnco1K6ayiYE3figslrXA72G2HQ/n76RzvYlofyi5QM+iX4YRs/pu3yzxlVQSST23+dMDknw==}
     engines: {node: '>= 0.6.0'}
@@ -5548,6 +5588,10 @@ packages:
     dependencies:
       callsites: 3.1.0
     dev: true
+
+  /parse-duration/1.0.2:
+    resolution: {integrity: sha512-Dg27N6mfok+ow1a2rj/nRjtCfaKrHUZV2SJpEn/s8GaVUSlf4GGRCRP1c13Hj+wfPKVMrFDqLMLITkYKgKxyyg==}
+    dev: false
 
   /parse-json/5.2.0:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
@@ -6670,7 +6714,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}

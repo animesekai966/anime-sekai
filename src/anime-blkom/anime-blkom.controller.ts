@@ -8,7 +8,6 @@ import { AnimeBlkomService } from "./anime-blkom.service";
 export class AnimeBlkomController {
   constructor(
     private blkomService: AnimeBlkomService,
-    private discord: DiscordService,
   ) {}
 
   @Get("/anime")
@@ -26,5 +25,32 @@ export class AnimeBlkomController {
     return this.blkomService.getAnimeList(page);
   }
 
-  
+  @Get("ep-raw")
+  getEpRaw(@Query("url") url: string) {
+    return this.blkomService.getAnimeEpServersRawVideoUrl(url);
+  }
+
+  @Get("/stream")
+  async getStream(
+    @Query("src") src: string,
+    @Query("embed") embed: string,
+    @Res() res: Response,
+  ) {
+    let response = await axios({
+      url: src,
+      headers: {
+        referer: embed,
+      },
+      responseType: "stream",
+    });
+
+    console.log(response);
+
+    res.set({
+      "Content-Type": "video/mp4",
+      "Accept-Ranges": "bytes",
+    });
+
+    response.data.pipe(res);
+  }
 }

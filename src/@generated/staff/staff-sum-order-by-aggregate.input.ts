@@ -10,10 +10,4 @@ export class StaffSumOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     anilistId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    age?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    yearsActive?: keyof typeof SortOrder;
 }

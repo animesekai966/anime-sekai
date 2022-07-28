@@ -12,16 +12,4 @@ export class CharacterMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     anilistId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    description?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    age?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    gender?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    bloodType?: true;
 }

@@ -20,22 +20,7 @@ export class StaffGroupBy {
     anilistId?: number;
 
     @Field(() => String, {nullable:false})
-    language!: string;
-
-    @Field(() => Int, {nullable:true})
-    age?: number;
-
-    @Field(() => String, {nullable:true})
-    gender?: string;
-
-    @Field(() => [Int], {nullable:true})
-    yearsActive?: Array<number>;
-
-    @Field(() => [String], {nullable:true})
-    homeTown?: Array<string>;
-
-    @Field(() => String, {nullable:false})
-    bloodType!: string;
+    info!: string;
 
     @Field(() => StaffCountAggregate, {nullable:true})
     _count?: StaffCountAggregate;

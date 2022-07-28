@@ -18,19 +18,10 @@ export class AnimeCountAggregate {
     anilistId!: number;
 
     @Field(() => Int, {nullable:false})
-    animeSlayerId!: number;
-
-    @Field(() => Int, {nullable:false})
-    xsAnimeId!: number;
-
-    @Field(() => Int, {nullable:false})
     animeXId!: number;
 
     @Field(() => Int, {nullable:false})
     animeBlkomId!: number;
-
-    @Field(() => Int, {nullable:false})
-    banner!: number;
 
     @Field(() => Int, {nullable:false})
     format!: number;
@@ -55,6 +46,9 @@ export class AnimeCountAggregate {
 
     @Field(() => Int, {nullable:false})
     isAdult!: number;
+
+    @Field(() => Int, {nullable:false})
+    rating!: number;
 
     @Field(() => Int, {nullable:false})
     source!: number;

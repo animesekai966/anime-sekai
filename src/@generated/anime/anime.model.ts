@@ -2,22 +2,24 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { AnimeCoverImage } from '../anime-cover-image/anime-cover-image.model';
+import { Image } from '../image/image.model';
 import { AnimeTitle } from '../anime-title/anime-title.model';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
-import { AnimeDescription } from '../anime-description/anime-description.model';
+import { Description } from '../description/description.model';
 import { FuzzyDate } from '../fuzzy-date/fuzzy-date.model';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 import { AnimeTrailer } from '../anime-trailer/anime-trailer.model';
 import { AnimeScoreProviders } from '../anime-score-providers/anime-score-providers.model';
-import { Genre } from '../genre/genre.model';
-import { Studio } from '../studio/studio.model';
-import { CharactersOnAnimes } from '../characters-on-animes/characters-on-animes.model';
-import { AnimeRelationType } from '../anime-relation-type/anime-relation-type.model';
-import { Episode } from '../episode/episode.model';
 import { AnimeBroadcast } from '../anime-broadcast/anime-broadcast.model';
+import { Genre } from '../genre/genre.model';
+import { Episode } from '../episode/episode.model';
+import { Studio } from '../studio/studio.model';
+import { CharacterOnAnime } from '../character-on-anime/character-on-anime.model';
+import { StaffOnAnime } from '../staff-on-anime/staff-on-anime.model';
+import { AnimeRelationType } from '../anime-relation-type/anime-relation-type.model';
 import { AnimeCount } from './anime-count.output';
 
 @ObjectType()
@@ -29,17 +31,11 @@ export class Anime {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:true})
-    malId!: number | null;
+    @Field(() => Int, {nullable:false})
+    malId!: number;
 
     @Field(() => Int, {nullable:true})
     anilistId!: number | null;
-
-    @Field(() => Int, {nullable:true})
-    animeSlayerId!: number | null;
-
-    @Field(() => String, {nullable:true})
-    xsAnimeId!: string | null;
 
     @Field(() => String, {nullable:true})
     animeXId!: string | null;
@@ -47,14 +43,14 @@ export class Anime {
     @Field(() => String, {nullable:true})
     animeBlkomId!: string | null;
 
-    @Field(() => String, {nullable:true})
-    banner!: string | null;
+    @Field(() => Image, {nullable:true})
+    banner?: Image | null;
 
-    @Field(() => AnimeCoverImage, {nullable:false})
-    cover?: AnimeCoverImage;
+    @Field(() => Image, {nullable:false})
+    cover?: Image;
 
-    @Field(() => [AnimeCoverImage], {nullable:true})
-    altCovers?: Array<AnimeCoverImage>;
+    @Field(() => [Image], {nullable:true})
+    altCovers?: Array<Image>;
 
     @Field(() => AnimeTitle, {nullable:false})
     title?: AnimeTitle;
@@ -65,8 +61,8 @@ export class Anime {
     @Field(() => AnimeStatus, {nullable:false,defaultValue:'RELEASING'})
     status!: keyof typeof AnimeStatus;
 
-    @Field(() => AnimeDescription, {nullable:false})
-    description?: AnimeDescription;
+    @Field(() => Description, {nullable:false})
+    description?: Description;
 
     @Field(() => FuzzyDate, {nullable:false})
     startDate?: FuzzyDate;
@@ -92,6 +88,9 @@ export class Anime {
     @Field(() => Boolean, {nullable:false})
     isAdult!: boolean;
 
+    @Field(() => AgeRating, {nullable:false})
+    rating!: keyof typeof AgeRating;
+
     @Field(() => AnimeSource, {nullable:false})
     source!: keyof typeof AnimeSource;
 
@@ -107,8 +106,14 @@ export class Anime {
     @Field(() => [String], {nullable:true})
     endings!: Array<string>;
 
+    @Field(() => AnimeBroadcast, {nullable:false})
+    broadcast?: AnimeBroadcast;
+
     @Field(() => [Genre], {nullable:true})
     genres?: Array<Genre>;
+
+    @Field(() => [Episode], {nullable:true})
+    episodes?: Array<Episode>;
 
     @Field(() => [Studio], {nullable:true})
     producers?: Array<Studio>;
@@ -116,17 +121,14 @@ export class Anime {
     @Field(() => [Studio], {nullable:true})
     studios?: Array<Studio>;
 
-    @Field(() => [CharactersOnAnimes], {nullable:true})
-    characters?: Array<CharactersOnAnimes>;
+    @Field(() => [CharacterOnAnime], {nullable:true})
+    characters?: Array<CharacterOnAnime>;
 
-    @Field(() => AnimeRelationType, {nullable:false})
-    related?: AnimeRelationType;
+    @Field(() => [StaffOnAnime], {nullable:true})
+    staff?: Array<StaffOnAnime>;
 
-    @Field(() => [Episode], {nullable:true})
-    episodes?: Array<Episode>;
-
-    @Field(() => AnimeBroadcast, {nullable:false})
-    broadcast?: AnimeBroadcast;
+    @Field(() => [AnimeRelationType], {nullable:true})
+    related?: Array<AnimeRelationType>;
 
     @Field(() => Date, {nullable:false})
     updatedAt!: Date;

@@ -15,40 +15,188 @@ generator nestgraphql {
 }
 
 model Anime {
-    id           String     @id @default(uuid()) @map("_id")
-    slug         String     @unique
-    malId        Int        @unique
-    anilistId    Int?       @unique
-    animeXId     String?    @unique
-    animeBlkomId String?    @unique
-    cover        AnimeImage @relation(name: "cover", fields: [coverId], references: [id])
-    
-    coverId String @unique
+    id              String              @id @default(uuid()) @map("_id")
+    slug            String              @unique
+    malId           Int                 @unique
+    anilistId       Int?                @unique
+    animeXId        String?             @unique
+    animeBlkomId    String?             @unique
+    //-------------------------------------//
+    banner          Image?
+    cover           Image
+    altCovers       Image[]
+    title           AnimeTitle
+    format          AnimeFormat         @default(TV)
+    status          AnimeStatus         @default(RELEASING)
+    description     Description
+    startDate       FuzzyDate
+    endDate         FuzzyDate
+    season          AnimeSeason
+    episodesCount   Int
+    duration        Int
+    countryOfOrigin String
+    isLicensed      Boolean
+    isAdult         Boolean
+    rating          AgeRating
+    source          AnimeSource
+    trailer         AnimeTrailer
+    score           AnimeScoreProviders
+    openings        String[]
+    endings         String[]
+    broadcast       AnimeBroadcast
+    genres          Genre[]             @relation(references: [id], fields: [genreIDs])
+    episodes        Episode[]
+    producers       Studio[]            @relation("producedAnimes", references: [id], fields: [producerIDs])
+    studios         Studio[]            @relation("animatedAnimes", references: [id], fields: [studioIDs])
+    characters      CharacterOnAnime[]  @relation("animeCharacter")
+    staff           StaffOnAnime[]      @relation("animeStaff")
+    related         AnimeRelationType[]
+    updatedAt       DateTime            @updatedAt
+    createdAt       DateTime            @default(now())
+    producerIDs     String[]
+    studioIDs       String[]
+    genreIDs        String[]
 }
 
-model AnimeImage {
-    id        String   @id @default(uuid()) @map("_id")
-    source    String
-    key       String   @unique
-    anime     Anime?   @relation(name: "cover")
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+type AnimeRelationType {
+    malId     Int
+    anilistId Int?
+    type      AnimeRelation
+}
+
+model StaffOnAnime {
+    id      String        @id @default(uuid()) @map("_id")
+    anime   Anime         @relation("animeStaff", fields: [animeId], references: [id])
+    staff   Staff         @relation("staffPerson", fields: [staffId], references: [id])
+    role    CharacterRole
+    animeId String
+    staffId String
+}
+
+model CharacterOnAnime {
+    id         String        @id @default(uuid()) @map("_id")
+    anime      Anime         @relation("animeCharacter", fields: [animeId], references: [id])
+    voiceActor Staff         @relation("staffCharacter", fields: [staffId], references: [id])
+    role       CharacterRole
+    animeId    String
+    staffId    String
+}
+
+type AnimeTitle {
+    romaji   String
+    english  String?
+    native   String?
+    synonyms String[]
+}
+
+type Description {
+    ar String?
+    en String?
+}
+
+type AnimeTrailer {
+    url       String?
+    thumbnail String?
+}
+
+type AnimeScoreProviders {
+    mal     AnimeScoreProvider
+    anilist AnimeScoreProvider
+}
+
+type AnimeScoreProvider {
+    score    Float
+    scoredBy Int
+}
+
+type AnimeBroadcast {
+    day      AnimeBroadcastDays
+    time     String
+    timezone String
+    string   String
 }
 
 model Episode {
-    id String @id @default(uuid()) @map("_id")
+    id        String          @id @default(uuid()) @map("_id")
+    anime     Anime           @relation(references: [id], fields: [animeId])
+    number    Int
+    name      String
+    servers   Server[]
+    source    AnimeSources    @default(ANIME_X)
+    filler    Boolean         @default(false)
+    last      Boolean         @default(false)
+    language  EpisodeLanguage @default(AR)
+    updatedAt DateTime        @updatedAt
+    createdAt DateTime        @default(now())
+    animeId   String
+}
+
+type Server {
+    id           String        @default(uuid()) @map("_id")
+    name         String
+    translatedBy String
+    quality      ServerQuality @default(FHD)
+    url          String
 }
 
 model Studio {
-    id String @id @default(uuid()) @map("_id")
+    id               String   @id @default(uuid()) @map("_id")
+    malId            Int      @unique
+    name             String   @unique
+    animatedAnimes   Anime[]  @relation("animatedAnimes", references: [id], fields: [animatedAnimeIDs])
+    producedAnimes   Anime[]  @relation("producedAnimes", references: [id], fields: [animatedAnimeIDs])
+    animatedAnimeIDs String[]
+    producedAnimeIDs String[]
 }
 
 model Genre {
-    id String @id @default(uuid()) @map("_id")
+    id       String    @id @default(uuid()) @map("_id")
+    malId    Int       @unique
+    name     String
+    type     GenreType @default(GENRE)
+    animes   Anime[]   @relation(references: [id], fields: [animeIDs])
+    animeIDs String[]
+}
+
+model Character {
+    id          String        @id @default(uuid()) @map("_id")
+    malId       Int?          @unique
+    anilistId   Int?          @unique
+    name        CharacterName
+    image       Image
+    description Description
+}
+
+type CharacterName {
+    english    String
+    native     String
+    alternates String[]
 }
 
 model Staff {
-    id String @id @default(uuid()) @map("_id")
+    id          String             @id @default(uuid()) @map("_id")
+    malId       Int?               @unique
+    anilistId   Int?               @unique
+    name        StaffName
+    image       Image
+    info        String
+    description Description
+    characters  CharacterOnAnime[] @relation("staffCharacter")
+    animeRoles  StaffOnAnime[]     @relation("staffPerson")
+}
+
+type StaffName {
+    english      String
+    native       String
+    nativeFamily String
+    alternates   String[]
+}
+
+type Image {
+    id        String   @default(uuid()) @map("_id")
+    source    String
+    key       String
+    createdAt DateTime @default(now())
 }
 
 type FuzzyDate {
@@ -157,4 +305,20 @@ enum AnimeSource {
     COMIC
     MULTIMEDIA_PROJECT
     PICTURE_BOOK
+}
+
+enum ServerQuality {
+    FHD
+    HD
+    SD
+    LD
+}
+
+enum AgeRating {
+    G
+    PG
+    PG13
+    R
+    RP
+    RX
 }

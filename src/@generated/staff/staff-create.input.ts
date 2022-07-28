@@ -1,12 +1,11 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { StaffImageCreateEnvelopeInput } from '../staff-image/staff-image-create-envelope.input';
 import { StaffNameCreateEnvelopeInput } from '../staff-name/staff-name-create-envelope.input';
-import { StaffCreateyearsActiveInput } from './staff-createyears-active.input';
-import { StaffCreatehomeTownInput } from './staff-createhome-town.input';
-import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
-import { CharactersOnAnimesCreateNestedManyWithoutStaffInput } from '../characters-on-animes/characters-on-animes-create-nested-many-without-staff.input';
+import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
+import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
+import { CharacterOnAnimeCreateNestedManyWithoutVoiceActorInput } from '../character-on-anime/character-on-anime-create-nested-many-without-voice-actor.input';
+import { StaffOnAnimeCreateNestedManyWithoutStaffInput } from '../staff-on-anime/staff-on-anime-create-nested-many-without-staff.input';
 
 @InputType()
 export class StaffCreateInput {
@@ -20,36 +19,21 @@ export class StaffCreateInput {
     @Field(() => Int, {nullable:true})
     anilistId?: number;
 
-    @Field(() => String, {nullable:false})
-    language!: string;
-
-    @Field(() => StaffImageCreateEnvelopeInput, {nullable:false})
-    image!: StaffImageCreateEnvelopeInput;
-
     @Field(() => StaffNameCreateEnvelopeInput, {nullable:false})
     name!: StaffNameCreateEnvelopeInput;
 
-    @Field(() => Int, {nullable:true})
-    age?: number;
-
-    @Field(() => String, {nullable:true})
-    gender?: string;
-
-    @Field(() => StaffCreateyearsActiveInput, {nullable:true})
-    yearsActive?: StaffCreateyearsActiveInput;
-
-    @Field(() => StaffCreatehomeTownInput, {nullable:true})
-    homeTown?: StaffCreatehomeTownInput;
+    @Field(() => ImageCreateEnvelopeInput, {nullable:false})
+    image!: ImageCreateEnvelopeInput;
 
     @Field(() => String, {nullable:false})
-    bloodType!: string;
+    info!: string;
 
-    @Field(() => FuzzyDateCreateEnvelopeInput, {nullable:false})
-    dateOfBirth!: FuzzyDateCreateEnvelopeInput;
+    @Field(() => DescriptionCreateEnvelopeInput, {nullable:false})
+    description!: DescriptionCreateEnvelopeInput;
 
-    @Field(() => FuzzyDateCreateEnvelopeInput, {nullable:false})
-    dateOfDeath!: FuzzyDateCreateEnvelopeInput;
+    @Field(() => CharacterOnAnimeCreateNestedManyWithoutVoiceActorInput, {nullable:true})
+    characters?: CharacterOnAnimeCreateNestedManyWithoutVoiceActorInput;
 
-    @Field(() => CharactersOnAnimesCreateNestedManyWithoutStaffInput, {nullable:true})
-    animes?: CharactersOnAnimesCreateNestedManyWithoutStaffInput;
+    @Field(() => StaffOnAnimeCreateNestedManyWithoutStaffInput, {nullable:true})
+    animeRoles?: StaffOnAnimeCreateNestedManyWithoutStaffInput;
 }

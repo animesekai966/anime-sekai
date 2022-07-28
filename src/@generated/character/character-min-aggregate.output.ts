@@ -13,16 +13,4 @@ export class CharacterMinAggregate {
 
     @Field(() => Int, {nullable:true})
     anilistId?: number;
-
-    @Field(() => String, {nullable:true})
-    description?: string;
-
-    @Field(() => String, {nullable:true})
-    age?: string;
-
-    @Field(() => String, {nullable:true})
-    gender?: string;
-
-    @Field(() => String, {nullable:true})
-    bloodType?: string;
 }

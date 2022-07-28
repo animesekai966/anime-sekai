@@ -15,20 +15,5 @@ export class StaffCountOrderByAggregateInput {
     anilistId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    language?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    age?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    gender?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    yearsActive?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    homeTown?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    bloodType?: keyof typeof SortOrder;
+    info?: keyof typeof SortOrder;
 }

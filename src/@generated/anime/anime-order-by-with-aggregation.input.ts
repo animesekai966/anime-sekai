@@ -23,19 +23,10 @@ export class AnimeOrderByWithAggregationInput {
     anilistId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    animeSlayerId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    xsAnimeId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     animeXId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     animeBlkomId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    banner?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     format?: keyof typeof SortOrder;
@@ -60,6 +51,9 @@ export class AnimeOrderByWithAggregationInput {
 
     @Field(() => SortOrder, {nullable:true})
     isAdult?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    rating?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     source?: keyof typeof SortOrder;

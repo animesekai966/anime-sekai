@@ -12,9 +12,6 @@ export class AnimeAvgAggregate {
     anilistId?: number;
 
     @Field(() => Float, {nullable:true})
-    animeSlayerId?: number;
-
-    @Field(() => Float, {nullable:true})
     episodesCount?: number;
 
     @Field(() => Float, {nullable:true})

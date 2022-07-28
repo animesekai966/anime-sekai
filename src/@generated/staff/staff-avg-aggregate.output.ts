@@ -10,10 +10,4 @@ export class StaffAvgAggregate {
 
     @Field(() => Float, {nullable:true})
     anilistId?: number;
-
-    @Field(() => Float, {nullable:true})
-    age?: number;
-
-    @Field(() => Float, {nullable:true})
-    yearsActive?: number;
 }

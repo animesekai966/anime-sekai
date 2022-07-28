@@ -2,9 +2,8 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { CharacterNameOrderByInput } from '../character-name/character-name-order-by.input';
-import { CharacterImageOrderByInput } from '../character-image/character-image-order-by.input';
-import { FuzzyDateOrderByInput } from '../fuzzy-date/fuzzy-date-order-by.input';
-import { CharactersOnAnimesOrderByRelationAggregateInput } from '../characters-on-animes/characters-on-animes-order-by-relation-aggregate.input';
+import { ImageOrderByInput } from '../image/image-order-by.input';
+import { DescriptionOrderByInput } from '../description/description-order-by.input';
 
 @InputType()
 export class CharacterOrderByWithRelationInput {
@@ -21,24 +20,9 @@ export class CharacterOrderByWithRelationInput {
     @Field(() => CharacterNameOrderByInput, {nullable:true})
     name?: CharacterNameOrderByInput;
 
-    @Field(() => CharacterImageOrderByInput, {nullable:true})
-    image?: CharacterImageOrderByInput;
+    @Field(() => ImageOrderByInput, {nullable:true})
+    image?: ImageOrderByInput;
 
-    @Field(() => SortOrder, {nullable:true})
-    description?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    age?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    gender?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    bloodType?: keyof typeof SortOrder;
-
-    @Field(() => FuzzyDateOrderByInput, {nullable:true})
-    dateOfBirth?: FuzzyDateOrderByInput;
-
-    @Field(() => CharactersOnAnimesOrderByRelationAggregateInput, {nullable:true})
-    animes?: CharactersOnAnimesOrderByRelationAggregateInput;
+    @Field(() => DescriptionOrderByInput, {nullable:true})
+    description?: DescriptionOrderByInput;
 }

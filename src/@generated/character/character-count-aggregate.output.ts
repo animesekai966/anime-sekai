@@ -15,17 +15,5 @@ export class CharacterCountAggregate {
     anilistId!: number;
 
     @Field(() => Int, {nullable:false})
-    description!: number;
-
-    @Field(() => Int, {nullable:false})
-    age!: number;
-
-    @Field(() => Int, {nullable:false})
-    gender!: number;
-
-    @Field(() => Int, {nullable:false})
-    bloodType!: number;
-
-    @Field(() => Int, {nullable:false})
     _all!: number;
 }

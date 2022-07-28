@@ -2,13 +2,11 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
-import { StaffImageCompositeFilter } from '../prisma/staff-image-composite-filter.input';
 import { StaffNameCompositeFilter } from '../prisma/staff-name-composite-filter.input';
-import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
-import { IntNullableListFilter } from '../prisma/int-nullable-list-filter.input';
-import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
-import { FuzzyDateCompositeFilter } from '../prisma/fuzzy-date-composite-filter.input';
-import { CharactersOnAnimesListRelationFilter } from '../characters-on-animes/characters-on-animes-list-relation-filter.input';
+import { ImageCompositeFilter } from '../prisma/image-composite-filter.input';
+import { DescriptionCompositeFilter } from '../prisma/description-composite-filter.input';
+import { CharacterOnAnimeListRelationFilter } from '../character-on-anime/character-on-anime-list-relation-filter.input';
+import { StaffOnAnimeListRelationFilter } from '../staff-on-anime/staff-on-anime-list-relation-filter.input';
 
 @InputType()
 export class StaffWhereInput {
@@ -31,36 +29,21 @@ export class StaffWhereInput {
     @Field(() => IntNullableFilter, {nullable:true})
     anilistId?: IntNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    language?: StringFilter;
-
-    @Field(() => StaffImageCompositeFilter, {nullable:true})
-    image?: StaffImageCompositeFilter;
-
     @Field(() => StaffNameCompositeFilter, {nullable:true})
     name?: StaffNameCompositeFilter;
 
-    @Field(() => IntNullableFilter, {nullable:true})
-    age?: IntNullableFilter;
-
-    @Field(() => StringNullableFilter, {nullable:true})
-    gender?: StringNullableFilter;
-
-    @Field(() => IntNullableListFilter, {nullable:true})
-    yearsActive?: IntNullableListFilter;
-
-    @Field(() => StringNullableListFilter, {nullable:true})
-    homeTown?: StringNullableListFilter;
+    @Field(() => ImageCompositeFilter, {nullable:true})
+    image?: ImageCompositeFilter;
 
     @Field(() => StringFilter, {nullable:true})
-    bloodType?: StringFilter;
+    info?: StringFilter;
 
-    @Field(() => FuzzyDateCompositeFilter, {nullable:true})
-    dateOfBirth?: FuzzyDateCompositeFilter;
+    @Field(() => DescriptionCompositeFilter, {nullable:true})
+    description?: DescriptionCompositeFilter;
 
-    @Field(() => FuzzyDateCompositeFilter, {nullable:true})
-    dateOfDeath?: FuzzyDateCompositeFilter;
+    @Field(() => CharacterOnAnimeListRelationFilter, {nullable:true})
+    characters?: CharacterOnAnimeListRelationFilter;
 
-    @Field(() => CharactersOnAnimesListRelationFilter, {nullable:true})
-    animes?: CharactersOnAnimesListRelationFilter;
+    @Field(() => StaffOnAnimeListRelationFilter, {nullable:true})
+    animeRoles?: StaffOnAnimeListRelationFilter;
 }

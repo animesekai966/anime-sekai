@@ -2,9 +2,8 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { CharacterNameCreateEnvelopeInput } from '../character-name/character-name-create-envelope.input';
-import { CharacterImageCreateEnvelopeInput } from '../character-image/character-image-create-envelope.input';
-import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
-import { CharactersOnAnimesCreateNestedManyWithoutCharacterInput } from '../characters-on-animes/characters-on-animes-create-nested-many-without-character.input';
+import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
+import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
 
 @InputType()
 export class CharacterCreateInput {
@@ -21,24 +20,9 @@ export class CharacterCreateInput {
     @Field(() => CharacterNameCreateEnvelopeInput, {nullable:false})
     name!: CharacterNameCreateEnvelopeInput;
 
-    @Field(() => CharacterImageCreateEnvelopeInput, {nullable:false})
-    image!: CharacterImageCreateEnvelopeInput;
+    @Field(() => ImageCreateEnvelopeInput, {nullable:false})
+    image!: ImageCreateEnvelopeInput;
 
-    @Field(() => String, {nullable:true})
-    description?: string;
-
-    @Field(() => String, {nullable:true})
-    age?: string;
-
-    @Field(() => String, {nullable:true})
-    gender?: string;
-
-    @Field(() => String, {nullable:true})
-    bloodType?: string;
-
-    @Field(() => FuzzyDateCreateEnvelopeInput, {nullable:false})
-    dateOfBirth!: FuzzyDateCreateEnvelopeInput;
-
-    @Field(() => CharactersOnAnimesCreateNestedManyWithoutCharacterInput, {nullable:true})
-    animes?: CharactersOnAnimesCreateNestedManyWithoutCharacterInput;
+    @Field(() => DescriptionCreateEnvelopeInput, {nullable:false})
+    description!: DescriptionCreateEnvelopeInput;
 }
