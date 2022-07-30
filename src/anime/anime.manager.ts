@@ -228,63 +228,89 @@ export class AnimeManager {
 
     let title: AnimeCreateInput["title"] = {
       set: {
-        romaji: malDetails.title || anilistDetails.title.romaji,
-        english: malDetails.title_english || anilistDetails.title.english,
-        native: malDetails.title_japanese || anilistDetails.title.native,
+        romaji: malDetails.title || anilistDetails.title.romaji || undefined,
+        english:
+          malDetails.title_english || anilistDetails.title.english || undefined,
+        native:
+          malDetails.title_japanese || anilistDetails.title.native || undefined,
       },
     };
 
-    let enDescription = malDetails.synopsis || anilistDetails.description;
+    let enDescription =
+      malDetails.synopsis || anilistDetails.description || undefined;
 
     let animeObject = {
       title,
       broadcast: {
         ...malDetails.broadcast,
-        day: malDetails.broadcast?.day?.toUpperCase() as any,
+        time: malDetails.broadcast.time || undefined,
+        timezone: malDetails.broadcast.timezone || undefined,
+        string: malDetails.broadcast.string || undefined,
+        day: malDetails.broadcast?.day?.toUpperCase() || (undefined as any),
       },
       description: {
-        en: enDescription,
-        ar: arDescription || (await this.translator.translate(enDescription)),
+        en: enDescription || undefined,
+        ar:
+          arDescription ||
+          (await this.translator.translate(enDescription)) ||
+          undefined,
       },
       startDate: {
         set: {
-          day: anilistDetails.startDate.day ?? malDetails.aired.prop.from.day,
+          day:
+            (anilistDetails.startDate.day ?? malDetails.aired.prop.from.day) ||
+            undefined,
           month:
-            anilistDetails.startDate.month ?? malDetails.aired.prop.from.month,
+            (anilistDetails.startDate.month ??
+              malDetails.aired.prop.from.month) ||
+            undefined,
           year:
-            anilistDetails.startDate.year ?? malDetails.aired.prop.from.year,
+            (anilistDetails.startDate.year ??
+              malDetails.aired.prop.from.year) ||
+            undefined,
         },
       },
       endDate: {
         set: {
-          day: anilistDetails.endDate.day ?? malDetails.aired.prop.to.day,
-          month: anilistDetails.endDate.month ?? malDetails.aired.prop.to.month,
-          year: anilistDetails.endDate.year ?? malDetails.aired.prop.to.year,
+          day:
+            (anilistDetails.endDate.day ?? malDetails.aired.prop.to.day) ||
+            undefined,
+          month:
+            (anilistDetails.endDate.month ?? malDetails.aired.prop.to.month) ||
+            undefined,
+          year:
+            (anilistDetails.endDate.year ?? malDetails.aired.prop.to.year) ||
+            undefined,
         },
       },
-      duration: ms(
-        anilistDetails.duration
-          ? anilistDetails.duration + "m"
-          : malDetails.duration,
-      ),
-      episodesCount: malDetails.episodes ?? malDetails.episodes,
-      rating: malRatingsToAnimeSekaiRatings[malDetails.rating],
+      duration:
+        ms(
+          anilistDetails.duration
+            ? anilistDetails.duration + "m"
+            : malDetails.duration,
+        ) || undefined,
+      episodesCount: (malDetails.episodes ?? malDetails.episodes) || undefined,
+      rating: malRatingsToAnimeSekaiRatings[malDetails.rating] || undefined,
       season: (malDetails.season?.toUpperCase() ||
-        anilistDetails.season) as any,
+        anilistDetails.season ||
+        undefined) as any,
       source: (malDetails.source?.toUpperCase()?.replace(/ /g, "_") ||
-        anilistDetails.source) as any,
+        anilistDetails.source ||
+        undefined) as any,
       isAdult:
-        anilistDetails.isAdult ?? NsfwRatings.includes(malDetails.rating),
-      isLicensed: anilistDetails.isLicensed ?? malDetails.approved,
+        (anilistDetails.isAdult ?? NsfwRatings.includes(malDetails.rating)) ||
+        undefined,
+      isLicensed:
+        (anilistDetails.isLicensed ?? malDetails.approved) || undefined,
       score: {
         set: {
           mal: {
-            score: malDetails.score,
-            scoredBy: malDetails.scored_by,
+            score: malDetails.score ?? undefined,
+            scoredBy: malDetails.scored_by ?? undefined,
           },
           anilist: {
-            score: anilistDetails.averageScore,
-            scoredBy: anilistDetails.popularity,
+            score: anilistDetails.averageScore ?? undefined,
+            scoredBy: anilistDetails.popularity ?? undefined,
           },
         },
       },
@@ -292,12 +318,17 @@ export class AnimeManager {
         set: {
           thumbnail:
             malDetails.trailer?.images?.maximum_image_url ||
-            anilistDetails.trailer?.thumbnail,
-          url: malDetails.trailer?.url || anilistDetails.trailer?.site,
+            anilistDetails.trailer?.thumbnail ||
+            undefined,
+          url:
+            malDetails.trailer?.url ||
+            anilistDetails.trailer?.site ||
+            undefined,
         },
       },
       format: (malDetails.type?.toUpperCase()?.replace(/ /g, "_") ||
-        anilistDetails.format) as any,
+        anilistDetails.format ||
+        undefined) as any,
       openings: {
         set: malDetails.theme?.openings,
       },
@@ -305,8 +336,9 @@ export class AnimeManager {
         set: malDetails.theme?.endings,
       },
       status: (anilistDetails.status ||
-        malStatusToAnimeSekaiStatus[malDetails.status]) as any,
-      countryOfOrigin: anilistDetails.countryOfOrigin,
+        malStatusToAnimeSekaiStatus[malDetails.status] ||
+        undefined) as any,
+      countryOfOrigin: anilistDetails.countryOfOrigin || undefined,
     };
 
     let cover =
