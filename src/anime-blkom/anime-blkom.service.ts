@@ -18,12 +18,14 @@ const fetchServers = [
   "https://blkomFetch10.sekai9666.repl.co",
 ];
 
+const PROXY_URL = `https://anime-sekai-proxy.onrender.com/`;
+
 @Injectable()
 export class AnimeBlkomService {
   axios: AxiosInstance;
   constructor(private jikan: JikanService) {
     this.axios = axios.create({
-      baseURL: "https://blkomFetch1.sekai9666.repl.co/animeblkom.net:443",
+      baseURL: `${PROXY_URL}animeblkom.net:443`,
       httpAgent: new http.Agent({ keepAlive: true }),
       httpsAgent: new https.Agent({ keepAlive: true }),
       headers: {
@@ -89,6 +91,7 @@ export class AnimeBlkomService {
       console.log(`[EP SCRAPER] ${ep}`);
       return servers;
     } catch (err) {
+      console.log(err);
       return await this.getAnimeEpServers(slug, ep);
     }
   }
@@ -107,11 +110,7 @@ export class AnimeBlkomService {
       let obj: any = srcTag.attr();
       sources.push({
         ...obj,
-        serverUrl:
-          "http://localhost:3000/anime-blkom/stream?src=" +
-          obj.src +
-          "&embed=" +
-          blkomEmbedUrl,
+        serverUrl: PROXY_URL + obj.src,
       });
     });
 
@@ -122,7 +121,8 @@ export class AnimeBlkomService {
     try {
       let { data } = await this.axios({ url: "/anime/" + slug });
       let $ = load(data);
-      let animeData: any = {
+      let animeData: AnimeEntity = {
+        malId: 0,
         slug: slug,
         mal: String($(`div.cta-btns > div > a.blue.cta`).attr("href")).trim(),
         poster: `https://animeblkom.net${$(`div.poster > img`).attr(
@@ -167,21 +167,30 @@ export class AnimeBlkomService {
       if (animeData.mal) animeData.isOnMal = true;
 
       if (eps) {
-        $(
-          `div.pull-right.list-column > div > ul.episodes-links > li.episode-link`,
-        )
-          //@ts-ignore
-          .each(async (_, el) => {
+        let moiveSrc = $(`div.video.embed-responsive > iframe`).attr("src");
+        if (moiveSrc) {
+          animeData.episodes.push({
+            url: `https://animeblkom.com/watch/${slug}`,
+            rawNumber: 1,
+            number: "MOVIE",
+            servers: [],
+          });
+        } else {
+          $(
+            `div.pull-right.list-column > div > ul.episodes-links > li.episode-link`,
+          ).each((_, el) => {
             let $ = load(el);
             let url = $(`a`).attr("href")?.trim();
+            if (!url) return;
             let rawNumber = Number(url.match(/watch\/.+\/([0-9]+)/)[1]);
             animeData.episodes.push({
               url,
               rawNumber,
               number: String($(`a > span:nth-child(3)`).text()).trim(),
+              servers: [],
             });
           });
-
+        }
         animeData.episodes = await Promise.all(
           animeData.episodes.map(async (ep) => ({
             ...ep,
