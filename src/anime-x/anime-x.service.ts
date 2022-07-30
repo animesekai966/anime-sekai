@@ -20,13 +20,14 @@ export class AnimeXService {
     });
   }
   async getLatest(page = 0): Promise<LatestAnimeEntity[]> {
-    let offset = page * 20;
+    let offset = page * 25;
     let {
       data: { data },
     } = await this.axios({ url: "v4/episodes/newest-episodes/" + offset });
 
     return data.map((anime) => ({
       number: anime.number,
+      rawNumber: Number(String(anime.number)?.match(/([0-9]+)/g)?.[0]),
       last: !!anime.last,
       filler: !!anime.filler,
       content: {
@@ -104,7 +105,7 @@ export class AnimeXService {
     }
   }
 
-  async getAnimeEpServers(slug: string, epNum: string) {
+  async getAnimeEpServers(slug: string, epNum: string): Promise<AnimeEpEntity["servers"]> {
     let {
       data: { data },
     } = await this.axios({ url: `v4/episodes/${slug}/play/` + epNum });
@@ -114,6 +115,7 @@ export class AnimeXService {
 
 export interface LatestAnimeEntity {
   number: string;
+  rawNumber: number;
   last: boolean;
   filler: boolean;
   content: {

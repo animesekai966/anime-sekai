@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { AnimeCreateInput } from "src/@generated/anime/anime-create.input";
 import { AnilistService } from "src/anilist/anilist.service";
 import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
-import { AnimeXService } from "src/anime-x/anime-x.service";
+import { AnimeXService, LatestAnimeEntity } from "src/anime-x/anime-x.service";
 import {
   JikanService,
   malRatingsToAnimeSekaiRatings,
@@ -110,6 +110,10 @@ export class AnimeManager {
         score: animeObject.score,
       },
     });
+
+    await this.addAnimeRelations(currentAnime.malId);
+    await this.addAnimeCovers(currentAnime.malId);
+    await this.addAnimeStaff(currentAnime.malId);
   }
 
   async createAnime({
@@ -151,7 +155,7 @@ export class AnimeManager {
       where: { malId: malId },
     });
 
-    if (isAlreadyInDb) return;
+    if (isAlreadyInDb) return null;
 
     let { animeObject, cover, banner, IDs } = await this.getAnimeInfo(
       { malId },
@@ -367,6 +371,49 @@ export class AnimeManager {
     );
   }
 
+  async addAnimeXEp(slug: string, ep: LatestAnimeEntity) {
+    let animeXEp = await this.animeX.getAnimeEpServers(slug, ep.number);
+    let anime = await this.prisma.anime.findUnique({
+      where: {
+        malId: this.jikan.malIdFromUrl(ep.content.mal_url),
+      },
+      include: {
+        episodes: true,
+      },
+    });
+
+    let ifAlreadyExsits = anime.episodes.find(
+      (dbEp) => dbEp.source === "ANIME_X" && dbEp.number === ep.rawNumber,
+    );
+
+    if (ifAlreadyExsits)
+      return console.log(`[SCRAPE] Skipped ${ep.number}ep Already In Db`);
+
+    await this.prisma.anime.update({
+      where: {
+        malId: this.jikan.malIdFromUrl(ep.content.mal_url),
+      },
+      data: {
+        episodes: {
+          create: {
+            name: ep.number,
+            number: ep.rawNumber,
+            source: "ANIME_X",
+            servers: animeXEp.map((server) => ({
+              name: server.server,
+              translatedBy: server.fansub,
+              url: server.link,
+            })),
+          },
+        },
+      },
+    });
+
+    console.log(
+      `[UPDATED] ${anime.title.romaji}, added ${ep.number} new animeX eps`,
+    );
+  }
+
   async addAnimeBlkomEpisodes(slug: string) {
     let animeBlkomDetails = await this.blkom.getAnime(slug, true);
     let anime = await this.prisma.anime.findUnique({
@@ -397,11 +444,7 @@ export class AnimeManager {
                   name: ep.number,
                   number: ep.rawNumber,
                   source: "ANIME_BLKOM",
-                  servers: ep.servers.map((server) => ({
-                    name: server.name,
-                    translatedBy: server.translatedBy,
-                    url: server.url,
-                  })),
+                  servers: ep.servers,
                 };
               }),
             },
@@ -412,6 +455,41 @@ export class AnimeManager {
     console.log(
       `[UPDATED] ${anime.title.romaji}, added ${newEps.length} new blkom eps`,
     );
+  }
+
+  async addAnimeBlkomEp(slug: string, number: number) {
+    let animeBlkomDetails = await this.blkom.getAnime(slug);
+    let ep = await this.blkom.getAnimeEpServers(slug, number);
+    let anime = await this.prisma.anime.findUnique({
+      where: { malId: animeBlkomDetails.malId },
+      include: { episodes: true },
+    });
+
+    let ifAlreadyExsits = anime.episodes.find(
+      (dbEp) => dbEp.source === "ANIME_BLKOM" && dbEp.number === number,
+    );
+
+    if (ifAlreadyExsits)
+      return console.log(`[SCRAPE] Skipped ${number}ep Already In Db`);
+    await this.prisma.anime.update({
+      where: {
+        malId: anime.malId,
+      },
+      data: {
+        episodes: {
+          create: [
+            {
+              name: String(number),
+              number: number,
+              source: "ANIME_BLKOM",
+              filler: false,
+              last: false,
+              servers: ep,
+            },
+          ],
+        },
+      },
+    });
   }
 
   async addAnimeGenres(malId: number) {

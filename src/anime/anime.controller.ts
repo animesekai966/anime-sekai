@@ -8,6 +8,7 @@ import { UploadService } from "src/upload/upload.service";
 import { AnimeManager } from "./anime.manager";
 import axios from "axios";
 import { TranslateService } from "src/translate/translate.service";
+import { AnimeJobs } from "./anime.jobs";
 
 @Controller("anime")
 export class AnimeController {
@@ -20,11 +21,17 @@ export class AnimeController {
     private uploads: UploadService,
     private manager: AnimeManager,
     private translator: TranslateService,
+    private animeJobs: AnimeJobs,
   ) {}
   @Get("/test")
   async test(@Query("slug") blkomSlug: string, @Query("text") text: string) {
     //return await this.manager.addAnimeBlkomEpisodes("high-school-dxd");
-    return await this.manager.createAnime({  blkomSlug });
+    return await this.manager.createAnime({ blkomSlug });
+  }
+
+  @Get("/scrapeAllAnimes")
+  async scrape() {
+    return await this.animeJobs.checkNewAnimeFromBlkom();
   }
 }
 

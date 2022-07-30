@@ -10,6 +10,7 @@ import { AnilistService } from "src/anilist/anilist.service";
 import { UploadService } from "src/upload/upload.service";
 import { AnimeManager } from "./anime.manager";
 import { TranslateService } from "src/translate/translate.service";
+import { AnimeJobs } from "./anime.jobs";
 
 @Module({
   providers: [
@@ -22,7 +23,8 @@ import { TranslateService } from "src/translate/translate.service";
     AnilistService,
     UploadService,
     AnimeManager,
-    TranslateService
+    TranslateService,
+    AnimeJobs
   ],
   controllers: [AnimeController],
 })
