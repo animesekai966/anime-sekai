@@ -354,6 +354,8 @@ export class AnimeManager {
                   name: ep.number,
                   number: ep.rawNumber,
                   source: "ANIME_X",
+                  filler: ep.filler,
+                  last: ep.last,
                   servers: ep.servers.map((server) => ({
                     name: server.server,
                     translatedBy: server.fansub,
@@ -399,6 +401,8 @@ export class AnimeManager {
             name: ep.number,
             number: ep.rawNumber,
             source: "ANIME_X",
+            filler: ep.filler,
+            last: ep.last,
             servers: animeXEp.map((server) => ({
               name: server.server,
               translatedBy: server.fansub,
