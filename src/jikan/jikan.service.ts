@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import * as https from "https";
-import * as http from "http";
+import  https from "https";
+import  http from "http";
 import { Client } from "jikan4.js";
 @Injectable()
 export class JikanService extends Client {

@@ -17,7 +17,7 @@ export class AnimeJobs {
   ) {}
 
   async checkNewAnimeFromAnimeX() {
-    for (let page = 0; page > 70; page++) {
+    for (let page = 0; page < 70; page++) {
       let pageAnimes = await this.animeXService.getAnimeList(page);
       for (let xAnime of pageAnimes) {
         if (xAnime.mal) {
@@ -30,7 +30,7 @@ export class AnimeJobs {
   }
 
   async checkNewAnimeFromBlkom() {
-    for (let page = 0; page > 200; page++) {
+    for (let page = 0; page < 200; page++) {
       let pageAnimes = await this.blkomService.getAnimeList(page);
       for (let blkomAnime of pageAnimes) {
         if (blkomAnime.isOnMal) {
@@ -44,7 +44,7 @@ export class AnimeJobs {
 
   @Cron(CronExpression.EVERY_HOUR)
   async checkNewEpsFromAnimeX() {
-    for (let page = 0; page > 2; page++) {
+    for (let page = 0; page < 2; page++) {
       let pageAnimes = await this.animeXService.getLatest(page);
       for (let xEp of pageAnimes) {
         if (xEp.content.mal_url) {
@@ -58,7 +58,7 @@ export class AnimeJobs {
 
   @Cron(CronExpression.EVERY_HOUR)
   async checkNewEpsFromBlkom() {
-    for (let page = 0; page > 2; page++) {
+    for (let page = 0; page < 2; page++) {
       let pageEps = await this.blkomService.getLatest(page);
       for (let blkomEp of pageEps) {
         let ifAnimeExists = await this.prisma.anime.count({

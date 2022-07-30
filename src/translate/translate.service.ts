@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance } from "axios";
-import * as https from "https";
-import * as http from "http";
-import * as translate from "translate";
+import  https from "https";
+import  http from "http";
+import translate from "translate";
 
 @Injectable()
 export class TranslateService {
