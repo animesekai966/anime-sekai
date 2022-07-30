@@ -12,7 +12,7 @@ import {
 import { PrismaService } from "src/prisma/prisma.service";
 import { UploadService } from "src/upload/upload.service";
 import { v4 } from "uuid";
-import * as ms from "ms";
+import  ms from "ms";
 import { TranslateService } from "src/translate/translate.service";
 
 @Injectable()

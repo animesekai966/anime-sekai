@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { load } from "cheerio/lib/slim";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import * as https from "https";
-import * as http from "http";
+import https from "https";
+import http from "http";
 import { JikanService } from "src/jikan/jikan.service";
 const fetchServers = [
   "https://blkomFetch.sekai9666.repl.co",

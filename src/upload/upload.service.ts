@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import * as S3 from "aws-sdk/clients/s3";
-import * as sharp from "sharp";
+import S3 from "aws-sdk/clients/s3";
+import sharp from "sharp";
 import axios from "axios";
 import { v4 } from "uuid";
 const s3Write = new S3({
