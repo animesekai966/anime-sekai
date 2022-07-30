@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import  S3 from "aws-sdk/clients/s3";
-import  sharp from "sharp";
+import S3 from "aws-sdk/clients/s3";
+import sharp from "sharp";
 import axios from "axios";
 import { v4 } from "uuid";
 const s3Write = new S3({
@@ -11,10 +11,10 @@ const s3Write = new S3({
 });
 
 const selectQuality = {
-  character: 50,
-  staff: 50,
-  "anime/cover": 80,
   "anime/banner": 100,
+  "anime/cover": 80,
+  character: 45,
+  staff: 40,
 };
 
 const BUCKET_NAME = "anime-sekai";
