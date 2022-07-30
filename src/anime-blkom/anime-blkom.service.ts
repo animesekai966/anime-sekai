@@ -40,7 +40,7 @@ export class AnimeBlkomService {
           "Content-Type": "application/json",
         },
         data: {
-          url: url,
+          url: "https://animeblkom.net" + url,
           get: true,
           data: null,
         },
