@@ -22,7 +22,6 @@ export class AnimeService {
       include: {
         characters: {
           include: {
-            anime: true,
             character: true,
             voiceActors: true,
           },
@@ -32,7 +31,6 @@ export class AnimeService {
         producers: true,
         staff: {
           include: {
-            anime: true,
             staff: true,
           },
         },
