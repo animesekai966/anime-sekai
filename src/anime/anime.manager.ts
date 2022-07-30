@@ -12,8 +12,8 @@ import {
 import { PrismaService } from "src/prisma/prisma.service";
 import { UploadService } from "src/upload/upload.service";
 import { v4 } from "uuid";
-import  ms from "ms";
 import { TranslateService } from "src/translate/translate.service";
+import * as ms from "ms";
 
 @Injectable()
 export class AnimeManager {
@@ -99,7 +99,7 @@ export class AnimeManager {
 
     await this.prisma.anime.update({
       where: {
-        malId
+        malId,
       },
       data: {
         duration: animeObject.duration,
@@ -108,9 +108,8 @@ export class AnimeManager {
         openings: animeObject.openings,
         episodesCount: animeObject.episodesCount,
         score: animeObject.score,
-        
-      }
-    })
+      },
+    });
   }
 
   async createAnime({

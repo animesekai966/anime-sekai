@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import https from "https";
-import http from "http";
+import * as https from "https";
+import * as http from "http";
 
 @Injectable()
 export class AnimeXService {

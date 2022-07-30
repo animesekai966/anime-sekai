@@ -1,7 +1,7 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import proxy from "express-http-proxy";
-import cors from "cors";
+import * as proxy from "express-http-proxy";
+import * as cors from "cors";
 
 import { Request, Response } from "express";
 async function bootstrap() {
