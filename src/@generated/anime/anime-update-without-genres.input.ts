@@ -18,7 +18,7 @@ import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-oper
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
 import { EnumAnimeSourceFieldUpdateOperationsInput } from '../prisma/enum-anime-source-field-update-operations.input';
 import { AnimeTrailerUpdateEnvelopeInput } from '../anime-trailer/anime-trailer-update-envelope.input';
-import { AnimeScoreProvidersUpdateEnvelopeInput } from '../anime-score-providers/anime-score-providers-update-envelope.input';
+import { AnimeScoreProvidersNullableUpdateEnvelopeInput } from '../prisma/anime-score-providers-nullable-update-envelope.input';
 import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
 import { AnimeBroadcastNullableUpdateEnvelopeInput } from '../prisma/anime-broadcast-nullable-update-envelope.input';
@@ -105,8 +105,8 @@ export class AnimeUpdateWithoutGenresInput {
     @Field(() => AnimeTrailerUpdateEnvelopeInput, {nullable:true})
     trailer?: AnimeTrailerUpdateEnvelopeInput;
 
-    @Field(() => AnimeScoreProvidersUpdateEnvelopeInput, {nullable:true})
-    score?: AnimeScoreProvidersUpdateEnvelopeInput;
+    @Field(() => AnimeScoreProvidersNullableUpdateEnvelopeInput, {nullable:true})
+    score?: AnimeScoreProvidersNullableUpdateEnvelopeInput;
 
     @Field(() => AnimeUpdateopeningsInput, {nullable:true})
     openings?: AnimeUpdateopeningsInput;

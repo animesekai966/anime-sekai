@@ -5,9 +5,9 @@ import { AnimeScoreProvider } from '../anime-score-provider/anime-score-provider
 @ObjectType()
 export class AnimeScoreProviders {
 
-    @Field(() => AnimeScoreProvider, {nullable:false})
-    mal?: AnimeScoreProvider;
+    @Field(() => AnimeScoreProvider, {nullable:true})
+    mal?: AnimeScoreProvider | null;
 
-    @Field(() => AnimeScoreProvider, {nullable:false})
-    anilist?: AnimeScoreProvider;
+    @Field(() => AnimeScoreProvider, {nullable:true})
+    anilist?: AnimeScoreProvider | null;
 }

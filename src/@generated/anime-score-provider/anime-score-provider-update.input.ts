@@ -1,14 +1,14 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
-import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { NullableFloatFieldUpdateOperationsInput } from '../prisma/nullable-float-field-update-operations.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 
 @InputType()
 export class AnimeScoreProviderUpdateInput {
 
-    @Field(() => FloatFieldUpdateOperationsInput, {nullable:true})
-    score?: FloatFieldUpdateOperationsInput;
+    @Field(() => NullableFloatFieldUpdateOperationsInput, {nullable:true})
+    score?: NullableFloatFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    scoredBy?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    scoredBy?: NullableIntFieldUpdateOperationsInput;
 }

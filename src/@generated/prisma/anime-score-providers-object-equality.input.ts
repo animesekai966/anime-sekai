@@ -5,9 +5,9 @@ import { AnimeScoreProviderObjectEqualityInput } from './anime-score-provider-ob
 @InputType()
 export class AnimeScoreProvidersObjectEqualityInput {
 
-    @Field(() => AnimeScoreProviderObjectEqualityInput, {nullable:false})
-    mal!: AnimeScoreProviderObjectEqualityInput;
+    @Field(() => AnimeScoreProviderObjectEqualityInput, {nullable:true})
+    mal?: AnimeScoreProviderObjectEqualityInput;
 
-    @Field(() => AnimeScoreProviderObjectEqualityInput, {nullable:false})
-    anilist!: AnimeScoreProviderObjectEqualityInput;
+    @Field(() => AnimeScoreProviderObjectEqualityInput, {nullable:true})
+    anilist?: AnimeScoreProviderObjectEqualityInput;
 }

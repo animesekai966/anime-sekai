@@ -1,6 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { AnimeScoreProviderCompositeFilter } from '../prisma/anime-score-provider-composite-filter.input';
+import { AnimeScoreProviderNullableCompositeFilter } from '../prisma/anime-score-provider-nullable-composite-filter.input';
 
 @InputType()
 export class AnimeScoreProvidersWhereInput {
@@ -14,9 +14,9 @@ export class AnimeScoreProvidersWhereInput {
     @Field(() => [AnimeScoreProvidersWhereInput], {nullable:true})
     NOT?: Array<AnimeScoreProvidersWhereInput>;
 
-    @Field(() => AnimeScoreProviderCompositeFilter, {nullable:true})
-    mal?: AnimeScoreProviderCompositeFilter;
+    @Field(() => AnimeScoreProviderNullableCompositeFilter, {nullable:true})
+    mal?: AnimeScoreProviderNullableCompositeFilter;
 
-    @Field(() => AnimeScoreProviderCompositeFilter, {nullable:true})
-    anilist?: AnimeScoreProviderCompositeFilter;
+    @Field(() => AnimeScoreProviderNullableCompositeFilter, {nullable:true})
+    anilist?: AnimeScoreProviderNullableCompositeFilter;
 }

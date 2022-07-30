@@ -5,9 +5,9 @@ import { AnimeScoreProviderCreateInput } from '../anime-score-provider/anime-sco
 @InputType()
 export class AnimeScoreProvidersCreateInput {
 
-    @Field(() => AnimeScoreProviderCreateInput, {nullable:false})
-    mal!: AnimeScoreProviderCreateInput;
+    @Field(() => AnimeScoreProviderCreateInput, {nullable:true})
+    mal?: AnimeScoreProviderCreateInput;
 
-    @Field(() => AnimeScoreProviderCreateInput, {nullable:false})
-    anilist!: AnimeScoreProviderCreateInput;
+    @Field(() => AnimeScoreProviderCreateInput, {nullable:true})
+    anilist?: AnimeScoreProviderCreateInput;
 }

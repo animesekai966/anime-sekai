@@ -18,7 +18,7 @@ import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
 import { AnimeTrailerCompositeFilter } from '../prisma/anime-trailer-composite-filter.input';
-import { AnimeScoreProvidersCompositeFilter } from '../prisma/anime-score-providers-composite-filter.input';
+import { AnimeScoreProvidersNullableCompositeFilter } from '../prisma/anime-score-providers-nullable-composite-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { AnimeBroadcastNullableCompositeFilter } from '../prisma/anime-broadcast-nullable-composite-filter.input';
 import { GenreListRelationFilter } from '../genre/genre-list-relation-filter.input';
@@ -113,8 +113,8 @@ export class AnimeWhereInput {
     @Field(() => AnimeTrailerCompositeFilter, {nullable:true})
     trailer?: AnimeTrailerCompositeFilter;
 
-    @Field(() => AnimeScoreProvidersCompositeFilter, {nullable:true})
-    score?: AnimeScoreProvidersCompositeFilter;
+    @Field(() => AnimeScoreProvidersNullableCompositeFilter, {nullable:true})
+    score?: AnimeScoreProvidersNullableCompositeFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
     openings?: StringNullableListFilter;

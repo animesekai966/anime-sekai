@@ -14,7 +14,7 @@ import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 import { AnimeTrailerCreateEnvelopeInput } from '../anime-trailer/anime-trailer-create-envelope.input';
-import { AnimeScoreProvidersCreateEnvelopeInput } from '../anime-score-providers/anime-score-providers-create-envelope.input';
+import { AnimeScoreProvidersNullableCreateEnvelopeInput } from '../prisma/anime-score-providers-nullable-create-envelope.input';
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { AnimeBroadcastNullableCreateEnvelopeInput } from '../prisma/anime-broadcast-nullable-create-envelope.input';
@@ -103,8 +103,8 @@ export class AnimeUncheckedCreateWithoutEpisodesInput {
     @Field(() => AnimeTrailerCreateEnvelopeInput, {nullable:false})
     trailer!: AnimeTrailerCreateEnvelopeInput;
 
-    @Field(() => AnimeScoreProvidersCreateEnvelopeInput, {nullable:false})
-    score!: AnimeScoreProvidersCreateEnvelopeInput;
+    @Field(() => AnimeScoreProvidersNullableCreateEnvelopeInput, {nullable:true})
+    score?: AnimeScoreProvidersNullableCreateEnvelopeInput;
 
     @Field(() => AnimeCreateopeningsInput, {nullable:true})
     openings?: AnimeCreateopeningsInput;

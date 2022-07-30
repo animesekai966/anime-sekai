@@ -98,8 +98,8 @@ export class Anime {
     @Field(() => AnimeTrailer, {nullable:false})
     trailer?: AnimeTrailer;
 
-    @Field(() => AnimeScoreProviders, {nullable:false})
-    score?: AnimeScoreProviders;
+    @Field(() => AnimeScoreProviders, {nullable:true})
+    score?: AnimeScoreProviders | null;
 
     @Field(() => [String], {nullable:true})
     openings!: Array<string>;

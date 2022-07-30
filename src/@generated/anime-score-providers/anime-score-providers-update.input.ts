@@ -1,13 +1,13 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { AnimeScoreProviderUpdateEnvelopeInput } from '../anime-score-provider/anime-score-provider-update-envelope.input';
+import { AnimeScoreProviderNullableUpdateEnvelopeInput } from '../prisma/anime-score-provider-nullable-update-envelope.input';
 
 @InputType()
 export class AnimeScoreProvidersUpdateInput {
 
-    @Field(() => AnimeScoreProviderUpdateEnvelopeInput, {nullable:true})
-    mal?: AnimeScoreProviderUpdateEnvelopeInput;
+    @Field(() => AnimeScoreProviderNullableUpdateEnvelopeInput, {nullable:true})
+    mal?: AnimeScoreProviderNullableUpdateEnvelopeInput;
 
-    @Field(() => AnimeScoreProviderUpdateEnvelopeInput, {nullable:true})
-    anilist?: AnimeScoreProviderUpdateEnvelopeInput;
+    @Field(() => AnimeScoreProviderNullableUpdateEnvelopeInput, {nullable:true})
+    anilist?: AnimeScoreProviderNullableUpdateEnvelopeInput;
 }

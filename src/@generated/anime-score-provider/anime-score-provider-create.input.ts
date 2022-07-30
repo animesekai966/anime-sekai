@@ -6,9 +6,9 @@ import { Int } from '@nestjs/graphql';
 @InputType()
 export class AnimeScoreProviderCreateInput {
 
-    @Field(() => Float, {nullable:false})
-    score!: number;
+    @Field(() => Float, {nullable:true})
+    score?: number;
 
-    @Field(() => Int, {nullable:false})
-    scoredBy!: number;
+    @Field(() => Int, {nullable:true})
+    scoredBy?: number;
 }
