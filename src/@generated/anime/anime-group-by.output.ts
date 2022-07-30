@@ -43,14 +43,14 @@ export class AnimeGroupBy {
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
 
-    @Field(() => Int, {nullable:false})
-    episodesCount!: number;
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 
-    @Field(() => Float, {nullable:false})
-    duration!: number;
+    @Field(() => Float, {nullable:true})
+    duration?: number;
 
-    @Field(() => String, {nullable:false})
-    countryOfOrigin!: string;
+    @Field(() => String, {nullable:true})
+    countryOfOrigin?: string;
 
     @Field(() => Boolean, {nullable:false})
     isLicensed!: boolean;

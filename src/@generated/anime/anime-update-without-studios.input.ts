@@ -12,7 +12,8 @@ import { EnumAnimeStatusFieldUpdateOperationsInput } from '../prisma/enum-anime-
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAnimeSeasonFieldUpdateOperationsInput } from '../prisma/enum-anime-season-field-update-operations.input';
-import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { NullableFloatFieldUpdateOperationsInput } from '../prisma/nullable-float-field-update-operations.input';
 import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
 import { EnumAnimeSourceFieldUpdateOperationsInput } from '../prisma/enum-anime-source-field-update-operations.input';
@@ -20,7 +21,7 @@ import { AnimeTrailerUpdateEnvelopeInput } from '../anime-trailer/anime-trailer-
 import { AnimeScoreProvidersUpdateEnvelopeInput } from '../anime-score-providers/anime-score-providers-update-envelope.input';
 import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
-import { AnimeBroadcastUpdateEnvelopeInput } from '../anime-broadcast/anime-broadcast-update-envelope.input';
+import { AnimeBroadcastNullableUpdateEnvelopeInput } from '../prisma/anime-broadcast-nullable-update-envelope.input';
 import { GenreUpdateManyWithoutAnimesNestedInput } from '../genre/genre-update-many-without-animes-nested.input';
 import { EpisodeUpdateManyWithoutAnimeNestedInput } from '../episode/episode-update-many-without-anime-nested.input';
 import { StudioUpdateManyWithoutProducedAnimesNestedInput } from '../studio/studio-update-many-without-produced-animes-nested.input';
@@ -80,14 +81,14 @@ export class AnimeUpdateWithoutStudiosInput {
     @Field(() => EnumAnimeSeasonFieldUpdateOperationsInput, {nullable:true})
     season?: EnumAnimeSeasonFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    episodesCount?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    episodesCount?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => FloatFieldUpdateOperationsInput, {nullable:true})
-    duration?: FloatFieldUpdateOperationsInput;
+    @Field(() => NullableFloatFieldUpdateOperationsInput, {nullable:true})
+    duration?: NullableFloatFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    countryOfOrigin?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => BoolFieldUpdateOperationsInput, {nullable:true})
     isLicensed?: BoolFieldUpdateOperationsInput;
@@ -113,8 +114,8 @@ export class AnimeUpdateWithoutStudiosInput {
     @Field(() => AnimeUpdateendingsInput, {nullable:true})
     endings?: AnimeUpdateendingsInput;
 
-    @Field(() => AnimeBroadcastUpdateEnvelopeInput, {nullable:true})
-    broadcast?: AnimeBroadcastUpdateEnvelopeInput;
+    @Field(() => AnimeBroadcastNullableUpdateEnvelopeInput, {nullable:true})
+    broadcast?: AnimeBroadcastNullableUpdateEnvelopeInput;
 
     @Field(() => GenreUpdateManyWithoutAnimesNestedInput, {nullable:true})
     genres?: GenreUpdateManyWithoutAnimesNestedInput;

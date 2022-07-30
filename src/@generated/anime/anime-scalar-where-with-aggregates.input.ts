@@ -6,7 +6,8 @@ import { StringNullableWithAggregatesFilter } from '../prisma/string-nullable-wi
 import { EnumAnimeFormatWithAggregatesFilter } from '../prisma/enum-anime-format-with-aggregates-filter.input';
 import { EnumAnimeStatusWithAggregatesFilter } from '../prisma/enum-anime-status-with-aggregates-filter.input';
 import { EnumAnimeSeasonWithAggregatesFilter } from '../prisma/enum-anime-season-with-aggregates-filter.input';
-import { FloatWithAggregatesFilter } from '../prisma/float-with-aggregates-filter.input';
+import { IntNullableWithAggregatesFilter } from '../prisma/int-nullable-with-aggregates-filter.input';
+import { FloatNullableWithAggregatesFilter } from '../prisma/float-nullable-with-aggregates-filter.input';
 import { BoolWithAggregatesFilter } from '../prisma/bool-with-aggregates-filter.input';
 import { EnumAgeRatingWithAggregatesFilter } from '../prisma/enum-age-rating-with-aggregates-filter.input';
 import { EnumAnimeSourceWithAggregatesFilter } from '../prisma/enum-anime-source-with-aggregates-filter.input';
@@ -52,14 +53,14 @@ export class AnimeScalarWhereWithAggregatesInput {
     @Field(() => EnumAnimeSeasonWithAggregatesFilter, {nullable:true})
     season?: EnumAnimeSeasonWithAggregatesFilter;
 
-    @Field(() => IntWithAggregatesFilter, {nullable:true})
-    episodesCount?: IntWithAggregatesFilter;
+    @Field(() => IntNullableWithAggregatesFilter, {nullable:true})
+    episodesCount?: IntNullableWithAggregatesFilter;
 
-    @Field(() => FloatWithAggregatesFilter, {nullable:true})
-    duration?: FloatWithAggregatesFilter;
+    @Field(() => FloatNullableWithAggregatesFilter, {nullable:true})
+    duration?: FloatNullableWithAggregatesFilter;
 
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    countryOfOrigin?: StringWithAggregatesFilter;
+    @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
+    countryOfOrigin?: StringNullableWithAggregatesFilter;
 
     @Field(() => BoolWithAggregatesFilter, {nullable:true})
     isLicensed?: BoolWithAggregatesFilter;

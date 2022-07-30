@@ -6,7 +6,8 @@ import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { EnumAnimeFormatFilter } from '../prisma/enum-anime-format-filter.input';
 import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
-import { FloatFilter } from '../prisma/float-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
+import { FloatNullableFilter } from '../prisma/float-nullable-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
@@ -52,14 +53,14 @@ export class AnimeScalarWhereInput {
     @Field(() => EnumAnimeSeasonFilter, {nullable:true})
     season?: EnumAnimeSeasonFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    episodesCount?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    episodesCount?: IntNullableFilter;
 
-    @Field(() => FloatFilter, {nullable:true})
-    duration?: FloatFilter;
+    @Field(() => FloatNullableFilter, {nullable:true})
+    duration?: FloatNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    countryOfOrigin?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    countryOfOrigin?: StringNullableFilter;
 
     @Field(() => BoolFilter, {nullable:true})
     isLicensed?: BoolFilter;

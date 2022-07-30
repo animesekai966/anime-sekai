@@ -32,9 +32,9 @@ model Anime {
     startDate       FuzzyDate
     endDate         FuzzyDate
     season          AnimeSeason
-    episodesCount   Int
-    duration        Float
-    countryOfOrigin String
+    episodesCount   Int?                @default(12)
+    duration        Float?              @default(1440000)
+    countryOfOrigin String?             @default("ja")
     isLicensed      Boolean
     isAdult         Boolean
     rating          AgeRating
@@ -43,7 +43,7 @@ model Anime {
     score           AnimeScoreProviders
     openings        String[]
     endings         String[]
-    broadcast       AnimeBroadcast
+    broadcast       AnimeBroadcast?
     genres          Genre[]             @relation(references: [id], fields: [genreIDs])
     episodes        Episode[]
     producers       Studio[]            @relation("producedAnimes", references: [id], fields: [producerIDs])
@@ -114,10 +114,10 @@ type AnimeScoreProvider {
 }
 
 type AnimeBroadcast {
-    day      AnimeBroadcastDays
-    time     String
-    timezone String
-    string   String
+    day      AnimeBroadcastDays?
+    time     String?
+    timezone String?
+    string   String?
 }
 
 model Episode {

@@ -12,14 +12,15 @@ import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input'
 import { DescriptionCompositeFilter } from '../prisma/description-composite-filter.input';
 import { FuzzyDateCompositeFilter } from '../prisma/fuzzy-date-composite-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
-import { FloatFilter } from '../prisma/float-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
+import { FloatNullableFilter } from '../prisma/float-nullable-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
 import { AnimeTrailerCompositeFilter } from '../prisma/anime-trailer-composite-filter.input';
 import { AnimeScoreProvidersCompositeFilter } from '../prisma/anime-score-providers-composite-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
-import { AnimeBroadcastCompositeFilter } from '../prisma/anime-broadcast-composite-filter.input';
+import { AnimeBroadcastNullableCompositeFilter } from '../prisma/anime-broadcast-nullable-composite-filter.input';
 import { GenreListRelationFilter } from '../genre/genre-list-relation-filter.input';
 import { EpisodeListRelationFilter } from '../episode/episode-list-relation-filter.input';
 import { StudioListRelationFilter } from '../studio/studio-list-relation-filter.input';
@@ -88,14 +89,14 @@ export class AnimeWhereInput {
     @Field(() => EnumAnimeSeasonFilter, {nullable:true})
     season?: EnumAnimeSeasonFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    episodesCount?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    episodesCount?: IntNullableFilter;
 
-    @Field(() => FloatFilter, {nullable:true})
-    duration?: FloatFilter;
+    @Field(() => FloatNullableFilter, {nullable:true})
+    duration?: FloatNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    countryOfOrigin?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    countryOfOrigin?: StringNullableFilter;
 
     @Field(() => BoolFilter, {nullable:true})
     isLicensed?: BoolFilter;
@@ -121,8 +122,8 @@ export class AnimeWhereInput {
     @Field(() => StringNullableListFilter, {nullable:true})
     endings?: StringNullableListFilter;
 
-    @Field(() => AnimeBroadcastCompositeFilter, {nullable:true})
-    broadcast?: AnimeBroadcastCompositeFilter;
+    @Field(() => AnimeBroadcastNullableCompositeFilter, {nullable:true})
+    broadcast?: AnimeBroadcastNullableCompositeFilter;
 
     @Field(() => GenreListRelationFilter, {nullable:true})
     genres?: GenreListRelationFilter;

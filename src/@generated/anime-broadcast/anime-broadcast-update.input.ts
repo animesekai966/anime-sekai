@@ -1,20 +1,20 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { EnumAnimeBroadcastDaysFieldUpdateOperationsInput } from '../prisma/enum-anime-broadcast-days-field-update-operations.input';
-import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
+import { NullableEnumAnimeBroadcastDaysFieldUpdateOperationsInput } from '../prisma/nullable-enum-anime-broadcast-days-field-update-operations.input';
+import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 
 @InputType()
 export class AnimeBroadcastUpdateInput {
 
-    @Field(() => EnumAnimeBroadcastDaysFieldUpdateOperationsInput, {nullable:true})
-    day?: EnumAnimeBroadcastDaysFieldUpdateOperationsInput;
+    @Field(() => NullableEnumAnimeBroadcastDaysFieldUpdateOperationsInput, {nullable:true})
+    day?: NullableEnumAnimeBroadcastDaysFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    time?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    time?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    timezone?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    timezone?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    string?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    string?: NullableStringFieldUpdateOperationsInput;
 }

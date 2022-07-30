@@ -74,14 +74,14 @@ export class Anime {
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
 
-    @Field(() => Int, {nullable:false})
-    episodesCount!: number;
+    @Field(() => Int, {nullable:true,defaultValue:12})
+    episodesCount!: number | null;
 
-    @Field(() => Float, {nullable:false})
-    duration!: number;
+    @Field(() => Float, {nullable:true,defaultValue:1440000})
+    duration!: number | null;
 
-    @Field(() => String, {nullable:false})
-    countryOfOrigin!: string;
+    @Field(() => String, {nullable:true,defaultValue:'ja'})
+    countryOfOrigin!: string | null;
 
     @Field(() => Boolean, {nullable:false})
     isLicensed!: boolean;
@@ -107,8 +107,8 @@ export class Anime {
     @Field(() => [String], {nullable:true})
     endings!: Array<string>;
 
-    @Field(() => AnimeBroadcast, {nullable:false})
-    broadcast?: AnimeBroadcast;
+    @Field(() => AnimeBroadcast, {nullable:true})
+    broadcast?: AnimeBroadcast | null;
 
     @Field(() => [Genre], {nullable:true})
     genres?: Array<Genre>;

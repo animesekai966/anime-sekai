@@ -17,7 +17,7 @@ import { AnimeTrailerCreateEnvelopeInput } from '../anime-trailer/anime-trailer-
 import { AnimeScoreProvidersCreateEnvelopeInput } from '../anime-score-providers/anime-score-providers-create-envelope.input';
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
-import { AnimeBroadcastCreateEnvelopeInput } from '../anime-broadcast/anime-broadcast-create-envelope.input';
+import { AnimeBroadcastNullableCreateEnvelopeInput } from '../prisma/anime-broadcast-nullable-create-envelope.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
@@ -74,14 +74,14 @@ export class AnimeCreateManyInput {
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
 
-    @Field(() => Int, {nullable:false})
-    episodesCount!: number;
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 
-    @Field(() => Float, {nullable:false})
-    duration!: number;
+    @Field(() => Float, {nullable:true})
+    duration?: number;
 
-    @Field(() => String, {nullable:false})
-    countryOfOrigin!: string;
+    @Field(() => String, {nullable:true})
+    countryOfOrigin?: string;
 
     @Field(() => Boolean, {nullable:false})
     isLicensed!: boolean;
@@ -107,8 +107,8 @@ export class AnimeCreateManyInput {
     @Field(() => AnimeCreateendingsInput, {nullable:true})
     endings?: AnimeCreateendingsInput;
 
-    @Field(() => AnimeBroadcastCreateEnvelopeInput, {nullable:false})
-    broadcast!: AnimeBroadcastCreateEnvelopeInput;
+    @Field(() => AnimeBroadcastNullableCreateEnvelopeInput, {nullable:true})
+    broadcast?: AnimeBroadcastNullableCreateEnvelopeInput;
 
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;

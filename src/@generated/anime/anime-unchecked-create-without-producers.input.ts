@@ -17,7 +17,7 @@ import { AnimeTrailerCreateEnvelopeInput } from '../anime-trailer/anime-trailer-
 import { AnimeScoreProvidersCreateEnvelopeInput } from '../anime-score-providers/anime-score-providers-create-envelope.input';
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
-import { AnimeBroadcastCreateEnvelopeInput } from '../anime-broadcast/anime-broadcast-create-envelope.input';
+import { AnimeBroadcastNullableCreateEnvelopeInput } from '../prisma/anime-broadcast-nullable-create-envelope.input';
 import { GenreUncheckedCreateNestedManyWithoutAnimesInput } from '../genre/genre-unchecked-create-nested-many-without-animes.input';
 import { EpisodeUncheckedCreateNestedManyWithoutAnimeInput } from '../episode/episode-unchecked-create-nested-many-without-anime.input';
 import { StudioUncheckedCreateNestedManyWithoutAnimatedAnimesInput } from '../studio/studio-unchecked-create-nested-many-without-animated-animes.input';
@@ -79,14 +79,14 @@ export class AnimeUncheckedCreateWithoutProducersInput {
     @Field(() => AnimeSeason, {nullable:false})
     season!: keyof typeof AnimeSeason;
 
-    @Field(() => Int, {nullable:false})
-    episodesCount!: number;
+    @Field(() => Int, {nullable:true})
+    episodesCount?: number;
 
-    @Field(() => Float, {nullable:false})
-    duration!: number;
+    @Field(() => Float, {nullable:true})
+    duration?: number;
 
-    @Field(() => String, {nullable:false})
-    countryOfOrigin!: string;
+    @Field(() => String, {nullable:true})
+    countryOfOrigin?: string;
 
     @Field(() => Boolean, {nullable:false})
     isLicensed!: boolean;
@@ -112,8 +112,8 @@ export class AnimeUncheckedCreateWithoutProducersInput {
     @Field(() => AnimeCreateendingsInput, {nullable:true})
     endings?: AnimeCreateendingsInput;
 
-    @Field(() => AnimeBroadcastCreateEnvelopeInput, {nullable:false})
-    broadcast!: AnimeBroadcastCreateEnvelopeInput;
+    @Field(() => AnimeBroadcastNullableCreateEnvelopeInput, {nullable:true})
+    broadcast?: AnimeBroadcastNullableCreateEnvelopeInput;
 
     @Field(() => GenreUncheckedCreateNestedManyWithoutAnimesInput, {nullable:true})
     genres?: GenreUncheckedCreateNestedManyWithoutAnimesInput;

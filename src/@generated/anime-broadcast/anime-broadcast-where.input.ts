@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { EnumAnimeBroadcastDaysFilter } from '../prisma/enum-anime-broadcast-days-filter.input';
-import { StringFilter } from '../prisma/string-filter.input';
+import { EnumAnimeBroadcastDaysNullableFilter } from '../prisma/enum-anime-broadcast-days-nullable-filter.input';
+import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 
 @InputType()
 export class AnimeBroadcastWhereInput {
@@ -15,15 +15,15 @@ export class AnimeBroadcastWhereInput {
     @Field(() => [AnimeBroadcastWhereInput], {nullable:true})
     NOT?: Array<AnimeBroadcastWhereInput>;
 
-    @Field(() => EnumAnimeBroadcastDaysFilter, {nullable:true})
-    day?: EnumAnimeBroadcastDaysFilter;
+    @Field(() => EnumAnimeBroadcastDaysNullableFilter, {nullable:true})
+    day?: EnumAnimeBroadcastDaysNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    time?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    time?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    timezone?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    timezone?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    string?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    string?: StringNullableFilter;
 }

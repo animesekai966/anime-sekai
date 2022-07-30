@@ -5,15 +5,15 @@ import { AnimeBroadcastDays } from '../anime/anime-broadcast-days.enum';
 @InputType()
 export class AnimeBroadcastObjectEqualityInput {
 
-    @Field(() => AnimeBroadcastDays, {nullable:false})
-    day!: keyof typeof AnimeBroadcastDays;
+    @Field(() => AnimeBroadcastDays, {nullable:true})
+    day?: keyof typeof AnimeBroadcastDays;
 
-    @Field(() => String, {nullable:false})
-    time!: string;
+    @Field(() => String, {nullable:true})
+    time?: string;
 
-    @Field(() => String, {nullable:false})
-    timezone!: string;
+    @Field(() => String, {nullable:true})
+    timezone?: string;
 
-    @Field(() => String, {nullable:false})
-    string!: string;
+    @Field(() => String, {nullable:true})
+    string?: string;
 }
