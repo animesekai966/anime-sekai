@@ -196,7 +196,7 @@ export class AnimeManager {
           key: animeCover.Key,
           source: animeCover.source,
         },
-        banner: {
+        banner: banner && {
           id: animeBanner.id,
           key: animeBanner.Key,
           source: animeBanner.source,
