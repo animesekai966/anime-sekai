@@ -31,7 +31,12 @@ export class AnimeController {
 
   @Get("/scrapeAllAnimes")
   async scrape() {
-    return await this.animeJobs.checkNewAnimeFromBlkom();
+    try {
+      return await this.animeJobs.checkNewAnimeFromBlkom();
+    } catch (err) {
+      console.log(err);
+      return "err";
+    }
   }
 }
 
