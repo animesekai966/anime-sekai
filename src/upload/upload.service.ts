@@ -11,10 +11,10 @@ const s3Write = new S3({
 });
 
 const selectQuality = {
-  character: 50,
-  staff: 50,
-  "anime/cover": 80,
-  "anime/banner": 90,
+  character: 40,
+  staff: 40,
+  "anime/cover": 70,
+  "anime/banner": 80,
 };
 
 const BUCKET_NAME = "anime-sekai";

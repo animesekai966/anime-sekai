@@ -15,10 +15,10 @@ generator nestgraphql {
 }
 
 model Anime {
-    id              String              @id @default(uuid()) @map("_id")
-    slug            String              @unique
-    malId           Int                 @unique
-    anilistId       Int                 @unique
+    id              String               @id @default(uuid()) @map("_id")
+    slug            String               @unique
+    malId           Int                  @unique
+    anilistId       Int                  @unique
     animeXId        String?
     animeBlkomId    String?
     //-------------------------------------//
@@ -26,15 +26,15 @@ model Anime {
     cover           Image
     altCovers       Image[]
     title           AnimeTitle
-    format          AnimeFormat         @default(TV)
-    status          AnimeStatus         @default(RELEASING)
+    format          AnimeFormat          @default(TV)
+    status          AnimeStatus          @default(RELEASING)
     description     Description
     startDate       FuzzyDate
     endDate         FuzzyDate
-    season          AnimeSeason
-    episodesCount   Int?                @default(12)
-    duration        Float?              @default(1440000)
-    countryOfOrigin String?             @default("ja")
+    season          AnimeSeason          @default(SUMMER)
+    episodesCount   Int?                 @default(12)
+    duration        Float?               @default(1440000)
+    countryOfOrigin String?              @default("ja")
     isLicensed      Boolean
     isAdult         Boolean
     rating          AgeRating
@@ -44,15 +44,15 @@ model Anime {
     openings        String[]
     endings         String[]
     broadcast       AnimeBroadcast?
-    genres          Genre[]             @relation(references: [id], fields: [genreIDs])
+    genres          Genre[]              @relation(references: [id], fields: [genreIDs])
     episodes        Episode[]
-    producers       Studio[]            @relation("producedAnimes", references: [id], fields: [producerIDs])
-    studios         Studio[]            @relation("animatedAnimes", references: [id], fields: [studioIDs])
-    characters      CharacterOnAnime[]  @relation("animeCharacter")
-    staff           StaffOnAnime[]      @relation("animeStaff")
+    producers       Studio[]             @relation("producedAnimes", references: [id], fields: [producerIDs])
+    studios         Studio[]             @relation("animatedAnimes", references: [id], fields: [studioIDs])
+    characters      CharacterOnAnime[]   @relation("animeCharacter")
+    staff           StaffOnAnime[]       @relation("animeStaff")
     related         AnimeRelationType[]
-    updatedAt       DateTime            @updatedAt
-    createdAt       DateTime            @default(now())
+    updatedAt       DateTime             @updatedAt
+    createdAt       DateTime             @default(now())
     producerIDs     String[]
     studioIDs       String[]
     genreIDs        String[]

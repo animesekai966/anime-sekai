@@ -71,7 +71,7 @@ export class Anime {
     @Field(() => FuzzyDate, {nullable:false})
     endDate?: FuzzyDate;
 
-    @Field(() => AnimeSeason, {nullable:false})
+    @Field(() => AnimeSeason, {nullable:false,defaultValue:'SUMMER'})
     season!: keyof typeof AnimeSeason;
 
     @Field(() => Int, {nullable:true,defaultValue:12})

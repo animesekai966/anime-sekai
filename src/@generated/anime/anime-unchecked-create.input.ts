@@ -77,8 +77,8 @@ export class AnimeUncheckedCreateInput {
     @Field(() => FuzzyDateCreateEnvelopeInput, {nullable:false})
     endDate!: FuzzyDateCreateEnvelopeInput;
 
-    @Field(() => AnimeSeason, {nullable:false})
-    season!: keyof typeof AnimeSeason;
+    @Field(() => AnimeSeason, {nullable:true})
+    season?: keyof typeof AnimeSeason;
 
     @Field(() => Int, {nullable:true})
     episodesCount?: number;
