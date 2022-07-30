@@ -19,7 +19,7 @@ export class AnimeService {
 
   async find(where: AnimeWhereInput, orderBy: AnimeOrderByWithRelationInput) {
     return await this.prisma.anime.findFirst({
-      where,
+      where: where as any,
       orderBy,
       include: {
         characters: {
@@ -41,9 +41,12 @@ export class AnimeService {
     });
   }
 
-  async findAll(where: AnimeWhereInput, orderBy: AnimeOrderByWithRelationInput) {
+  async findAll(
+    where: AnimeWhereInput,
+    orderBy: AnimeOrderByWithRelationInput,
+  ) {
     return await this.prisma.anime.findMany({
-      where,
+      where: where as any,
       orderBy,
       include: {
         characters: {
