@@ -21,6 +21,9 @@ import { TranslateService } from './translate/translate.service';
       driver: ApolloDriver,
       debug: false,
       autoSchemaFile: true,
+      introspection: true,
+      cache: "bounded",
+      
     }),
     ScheduleModule.forRoot(),
     AnimeModule,
