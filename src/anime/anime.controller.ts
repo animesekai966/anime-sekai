@@ -31,8 +31,7 @@ export class AnimeController {
 
   @Get("/scrapeAllAnimes")
   async scrape() {
-    this.animeJobs.checkNewAnimeFromBlkom();
-    return "starting......";
+    return await this.animeJobs.checkNewAnimeFromBlkom();
   }
 }
 
