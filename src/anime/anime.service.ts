@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { AnimeOrderByWithRelationInput } from "src/@generated/anime/anime-order-by-with-relation.input";
 import { AnimeWhereInput } from "src/@generated/anime/anime-where.input";
 import { AnilistService } from "src/anilist/anilist.service";
 import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
@@ -16,9 +17,34 @@ export class AnimeService {
     private anilist: AnilistService,
   ) {}
 
-  async find(where: AnimeWhereInput) {
+  async find(where: AnimeWhereInput, orderBy: AnimeOrderByWithRelationInput) {
     return await this.prisma.anime.findFirst({
       where,
+      orderBy,
+      include: {
+        characters: {
+          include: {
+            character: true,
+            voiceActors: true,
+          },
+        },
+        episodes: true,
+        genres: true,
+        producers: true,
+        staff: {
+          include: {
+            staff: true,
+          },
+        },
+        studios: true,
+      },
+    });
+  }
+
+  async findAll(where: AnimeWhereInput, orderBy: AnimeOrderByWithRelationInput) {
+    return await this.prisma.anime.findMany({
+      where,
+      orderBy,
       include: {
         characters: {
           include: {

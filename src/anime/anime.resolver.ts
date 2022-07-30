@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
+import { AnimeOrderByWithRelationInput } from "src/@generated/anime/anime-order-by-with-relation.input";
 import { AnimeWhereInput } from "src/@generated/anime/anime-where.input";
 import { Anime } from "src/@generated/anime/anime.model";
 import { AnimeService } from "./anime.service";
@@ -8,7 +9,22 @@ export class AnimeResolver {
   constructor(private readonly animeService: AnimeService) {}
 
   @Query(() => Anime, { name: "anime" })
-  findOne(@Args("AnimeWhereInput") animeWhereInput: AnimeWhereInput) {
-    return this.animeService.find(animeWhereInput);
+  findOne(
+    @Args("AnimeWhereInput", { nullable: true })
+    animeWhereInput: AnimeWhereInput,
+    @Args("AnimeOrderBy", { nullable: true })
+    orderBy: AnimeOrderByWithRelationInput,
+  ) {
+    return this.animeService.find(animeWhereInput, orderBy);
+  }
+
+  @Query(() => [Anime], { name: "animes" })
+  find(
+    @Args("AnimeWhereInput", { nullable: true })
+    animeWhereInput: AnimeWhereInput,
+    @Args("AnimeOrderBy", { nullable: true })
+    orderBy: AnimeOrderByWithRelationInput,
+  ) {
+    return this.animeService.findAll(animeWhereInput, orderBy);
   }
 }
