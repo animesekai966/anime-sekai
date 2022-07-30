@@ -21,37 +21,19 @@ const fetchServers = [
 @Injectable()
 export class AnimeBlkomService {
   axios: AxiosInstance;
-  fetchWeb: ({ url }: { url: string }) => Promise<{ data: string }>;
   constructor(private jikan: JikanService) {
     this.axios = axios.create({
-      baseURL: "https://animeblkom.net",
+      baseURL: "https://blkomFetch1.sekai9666.repl.co/animeblkom.net:443",
       httpAgent: new http.Agent({ keepAlive: true }),
       httpsAgent: new https.Agent({ keepAlive: true }),
       headers: {
         "x-requested-with": "XMLHttpRequest",
       },
     });
-    this.fetchWeb = async ({ url }) => {
-      let { data } = await this.axios({
-        baseURL: "https://manga-sekai-cfs-1.herokuapp.com",
-        url: "/json-example",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          url: "https://animeblkom.net" + url,
-          get: true,
-          data: null,
-        },
-      });
-
-      return { data };
-    };
   }
 
   async getAnimeList(page = 0): Promise<AnimeEntity[]> {
-    let { data } = await this.fetchWeb({ url: "/anime-list?page=" + page++ });
+    let { data } = await this.axios({ url: "/anime-list?page=" + page++ });
     let slugs: string[] = [];
     let $ = load(data);
     $(`div.poster > a`).each((_, el) => {
@@ -87,7 +69,7 @@ export class AnimeBlkomService {
 
   async getAnimeEpServers(slug: string, ep = 1): Promise<AnimeEpServer[]> {
     try {
-      let { data } = await this.fetchWeb({ url: "/watch/" + slug + "/" + ep });
+      let { data } = await this.axios({ url: "/watch/" + slug + "/" + ep });
       let servers = [];
       let $ = load(data);
       $(`span.server`).each((_, el) => {
@@ -112,7 +94,7 @@ export class AnimeBlkomService {
   }
 
   async getAnimeEpServersRawVideoUrl(blkomEmbedUrl: string) {
-    let { data } = await this.fetchWeb({ url: blkomEmbedUrl });
+    let { data } = await this.axios({ url: blkomEmbedUrl });
     let $ = load(data);
     let sources: {
       url: string;
@@ -138,7 +120,7 @@ export class AnimeBlkomService {
 
   async getAnime(slug: string, eps = false): Promise<AnimeEntity> {
     try {
-      let { data } = await this.fetchWeb({ url: "/anime/" + slug });
+      let { data } = await this.axios({ url: "/anime/" + slug });
       let $ = load(data);
       let animeData: any = {
         slug: slug,
