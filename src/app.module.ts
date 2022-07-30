@@ -12,8 +12,9 @@ import { AnimeBlkomController } from "./anime-blkom/anime-blkom.controller";
 import { DiscordService } from "./discord/discord.service";
 import { AnimeXController } from "./anime-x/anime-x.controller";
 import { AnimeModule } from "./anime/anime.module";
-import { UploadService } from './upload/upload.service';
-import { TranslateService } from './translate/translate.service';
+import { UploadService } from "./upload/upload.service";
+import { TranslateService } from "./translate/translate.service";
+import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
 
 @Module({
   imports: [
@@ -22,8 +23,10 @@ import { TranslateService } from './translate/translate.service';
       debug: false,
       autoSchemaFile: true,
       introspection: true,
-      cache: "bounded",
-      
+      cache: new InMemoryLRUCache({
+        maxSize: Math.pow(2, 20) * 100,
+        ttl: 5 * 60 * 1000,
+      }),
     }),
     ScheduleModule.forRoot(),
     AnimeModule,

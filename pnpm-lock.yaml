@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@apollo/utils.keyvaluecache': ^1.0.1
   '@mateoaranda/jikanjs': ^1.2.4
   '@nestjs/apollo': ^10.0.19
   '@nestjs/cli': ^8.2.8
@@ -68,6 +69,7 @@ specifiers:
   webpack: 5.0.0
 
 dependencies:
+  '@apollo/utils.keyvaluecache': 1.0.1
   '@mateoaranda/jikanjs': 1.2.4
   '@nestjs/apollo': 10.0.19_vrcxsxcmh567id4ork53buvjpe
   '@nestjs/common': 8.4.7_aniaiezvefq2fqnommj6u5l4zi
