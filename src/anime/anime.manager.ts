@@ -13,7 +13,6 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { UploadService } from "src/upload/upload.service";
 import { v4 } from "uuid";
 import * as ms from "ms";
-import { Anime } from "@prisma/client";
 import { TranslateService } from "src/translate/translate.service";
 
 @Injectable()
@@ -28,13 +27,201 @@ export class AnimeManager {
     private translator: TranslateService,
   ) {}
 
-  async createAnime(slug: string) {
-    let animeBlkomDetails = await this.blkom.getAnime(slug);
-    let malId = animeBlkomDetails.malId;
-    if (!animeBlkomDetails.isOnMal) return null;
+  async updateAnime({
+    blkomSlug,
+    animeXSlug,
+  }: {
+    blkomSlug: string;
+    animeXSlug: string;
+  }) {
+    let animeBlkomDetails = await this.blkom.getAnime(blkomSlug);
+    let animeXDetails = await this.animeX.getAnime({
+      slug: animeXSlug,
+      mal: animeBlkomDetails.mal,
+    });
+    let malId =
+      animeBlkomDetails.malId ?? this.jikan.malIdFromUrl(animeXDetails.mal);
+    if (!malId) return;
+    let currentAnime = await this.prisma.anime.findUnique({
+      where: {
+        malId,
+      },
+    });
 
-    let anilistDetails = await this.anilist.getAnimeDetails({ malId });
+    let { animeObject, cover, banner, IDs } = await this.getAnimeInfo(
+      { malId },
+      {
+        arDescription: animeBlkomDetails.story || animeXDetails.story,
+      },
+    );
+
+    if (currentAnime.cover.source !== cover) {
+      await this.upload.delete({ key: currentAnime.cover.key });
+      let newCover = await this.upload.uploadImgAndConvertFromUrl({
+        url: cover,
+        type: "anime/cover",
+        parentId: currentAnime.id,
+      });
+
+      await this.prisma.anime.update({
+        where: {
+          malId,
+        },
+        data: {
+          cover: {
+            id: newCover.id,
+            key: newCover.Key,
+            source: newCover.source,
+          },
+        },
+      });
+    } else if (currentAnime.banner.source !== banner) {
+      await this.upload.delete({ key: currentAnime.banner.key });
+      let newBanner = await this.upload.uploadImgAndConvertFromUrl({
+        url: banner,
+        type: "anime/banner",
+        parentId: currentAnime.id,
+      });
+
+      await this.prisma.anime.update({
+        where: {
+          malId,
+        },
+        data: {
+          banner: {
+            id: newBanner.id,
+            key: newBanner.Key,
+            source: newBanner.source,
+          },
+        },
+      });
+    }
+
+    await this.prisma.anime.update({
+      where: {
+        malId
+      },
+      data: {
+        duration: animeObject.duration,
+        endDate: animeObject.endDate,
+        endings: animeObject.endings,
+        openings: animeObject.openings,
+        episodesCount: animeObject.episodesCount,
+        score: animeObject.score,
+        
+      }
+    })
+  }
+
+  async createAnime({
+    blkomSlug,
+    animeXSlug,
+  }: {
+    blkomSlug?: string;
+    animeXSlug?: string;
+  }) {
+    let malUrl: string = null;
+    let malId: number = null;
+    let animeBlkomId: string = null;
+    let animeXId: string = null;
+    let arStory = "";
+
+    if (blkomSlug) {
+      let animeBlkomDetails = await this.blkom.getAnime(blkomSlug);
+      malId = animeBlkomDetails.malId;
+      malUrl = animeBlkomDetails.mal;
+      animeBlkomId = animeBlkomDetails.slug;
+      arStory = animeBlkomDetails.story;
+    }
+
+    if (animeXSlug || malUrl) {
+      let animeXDetails = await this.animeX.getAnime({
+        slug: animeXSlug,
+        mal: malUrl,
+      });
+      if (animeXDetails) {
+        if (!malId) malId = this.jikan.malIdFromUrl(animeXDetails.mal);
+        animeXId = animeXDetails.primary_key;
+        if (!arStory) arStory = animeXDetails.story;
+      }
+    }
+
+    if (!malId) return null;
+
+    let isAlreadyInDb = await this.prisma.anime.count({
+      where: { malId: malId },
+    });
+
+    if (isAlreadyInDb) return;
+
+    let { animeObject, cover, banner, IDs } = await this.getAnimeInfo(
+      { malId },
+      {
+        arDescription: arStory,
+      },
+    );
+
+    let animeId = v4();
+
+    let animeCover = await this.upload.uploadImgAndConvertFromUrl({
+      url: cover,
+      parentId: animeId,
+      type: "anime/cover",
+    });
+
+    let animeBanner =
+      banner &&
+      (await this.upload.uploadImgAndConvertFromUrl({
+        url: banner,
+        parentId: animeId,
+        type: "anime/banner",
+      }));
+
+    let anime = await this.prisma.anime.create({
+      data: {
+        id: animeId,
+        malId: IDs.malId,
+        anilistId: IDs.anilistId,
+        animeXId: animeXId,
+        animeBlkomId: animeBlkomId,
+        slug: animeObject.title.set.romaji
+          .toLowerCase()
+          .replace(/[^aA-zZ]/gm, "_"),
+        ...animeObject,
+        cover: {
+          id: animeCover.id,
+          key: animeCover.Key,
+          source: animeCover.source,
+        },
+        banner: {
+          id: animeBanner.id,
+          key: animeBanner.Key,
+          source: animeBanner.source,
+        },
+      },
+    });
+
+    console.log(`[CREATED] ${anime.title.romaji}`);
+    if (animeBlkomId) await this.addAnimeBlkomEpisodes(animeBlkomId);
+    if (animeXId) await this.addAnimeXEpisodes(animeXId, anime.id);
+    await this.addAnimeGenres(malId);
+    await this.addAnimeStudiosAndProducers(malId);
+    await this.addAnimeCovers(malId);
+    await this.addAnimeRelations(malId);
+    await this.addAnimeCharacters(malId);
+    await this.addAnimeStaff(malId);
+
+    return anime;
+  }
+
+  async getAnimeInfo(
+    { malId }: { malId: number },
+    {
+      arDescription = undefined,
+    }: { arDescription?: string; animeBlkomId?: string; animeXId?: string },
+  ) {
     let malDetails = await this.jikan.getAnimeRaw(malId);
+    let anilistDetails = await this.anilist.getAnimeDetails({ malId });
 
     let title: AnimeCreateInput["title"] = {
       set: {
@@ -46,35 +233,7 @@ export class AnimeManager {
 
     let enDescription = malDetails.synopsis || anilistDetails.description;
 
-    let startDate: AnimeCreateInput["endDate"] = {
-      set: {
-        day: anilistDetails.startDate.day ?? malDetails.aired.prop.from.day,
-        month:
-          anilistDetails.startDate.month ?? malDetails.aired.prop.from.month,
-        year: anilistDetails.startDate.year ?? malDetails.aired.prop.from.year,
-      },
-    };
-
-    let endDate: AnimeCreateInput["endDate"] = {
-      set: {
-        day: anilistDetails.endDate.day ?? malDetails.aired.prop.to.day,
-        month: anilistDetails.endDate.month ?? malDetails.aired.prop.to.month,
-        year: anilistDetails.endDate.year ?? malDetails.aired.prop.to.year,
-      },
-    };
-
-    let duration = ms(
-      anilistDetails.duration
-        ? anilistDetails.duration + "m"
-        : malDetails.duration,
-    );
-
     let animeObject = {
-      id: "",
-      malId: malDetails.mal_id,
-      anilistId: anilistDetails.id,
-      animeBlkomId: animeBlkomDetails.slug,
-      slug: title.set.romaji.toLowerCase().replace(/[^aA-zZ]/gm, "_"),
       title,
       broadcast: {
         ...malDetails.broadcast,
@@ -82,13 +241,29 @@ export class AnimeManager {
       },
       description: {
         en: enDescription,
-        ar:
-          animeBlkomDetails.story ||
-          (await this.translator.translate(enDescription)),
+        ar: arDescription || (await this.translator.translate(enDescription)),
       },
-      startDate,
-      endDate,
-      duration,
+      startDate: {
+        set: {
+          day: anilistDetails.startDate.day ?? malDetails.aired.prop.from.day,
+          month:
+            anilistDetails.startDate.month ?? malDetails.aired.prop.from.month,
+          year:
+            anilistDetails.startDate.year ?? malDetails.aired.prop.from.year,
+        },
+      },
+      endDate: {
+        set: {
+          day: anilistDetails.endDate.day ?? malDetails.aired.prop.to.day,
+          month: anilistDetails.endDate.month ?? malDetails.aired.prop.to.month,
+          year: anilistDetails.endDate.year ?? malDetails.aired.prop.to.year,
+        },
+      },
+      duration: ms(
+        anilistDetails.duration
+          ? anilistDetails.duration + "m"
+          : malDetails.duration,
+      ),
       episodesCount: malDetails.episodes ?? malDetails.episodes,
       rating: malRatingsToAnimeSekaiRatings[malDetails.rating],
       season: (malDetails.season?.toUpperCase() ||
@@ -131,73 +306,69 @@ export class AnimeManager {
       countryOfOrigin: anilistDetails.countryOfOrigin,
     };
 
-    let isAlreadyInDb = await this.prisma.anime.count({
+    let cover =
+      anilistDetails.coverImage.extraLarge ||
+      anilistDetails.coverImage.large ||
+      malDetails.images.jpg.large_image_url ||
+      malDetails.images.jpg.image_url;
+    let banner = anilistDetails.bannerImage;
+
+    return {
+      animeObject,
+      cover,
+      banner,
+      IDs: { malId: malDetails.mal_id, anilistId: anilistDetails.id },
+    };
+  }
+
+  async addAnimeXEpisodes(slug: string, animeId: string) {
+    let animeXeps = await this.animeX.getAnimeEps(slug, true);
+    let anime = await this.prisma.anime.findUnique({
       where: {
-        malId: malId,
+        id: animeId,
+      },
+      include: {
+        episodes: true,
       },
     });
 
-    if (isAlreadyInDb) return;
-    let animeId = v4();
-    animeObject.id = animeId;
-
-    let animeCover = await this.upload.uploadImgAndConvertFromUrl({
-      url:
-        anilistDetails.coverImage.extraLarge ||
-        anilistDetails.coverImage.large ||
-        malDetails.images.jpg.large_image_url,
-      parentId: animeId,
-      quality: 80,
-      type: "anime/cover",
+    let newEps = animeXeps.filter((ep) => {
+      return !anime.episodes.find(
+        (dbEp) => dbEp.source === "ANIME_X" && dbEp.number === ep.rawNumber,
+      );
     });
 
-    let animeBanner =
-      anilistDetails.bannerImage &&
-      (await this.upload.uploadImgAndConvertFromUrl({
-        url: anilistDetails.bannerImage,
-        parentId: animeId,
-        quality: 90,
-        type: "anime/banner",
-      }));
-
-    let anime = await this.prisma.anime.create({
-      data: {
-        ...animeObject,
-        cover: {
-          id: animeCover.id,
-          key: animeCover.Key,
-          source: animeCover.source,
+    if (newEps.length > 0) {
+      await this.prisma.anime.update({
+        where: {
+          id: animeId,
         },
-        banner: {
-          id: animeBanner.id,
-          key: animeBanner.Key,
-          source: animeBanner.source,
+        data: {
+          episodes: {
+            createMany: {
+              data: newEps.map((ep) => {
+                return {
+                  name: ep.number,
+                  number: ep.rawNumber,
+                  source: "ANIME_X",
+                  servers: ep.servers.map((server) => ({
+                    name: server.server,
+                    translatedBy: server.fansub,
+                    url: server.link,
+                  })),
+                };
+              }),
+            },
+          },
         },
-      },
-    });
-
-    console.log(`[CREATED] ${anime.title.romaji}`);
-    await this.addAnimeEpisodes(slug);
-    await this.addAnimeGenres(malDetails.mal_id);
-    await this.addAnimeStudiosAndProducers(malDetails.mal_id);
-    await this.addAnimeCovers(malDetails.mal_id);
-    await this.addAnimeRelations(malDetails.mal_id);
-    await this.addAnimeCharacters(malDetails.mal_id);
-    await this.addAnimeStaff(malDetails.mal_id);
-
-    return anime;
+      });
+    }
+    console.log(
+      `[UPDATED] ${anime.title.romaji}, added ${newEps.length} new animeX eps`,
+    );
   }
 
-  async getAnimeInfo(
-    { malId }: { malId: number },
-    { descriptionAr }: { descriptionAr: string },
-  ) {
-
-
-    
-  }
-
-  async addAnimeEpisodes(slug: string) {
+  async addAnimeBlkomEpisodes(slug: string) {
     let animeBlkomDetails = await this.blkom.getAnime(slug, true);
     let anime = await this.prisma.anime.findUnique({
       where: {
@@ -226,6 +397,7 @@ export class AnimeManager {
                 return {
                   name: ep.number,
                   number: ep.rawNumber,
+                  source: "ANIME_BLKOM",
                   servers: ep.servers.map((server) => ({
                     name: server.name,
                     translatedBy: server.translatedBy,
@@ -239,7 +411,7 @@ export class AnimeManager {
       });
     }
     console.log(
-      `[UPDATED] ${anime.title.romaji}, added ${newEps.length} new eps`,
+      `[UPDATED] ${anime.title.romaji}, added ${newEps.length} new blkom eps`,
     );
   }
 
@@ -340,8 +512,9 @@ export class AnimeManager {
             type: "anime/cover",
           });
           return {
-            source: cover,
+            id: upload.id,
             key: upload.Key,
+            source: upload.source,
           };
         }),
       );
@@ -461,7 +634,6 @@ export class AnimeManager {
           parentId: staffId,
           url: image,
           type: "staff",
-          quality: 70,
         });
 
         await this.prisma.staff.create({
@@ -469,7 +641,8 @@ export class AnimeManager {
             id: staffId,
             malId: staff.mal_id,
             image: {
-              source: image,
+              id: uploadedImage.id,
+              source: uploadedImage.source,
               key: uploadedImage.Key,
             },
             description,
@@ -513,7 +686,6 @@ export class AnimeManager {
           parentId: characterId,
           url: image,
           type: "character",
-          quality: 70,
         });
 
         await this.prisma.character.create({
@@ -521,8 +693,9 @@ export class AnimeManager {
             id: characterId,
             malId: character.mal_id,
             image: {
-              source: image,
+              source: uploadedImage.source,
               key: uploadedImage.Key,
+              id: uploadedImage.id,
             },
             description,
             name: {

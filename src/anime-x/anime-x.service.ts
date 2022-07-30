@@ -90,6 +90,7 @@ export class AnimeXService {
         data.map(async (ep: any) => {
           return {
             number: ep.number,
+            rawNumber: Number(String(ep.number)?.match(/([0-9]+)/g)?.[0]),
             last: !!ep.last,
             filler: !!ep.filler,
             servers: fetchServers
@@ -163,6 +164,7 @@ export interface AnimeEntity {
 
 export interface AnimeEpEntity {
   number: string;
+  rawNumber: number;
   last: boolean;
   filler: boolean;
   servers: { link: string; server: string; fansub: string; quality: string }[];

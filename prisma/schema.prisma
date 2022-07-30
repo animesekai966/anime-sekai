@@ -18,9 +18,9 @@ model Anime {
     id              String              @id @default(uuid()) @map("_id")
     slug            String              @unique
     malId           Int                 @unique
-    anilistId       Int?                @unique
-    animeXId        String?             @unique
-    animeBlkomId    String?             @unique
+    anilistId       Int                 @unique
+    animeXId        String?
+    animeBlkomId    String?
     //-------------------------------------//
     banner          Image?
     cover           Image

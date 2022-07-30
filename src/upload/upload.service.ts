@@ -10,25 +10,34 @@ const s3Write = new S3({
   signatureVersion: "v4",
 });
 
+const selectQuality = {
+  character: 50,
+  staff: 50,
+  "anime/cover": 80,
+  "anime/banner": 90,
+};
+
+const BUCKET_NAME = "anime-sekai";
+
 @Injectable()
 export class UploadService {
   async uploadImgAndConvertFromUrl({
     url,
-    quality = 80,
     parentId,
     type,
   }: {
     url: string;
-    quality?: number;
     parentId: string;
     type: "character" | "staff" | "anime/cover" | "anime/banner";
   }) {
     let { data } = await axios({ url, responseType: "arraybuffer" });
     let uploadId = v4();
+    let quality = selectQuality[type];
+
     let key = `${type}/${parentId}/${uploadId}.webp`;
     let result = await s3Write
       .upload({
-        Bucket: "anime-sekai",
+        Bucket: BUCKET_NAME,
         Key: key,
         Body: await sharp(data).webp({ quality, effort: 6 }).toBuffer(),
         ContentType: "image/webp",
@@ -38,5 +47,16 @@ export class UploadService {
 
     console.log("[UPLOAD] Uploaded A", type);
     return { id: uploadId, ...result, source: url };
+  }
+
+  async delete({ key }: { key: string }) {
+    let result = await s3Write
+      .deleteObjectTagging({
+        Bucket: BUCKET_NAME,
+        Key: key,
+      })
+      .promise();
+
+    return result;
   }
 }

@@ -2,7 +2,6 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
-import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { ImageNullableCompositeFilter } from '../prisma/image-nullable-composite-filter.input';
 import { ImageCompositeFilter } from '../prisma/image-composite-filter.input';
@@ -50,8 +49,8 @@ export class AnimeWhereInput {
     @Field(() => IntFilter, {nullable:true})
     malId?: IntFilter;
 
-    @Field(() => IntNullableFilter, {nullable:true})
-    anilistId?: IntNullableFilter;
+    @Field(() => IntFilter, {nullable:true})
+    anilistId?: IntFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     animeXId?: StringNullableFilter;
