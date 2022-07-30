@@ -12,6 +12,9 @@ export class CharacterOnAnimeOrderByWithAggregationInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    relationId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     role?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -19,6 +22,9 @@ export class CharacterOnAnimeOrderByWithAggregationInput {
 
     @Field(() => SortOrder, {nullable:true})
     staffId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    characterId?: keyof typeof SortOrder;
 
     @Field(() => CharacterOnAnimeCountOrderByAggregateInput, {nullable:true})
     _count?: CharacterOnAnimeCountOrderByAggregateInput;

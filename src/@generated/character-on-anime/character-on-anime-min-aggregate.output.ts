@@ -8,6 +8,9 @@ export class CharacterOnAnimeMinAggregate {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => String, {nullable:true})
+    relationId?: string;
+
     @Field(() => CharacterRole, {nullable:true})
     role?: keyof typeof CharacterRole;
 
@@ -15,5 +18,5 @@ export class CharacterOnAnimeMinAggregate {
     animeId?: string;
 
     @Field(() => String, {nullable:true})
-    staffId?: string;
+    characterId?: string;
 }

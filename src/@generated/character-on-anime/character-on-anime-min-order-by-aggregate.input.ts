@@ -9,11 +9,14 @@ export class CharacterOnAnimeMinOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    relationId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     role?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     animeId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    staffId?: keyof typeof SortOrder;
+    characterId?: keyof typeof SortOrder;
 }

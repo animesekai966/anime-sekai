@@ -11,8 +11,5 @@ export class StaffMaxAggregateInput {
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    anilistId?: true;
-
-    @Field(() => Boolean, {nullable:true})
     info?: true;
 }

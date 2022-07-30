@@ -12,5 +12,8 @@ export class CharacterNameOrderByInput {
     native?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    arabic?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     alternates?: keyof typeof SortOrder;
 }

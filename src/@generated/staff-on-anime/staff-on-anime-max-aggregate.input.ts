@@ -8,6 +8,9 @@ export class StaffOnAnimeMaxAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
+    relationId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     role?: true;
 
     @Field(() => Boolean, {nullable:true})

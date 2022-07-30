@@ -7,7 +7,4 @@ export class StaffAvgAggregate {
 
     @Field(() => Float, {nullable:true})
     malId?: number;
-
-    @Field(() => Float, {nullable:true})
-    anilistId?: number;
 }

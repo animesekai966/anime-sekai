@@ -10,7 +10,4 @@ export class CharacterMaxAggregate {
 
     @Field(() => Int, {nullable:true})
     malId?: number;
-
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
 }

@@ -10,7 +10,4 @@ export class CharacterWhereUniqueInput {
 
     @Field(() => Int, {nullable:true})
     malId?: number;
-
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
 }

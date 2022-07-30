@@ -1,14 +1,26 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { StaffUpdateOneRequiredWithoutCharactersNestedInput } from '../staff/staff-update-one-required-without-characters-nested.input';
+import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
+import { StaffUpdateManyWithoutCharactersNestedInput } from '../staff/staff-update-many-without-characters-nested.input';
+import { CharacterUpdateOneRequiredWithoutAnimeNestedInput } from '../character/character-update-one-required-without-anime-nested.input';
 import { EnumCharacterRoleFieldUpdateOperationsInput } from '../prisma/enum-character-role-field-update-operations.input';
+import { CharacterOnAnimeUpdatestaffIdInput } from './character-on-anime-updatestaff-id.input';
 
 @InputType()
 export class CharacterOnAnimeUpdateWithoutAnimeInput {
 
-    @Field(() => StaffUpdateOneRequiredWithoutCharactersNestedInput, {nullable:true})
-    voiceActor?: StaffUpdateOneRequiredWithoutCharactersNestedInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    relationId?: StringFieldUpdateOperationsInput;
+
+    @Field(() => StaffUpdateManyWithoutCharactersNestedInput, {nullable:true})
+    voiceActors?: StaffUpdateManyWithoutCharactersNestedInput;
+
+    @Field(() => CharacterUpdateOneRequiredWithoutAnimeNestedInput, {nullable:true})
+    character?: CharacterUpdateOneRequiredWithoutAnimeNestedInput;
 
     @Field(() => EnumCharacterRoleFieldUpdateOperationsInput, {nullable:true})
     role?: EnumCharacterRoleFieldUpdateOperationsInput;
+
+    @Field(() => CharacterOnAnimeUpdatestaffIdInput, {nullable:true})
+    staffId?: CharacterOnAnimeUpdatestaffIdInput;
 }

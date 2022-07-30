@@ -12,8 +12,8 @@ export class StaffCountOrderByAggregateInput {
     malId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    anilistId?: keyof typeof SortOrder;
+    info?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    info?: keyof typeof SortOrder;
+    characterIDs?: keyof typeof SortOrder;
 }

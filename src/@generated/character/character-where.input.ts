@@ -1,10 +1,11 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
+import { IntFilter } from '../prisma/int-filter.input';
 import { CharacterNameCompositeFilter } from '../prisma/character-name-composite-filter.input';
 import { ImageCompositeFilter } from '../prisma/image-composite-filter.input';
 import { DescriptionCompositeFilter } from '../prisma/description-composite-filter.input';
+import { CharacterOnAnimeListRelationFilter } from '../character-on-anime/character-on-anime-list-relation-filter.input';
 
 @InputType()
 export class CharacterWhereInput {
@@ -21,11 +22,8 @@ export class CharacterWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => IntNullableFilter, {nullable:true})
-    malId?: IntNullableFilter;
-
-    @Field(() => IntNullableFilter, {nullable:true})
-    anilistId?: IntNullableFilter;
+    @Field(() => IntFilter, {nullable:true})
+    malId?: IntFilter;
 
     @Field(() => CharacterNameCompositeFilter, {nullable:true})
     name?: CharacterNameCompositeFilter;
@@ -35,4 +33,7 @@ export class CharacterWhereInput {
 
     @Field(() => DescriptionCompositeFilter, {nullable:true})
     description?: DescriptionCompositeFilter;
+
+    @Field(() => CharacterOnAnimeListRelationFilter, {nullable:true})
+    anime?: CharacterOnAnimeListRelationFilter;
 }

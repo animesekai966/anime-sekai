@@ -3,7 +3,6 @@ import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Anime } from '../anime/anime.model';
 import { Staff } from '../staff/staff.model';
-import { CharacterRole } from '../prisma/character-role.enum';
 
 @ObjectType()
 export class StaffOnAnime {
@@ -11,14 +10,17 @@ export class StaffOnAnime {
     @Field(() => ID, {nullable:false})
     id!: string;
 
+    @Field(() => String, {nullable:false})
+    relationId!: string;
+
     @Field(() => Anime, {nullable:false})
     anime?: Anime;
 
     @Field(() => Staff, {nullable:false})
     staff?: Staff;
 
-    @Field(() => CharacterRole, {nullable:false})
-    role!: keyof typeof CharacterRole;
+    @Field(() => String, {nullable:false})
+    role!: string;
 
     @Field(() => String, {nullable:false})
     animeId!: string;

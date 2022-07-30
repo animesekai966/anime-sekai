@@ -7,6 +7,7 @@ import { StringNullableWithAggregatesFilter } from '../prisma/string-nullable-wi
 import { EnumAnimeFormatWithAggregatesFilter } from '../prisma/enum-anime-format-with-aggregates-filter.input';
 import { EnumAnimeStatusWithAggregatesFilter } from '../prisma/enum-anime-status-with-aggregates-filter.input';
 import { EnumAnimeSeasonWithAggregatesFilter } from '../prisma/enum-anime-season-with-aggregates-filter.input';
+import { FloatWithAggregatesFilter } from '../prisma/float-with-aggregates-filter.input';
 import { BoolWithAggregatesFilter } from '../prisma/bool-with-aggregates-filter.input';
 import { EnumAgeRatingWithAggregatesFilter } from '../prisma/enum-age-rating-with-aggregates-filter.input';
 import { EnumAnimeSourceWithAggregatesFilter } from '../prisma/enum-anime-source-with-aggregates-filter.input';
@@ -55,8 +56,8 @@ export class AnimeScalarWhereWithAggregatesInput {
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     episodesCount?: IntWithAggregatesFilter;
 
-    @Field(() => IntWithAggregatesFilter, {nullable:true})
-    duration?: IntWithAggregatesFilter;
+    @Field(() => FloatWithAggregatesFilter, {nullable:true})
+    duration?: FloatWithAggregatesFilter;
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     countryOfOrigin?: StringWithAggregatesFilter;

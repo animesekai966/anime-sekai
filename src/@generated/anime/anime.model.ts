@@ -9,6 +9,7 @@ import { AnimeStatus } from '../prisma/anime-status.enum';
 import { Description } from '../description/description.model';
 import { FuzzyDate } from '../fuzzy-date/fuzzy-date.model';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 import { AnimeTrailer } from '../anime-trailer/anime-trailer.model';
@@ -76,7 +77,7 @@ export class Anime {
     @Field(() => Int, {nullable:false})
     episodesCount!: number;
 
-    @Field(() => Int, {nullable:false})
+    @Field(() => Float, {nullable:false})
     duration!: number;
 
     @Field(() => String, {nullable:false})

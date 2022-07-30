@@ -1,18 +1,16 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
+import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { CharacterNameUpdateEnvelopeInput } from '../character-name/character-name-update-envelope.input';
 import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
+import { CharacterOnAnimeUpdateManyWithoutCharacterNestedInput } from '../character-on-anime/character-on-anime-update-many-without-character-nested.input';
 
 @InputType()
 export class CharacterUpdateInput {
 
-    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
-    malId?: NullableIntFieldUpdateOperationsInput;
-
-    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
-    anilistId?: NullableIntFieldUpdateOperationsInput;
+    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
+    malId?: IntFieldUpdateOperationsInput;
 
     @Field(() => CharacterNameUpdateEnvelopeInput, {nullable:true})
     name?: CharacterNameUpdateEnvelopeInput;
@@ -22,4 +20,7 @@ export class CharacterUpdateInput {
 
     @Field(() => DescriptionUpdateEnvelopeInput, {nullable:true})
     description?: DescriptionUpdateEnvelopeInput;
+
+    @Field(() => CharacterOnAnimeUpdateManyWithoutCharacterNestedInput, {nullable:true})
+    anime?: CharacterOnAnimeUpdateManyWithoutCharacterNestedInput;
 }

@@ -18,17 +18,14 @@ export class Staff {
     @Field(() => Int, {nullable:true})
     malId!: number | null;
 
-    @Field(() => Int, {nullable:true})
-    anilistId!: number | null;
-
     @Field(() => StaffName, {nullable:false})
     name?: StaffName;
 
     @Field(() => Image, {nullable:false})
     image?: Image;
 
-    @Field(() => String, {nullable:false})
-    info!: string;
+    @Field(() => String, {nullable:true})
+    info!: string | null;
 
     @Field(() => Description, {nullable:false})
     description?: Description;
@@ -38,6 +35,9 @@ export class Staff {
 
     @Field(() => [StaffOnAnime], {nullable:true})
     animeRoles?: Array<StaffOnAnime>;
+
+    @Field(() => [String], {nullable:true})
+    characterIDs!: Array<string>;
 
     @Field(() => StaffCount, {nullable:false})
     _count?: StaffCount;

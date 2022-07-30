@@ -6,4 +6,7 @@ export class StaffOnAnimeWhereUniqueInput {
 
     @Field(() => String, {nullable:true})
     id?: string;
+
+    @Field(() => String, {nullable:true})
+    relationId?: string;
 }

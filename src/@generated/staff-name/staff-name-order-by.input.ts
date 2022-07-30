@@ -9,6 +9,9 @@ export class StaffNameOrderByInput {
     english?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    arabic?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     native?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

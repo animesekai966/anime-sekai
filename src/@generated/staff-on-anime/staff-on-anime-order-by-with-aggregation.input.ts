@@ -12,6 +12,9 @@ export class StaffOnAnimeOrderByWithAggregationInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    relationId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     role?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

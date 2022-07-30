@@ -12,6 +12,8 @@ import { AnimeBlkomController } from "./anime-blkom/anime-blkom.controller";
 import { DiscordService } from "./discord/discord.service";
 import { AnimeXController } from "./anime-x/anime-x.controller";
 import { AnimeModule } from "./anime/anime.module";
+import { UploadService } from './upload/upload.service';
+import { TranslateService } from './translate/translate.service';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { AnimeModule } from "./anime/anime.module";
     AnimeBlkomService,
     JikanService,
     AnilistService,
+    UploadService,
+    TranslateService,
   ],
   exports: [],
 })

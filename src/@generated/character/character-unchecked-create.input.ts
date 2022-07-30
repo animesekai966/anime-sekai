@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { CharacterNameCreateEnvelopeInput } from '../character-name/character-name-create-envelope.input';
 import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
 import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
+import { CharacterOnAnimeUncheckedCreateNestedManyWithoutCharacterInput } from '../character-on-anime/character-on-anime-unchecked-create-nested-many-without-character.input';
 
 @InputType()
 export class CharacterUncheckedCreateInput {
@@ -11,11 +12,8 @@ export class CharacterUncheckedCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => Int, {nullable:true})
-    malId?: number;
-
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
+    @Field(() => Int, {nullable:false})
+    malId!: number;
 
     @Field(() => CharacterNameCreateEnvelopeInput, {nullable:false})
     name!: CharacterNameCreateEnvelopeInput;
@@ -25,4 +23,7 @@ export class CharacterUncheckedCreateInput {
 
     @Field(() => DescriptionCreateEnvelopeInput, {nullable:false})
     description!: DescriptionCreateEnvelopeInput;
+
+    @Field(() => CharacterOnAnimeUncheckedCreateNestedManyWithoutCharacterInput, {nullable:true})
+    anime?: CharacterOnAnimeUncheckedCreateNestedManyWithoutCharacterInput;
 }

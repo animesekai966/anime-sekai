@@ -1,6 +1,5 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
-import { CharacterRole } from '../prisma/character-role.enum';
 import { StaffOnAnimeCountAggregate } from './staff-on-anime-count-aggregate.output';
 import { StaffOnAnimeMinAggregate } from './staff-on-anime-min-aggregate.output';
 import { StaffOnAnimeMaxAggregate } from './staff-on-anime-max-aggregate.output';
@@ -11,8 +10,11 @@ export class StaffOnAnimeGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
-    @Field(() => CharacterRole, {nullable:false})
-    role!: keyof typeof CharacterRole;
+    @Field(() => String, {nullable:false})
+    relationId!: string;
+
+    @Field(() => String, {nullable:false})
+    role!: string;
 
     @Field(() => String, {nullable:false})
     animeId!: string;

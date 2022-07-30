@@ -12,10 +12,10 @@ export class StaffCountAggregate {
     malId!: number;
 
     @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    info!: number;
 
     @Field(() => Int, {nullable:false})
-    info!: number;
+    characterIDs!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

@@ -10,6 +10,9 @@ export class StaffOnAnimeOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    relationId?: keyof typeof SortOrder;
+
     @Field(() => AnimeOrderByWithRelationInput, {nullable:true})
     anime?: AnimeOrderByWithRelationInput;
 

@@ -280,7 +280,7 @@ export class AnilistService {
   }
 }
 
-interface AnimeEntity {
+export interface AnimeEntity {
   id: number;
   idMal: number;
   title: {

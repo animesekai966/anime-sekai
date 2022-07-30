@@ -13,11 +13,8 @@ export class CharacterGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
-    @Field(() => Int, {nullable:true})
-    malId?: number;
-
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
+    @Field(() => Int, {nullable:false})
+    malId!: number;
 
     @Field(() => CharacterCountAggregate, {nullable:true})
     _count?: CharacterCountAggregate;

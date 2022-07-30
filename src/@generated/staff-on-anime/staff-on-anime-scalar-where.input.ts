@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { EnumCharacterRoleFilter } from '../prisma/enum-character-role-filter.input';
 
 @InputType()
 export class StaffOnAnimeScalarWhereInput {
@@ -18,8 +17,11 @@ export class StaffOnAnimeScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => EnumCharacterRoleFilter, {nullable:true})
-    role?: EnumCharacterRoleFilter;
+    @Field(() => StringFilter, {nullable:true})
+    relationId?: StringFilter;
+
+    @Field(() => StringFilter, {nullable:true})
+    role?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
     animeId?: StringFilter;

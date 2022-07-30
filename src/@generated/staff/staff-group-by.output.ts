@@ -16,11 +16,11 @@ export class StaffGroupBy {
     @Field(() => Int, {nullable:true})
     malId?: number;
 
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
+    @Field(() => String, {nullable:true})
+    info?: string;
 
-    @Field(() => String, {nullable:false})
-    info!: string;
+    @Field(() => [String], {nullable:true})
+    characterIDs?: Array<string>;
 
     @Field(() => StaffCountAggregate, {nullable:true})
     _count?: StaffCountAggregate;

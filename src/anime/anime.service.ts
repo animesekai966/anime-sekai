@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAnimeInput } from './dto/create-anime.input';
-import { UpdateAnimeInput } from './dto/update-anime.input';
+import { Injectable } from "@nestjs/common";
+import { AnimeWhereInput } from "src/@generated/anime/anime-where.input";
+import { AnilistService } from "src/anilist/anilist.service";
+import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
+import { AnimeXService } from "src/anime-x/anime-x.service";
+import { JikanService } from "src/jikan/jikan.service";
+import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
 export class AnimeService {
-  create(createAnimeInput: CreateAnimeInput) {
-    return 'This action adds a new anime';
-  }
+  constructor(
+    private jikan: JikanService,
+    private blkom: AnimeBlkomService,
+    private animeX: AnimeXService,
+    private prisma: PrismaService,
+    private anilist: AnilistService,
+  ) {}
 
-  findAll() {
-    return `This action returns all anime`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} anime`;
-  }
-
-  update(id: number, updateAnimeInput: UpdateAnimeInput) {
-    return `This action updates a #${id} anime`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} anime`;
+  async find(where: AnimeWhereInput) {
+    return await this.prisma.anime.findFirst({
+      where,
+      include: {
+        characters: {
+          include: {
+            anime: true,
+            character: true,
+            voiceActors: true,
+          },
+        },
+        episodes: true,
+        genres: true,
+        producers: true,
+        staff: {
+          include: {
+            anime: true,
+            staff: true,
+          },
+        },
+        studios: true,
+      },
+    });
   }
 }

@@ -7,7 +7,4 @@ export class CharacterAvgAggregate {
 
     @Field(() => Float, {nullable:true})
     malId?: number;
-
-    @Field(() => Float, {nullable:true})
-    anilistId?: number;
 }

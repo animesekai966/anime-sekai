@@ -33,7 +33,7 @@ model Anime {
     endDate         FuzzyDate
     season          AnimeSeason
     episodesCount   Int
-    duration        Int
+    duration        Float
     countryOfOrigin String
     isLicensed      Boolean
     isAdult         Boolean
@@ -65,21 +65,25 @@ type AnimeRelationType {
 }
 
 model StaffOnAnime {
-    id      String        @id @default(uuid()) @map("_id")
-    anime   Anime         @relation("animeStaff", fields: [animeId], references: [id])
-    staff   Staff         @relation("staffPerson", fields: [staffId], references: [id])
-    role    CharacterRole
-    animeId String
-    staffId String
+    id         String @id @default(uuid()) @map("_id")
+    relationId String @unique
+    anime      Anime  @relation("animeStaff", fields: [animeId], references: [id])
+    staff      Staff  @relation("staffPerson", fields: [staffId], references: [id])
+    role       String
+    animeId    String
+    staffId    String
 }
 
 model CharacterOnAnime {
-    id         String        @id @default(uuid()) @map("_id")
-    anime      Anime         @relation("animeCharacter", fields: [animeId], references: [id])
-    voiceActor Staff         @relation("staffCharacter", fields: [staffId], references: [id])
-    role       CharacterRole
-    animeId    String
-    staffId    String
+    id          String        @id @default(uuid()) @map("_id")
+    relationId  String        @unique
+    anime       Anime         @relation("animeCharacter", fields: [animeId], references: [id])
+    voiceActors Staff[]       @relation("staffCharacter", fields: [staffId], references: [id])
+    character   Character     @relation("character", fields: [characterId], references: [id])
+    role        CharacterRole
+    animeId     String
+    staffId     String[]
+    characterId String
 }
 
 type AnimeTitle {
@@ -111,6 +115,8 @@ type AnimeScoreProvider {
 
 type AnimeBroadcast {
     day      AnimeBroadcastDays
+    time     String
+    timezone String
     string   String
 }
 
@@ -120,7 +126,7 @@ model Episode {
     number    Int
     name      String
     servers   Server[]
-    source    AnimeSources    @default(ANIME_X)
+    source    AnimeSources    @default(ANIME_BLKOM)
     filler    Boolean         @default(false)
     last      Boolean         @default(false)
     language  EpisodeLanguage @default(AR)
@@ -150,43 +156,45 @@ model Studio {
 model Genre {
     id       String    @id @default(uuid()) @map("_id")
     malId    Int       @unique
-    name     String
+    name     String    @unique
     type     GenreType @default(GENRE)
     animes   Anime[]   @relation(references: [id], fields: [animeIDs])
     animeIDs String[]
 }
 
 model Character {
-    id          String        @id @default(uuid()) @map("_id")
-    malId       Int?          @unique
-    anilistId   Int?          @unique
+    id          String             @id @default(uuid()) @map("_id")
+    malId       Int                @unique
     name        CharacterName
     image       Image
     description Description
+    anime       CharacterOnAnime[] @relation("character")
 }
 
 type CharacterName {
     english    String
-    native     String
+    native     String?
+    arabic     String?
     alternates String[]
 }
 
 model Staff {
-    id          String             @id @default(uuid()) @map("_id")
-    malId       Int?               @unique
-    anilistId   Int?               @unique
-    name        StaffName
-    image       Image
-    info        String
-    description Description
-    characters  CharacterOnAnime[] @relation("staffCharacter")
-    animeRoles  StaffOnAnime[]     @relation("staffPerson")
+    id           String             @id @default(uuid()) @map("_id")
+    malId        Int?               @unique
+    name         StaffName
+    image        Image
+    info         String?
+    description  Description
+    characters   CharacterOnAnime[] @relation("staffCharacter", fields: [characterIDs], references: [id])
+    animeRoles   StaffOnAnime[]     @relation("staffPerson")
+    characterIDs String[]
 }
 
 type StaffName {
     english      String
-    native       String
-    nativeFamily String
+    arabic       String?
+    native       String?
+    nativeFamily String?
     alternates   String[]
 }
 
@@ -257,6 +265,7 @@ enum AnimeRelation {
     SOURCE
     COMPILATION
     CONTAINS
+    RECOMMENDATION
 }
 
 enum AnimeStatus {

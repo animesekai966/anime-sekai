@@ -3,6 +3,7 @@ import { load } from "cheerio/lib/slim";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import * as https from "https";
 import * as http from "http";
+import { JikanService } from "src/jikan/jikan.service";
 const fetchServers = [
   "https://blkomFetch.sekai9666.repl.co",
   "https://blkomFetch1.sekai9666.repl.co",
@@ -20,7 +21,7 @@ const fetchServers = [
 @Injectable()
 export class AnimeBlkomService {
   axios: AxiosInstance;
-  constructor() {
+  constructor(private jikan: JikanService) {
     this.axios = axios.create({
       baseURL: "https://animeblkom.net",
       httpAgent: new http.Agent({ keepAlive: true }),
@@ -121,7 +122,8 @@ export class AnimeBlkomService {
     try {
       let { data } = await this.axios({ url: "/anime/" + slug });
       let $ = load(data);
-      let animeData = {
+      let animeData: any = {
+        slug: slug,
         mal: String($(`div.cta-btns > div > a.blue.cta`).attr("href")).trim(),
         poster: `https://animeblkom.net${$(`div.poster > img`).attr(
           "data-original",
@@ -140,9 +142,7 @@ export class AnimeBlkomService {
             .text()
             ?.trim(),
         ),
-        story: String(
-          $(`div.col-xs-12.story-container > div.story > p`).text(),
-        ).trim(),
+        story: String($(`div.story`).text()).trim(),
         episodesCount: String(
           $(`div.info-table > div:nth-child(1) > span.info`).text(),
         ).trim(),
@@ -161,6 +161,8 @@ export class AnimeBlkomService {
         episodes: [],
         isOnMal: false,
       };
+
+      animeData.malId = this.jikan.malIdFromUrl(animeData.mal);
 
       if (animeData.mal) animeData.isOnMal = true;
 
@@ -211,7 +213,9 @@ export interface LatestAnimeEntity {
 }
 
 export interface AnimeEntity {
+  slug: string;
   mal: string;
+  malId: number;
   poster: string;
   title: string;
   type: string;

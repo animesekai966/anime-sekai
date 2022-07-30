@@ -16,9 +16,6 @@ export class StaffOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     malId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
-    anilistId?: keyof typeof SortOrder;
-
     @Field(() => StaffNameOrderByInput, {nullable:true})
     name?: StaffNameOrderByInput;
 
@@ -36,4 +33,7 @@ export class StaffOrderByWithRelationInput {
 
     @Field(() => StaffOnAnimeOrderByRelationAggregateInput, {nullable:true})
     animeRoles?: StaffOnAnimeOrderByRelationAggregateInput;
+
+    @Field(() => SortOrder, {nullable:true})
+    characterIDs?: keyof typeof SortOrder;
 }

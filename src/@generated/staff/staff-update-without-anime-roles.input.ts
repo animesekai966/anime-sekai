@@ -3,9 +3,10 @@ import { InputType } from '@nestjs/graphql';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { StaffNameUpdateEnvelopeInput } from '../staff-name/staff-name-update-envelope.input';
 import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
-import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
+import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
-import { CharacterOnAnimeUpdateManyWithoutVoiceActorNestedInput } from '../character-on-anime/character-on-anime-update-many-without-voice-actor-nested.input';
+import { CharacterOnAnimeUpdateManyWithoutVoiceActorsNestedInput } from '../character-on-anime/character-on-anime-update-many-without-voice-actors-nested.input';
+import { StaffUpdatecharacterIDsInput } from './staff-updatecharacter-i-ds.input';
 
 @InputType()
 export class StaffUpdateWithoutAnimeRolesInput {
@@ -13,21 +14,21 @@ export class StaffUpdateWithoutAnimeRolesInput {
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     malId?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
-    anilistId?: NullableIntFieldUpdateOperationsInput;
-
     @Field(() => StaffNameUpdateEnvelopeInput, {nullable:true})
     name?: StaffNameUpdateEnvelopeInput;
 
     @Field(() => ImageUpdateEnvelopeInput, {nullable:true})
     image?: ImageUpdateEnvelopeInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    info?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    info?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => DescriptionUpdateEnvelopeInput, {nullable:true})
     description?: DescriptionUpdateEnvelopeInput;
 
-    @Field(() => CharacterOnAnimeUpdateManyWithoutVoiceActorNestedInput, {nullable:true})
-    characters?: CharacterOnAnimeUpdateManyWithoutVoiceActorNestedInput;
+    @Field(() => CharacterOnAnimeUpdateManyWithoutVoiceActorsNestedInput, {nullable:true})
+    characters?: CharacterOnAnimeUpdateManyWithoutVoiceActorsNestedInput;
+
+    @Field(() => StaffUpdatecharacterIDsInput, {nullable:true})
+    characterIDs?: StaffUpdatecharacterIDsInput;
 }

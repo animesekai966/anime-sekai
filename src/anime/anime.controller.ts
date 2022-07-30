@@ -1,10 +1,13 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { Anime } from "src/@generated/anime/anime.model";
 import { AnilistService } from "src/anilist/anilist.service";
 import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
 import { AnimeXService } from "src/anime-x/anime-x.service";
 import { JikanService } from "src/jikan/jikan.service";
 import { PrismaService } from "src/prisma/prisma.service";
+import { UploadService } from "src/upload/upload.service";
+import { AnimeManager } from "./anime.manager";
+import axios from "axios";
+import { TranslateService } from "src/translate/translate.service";
 
 @Controller("anime")
 export class AnimeController {
@@ -14,27 +17,42 @@ export class AnimeController {
     private animeX: AnimeXService,
     private prisma: PrismaService,
     private anilist: AnilistService,
+    private uploads: UploadService,
+    private manager: AnimeManager,
+    private translator: TranslateService,
   ) {}
   @Get("/test")
-  async test(@Query("malId") id: number) {
-    let anilistDetails = await this.anilist.getAnimeDetails({ malId: id });
-    let malDetails = await this.jikan.getAnimeRaw(id);
-    let characters = await this.jikan.anime.getCharacters(id);
-    let altCovers = await this.jikan.anime.getPictures(id);
-    let recommendations = await this.jikan.anime.getRecommendations(id);
-    let staff = await this.jikan.anime.getStaff(id);
+  async test(@Query("slug") blkomSlug: string, @Query("text") text: string) {
+    return await this.manager.addAnimeEpisodes("high-school-dxd");
+    //return await this.manager.createAnime(blkomSlug);
+  }
+}
 
-    let anime = await this.prisma.anime.create({
+async function translate(text: string) {
+  if (!text) return "";
+  try {
+    let { data } = await axios({
+      method: "post",
+      url: "https://web-api.itranslateapp.com/v3/texts/translate",
+      headers: {
+        accept: "application/json",
+        "api-key": "d2aefeac9dc661bc98eebd6cc12f0b82",
+        "content-type": "application/json",
+      },
       data: {
-        title: {
-          ...anilistDetails.title,
+        source: {
+          dialect: "en",
+          text: text,
         },
-        countryOfOrigin: anilistDetails.countryOfOrigin,
-        broadcast: {
-            day
-        }
+        target: {
+          dialect: "ar",
+        },
       },
     });
-    return anime;
+
+    return data.target.text;
+  } catch (err) {
+    console.log(`[TRANSLATE] err `, err);
+    return await translate(text);
   }
 }

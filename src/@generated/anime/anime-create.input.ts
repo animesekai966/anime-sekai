@@ -10,6 +10,7 @@ import { AnimeStatus } from '../prisma/anime-status.enum';
 import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
 import { FuzzyDateCreateEnvelopeInput } from '../fuzzy-date/fuzzy-date-create-envelope.input';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 import { AnimeTrailerCreateEnvelopeInput } from '../anime-trailer/anime-trailer-create-envelope.input';
@@ -82,7 +83,7 @@ export class AnimeCreateInput {
     @Field(() => Int, {nullable:false})
     episodesCount!: number;
 
-    @Field(() => Int, {nullable:false})
+    @Field(() => Float, {nullable:false})
     duration!: number;
 
     @Field(() => String, {nullable:false})

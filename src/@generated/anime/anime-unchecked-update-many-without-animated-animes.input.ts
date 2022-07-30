@@ -13,6 +13,7 @@ import { EnumAnimeStatusFieldUpdateOperationsInput } from '../prisma/enum-anime-
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAnimeSeasonFieldUpdateOperationsInput } from '../prisma/enum-anime-season-field-update-operations.input';
+import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
 import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
 import { EnumAnimeSourceFieldUpdateOperationsInput } from '../prisma/enum-anime-source-field-update-operations.input';
@@ -78,8 +79,8 @@ export class AnimeUncheckedUpdateManyWithoutAnimatedAnimesInput {
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     episodesCount?: IntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    duration?: IntFieldUpdateOperationsInput;
+    @Field(() => FloatFieldUpdateOperationsInput, {nullable:true})
+    duration?: FloatFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     countryOfOrigin?: StringFieldUpdateOperationsInput;

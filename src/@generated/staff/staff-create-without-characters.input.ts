@@ -5,6 +5,7 @@ import { StaffNameCreateEnvelopeInput } from '../staff-name/staff-name-create-en
 import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
 import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
 import { StaffOnAnimeCreateNestedManyWithoutStaffInput } from '../staff-on-anime/staff-on-anime-create-nested-many-without-staff.input';
+import { StaffCreatecharacterIDsInput } from './staff-createcharacter-i-ds.input';
 
 @InputType()
 export class StaffCreateWithoutCharactersInput {
@@ -15,21 +16,21 @@ export class StaffCreateWithoutCharactersInput {
     @Field(() => Int, {nullable:true})
     malId?: number;
 
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
-
     @Field(() => StaffNameCreateEnvelopeInput, {nullable:false})
     name!: StaffNameCreateEnvelopeInput;
 
     @Field(() => ImageCreateEnvelopeInput, {nullable:false})
     image!: ImageCreateEnvelopeInput;
 
-    @Field(() => String, {nullable:false})
-    info!: string;
+    @Field(() => String, {nullable:true})
+    info?: string;
 
     @Field(() => DescriptionCreateEnvelopeInput, {nullable:false})
     description!: DescriptionCreateEnvelopeInput;
 
     @Field(() => StaffOnAnimeCreateNestedManyWithoutStaffInput, {nullable:true})
     animeRoles?: StaffOnAnimeCreateNestedManyWithoutStaffInput;
+
+    @Field(() => StaffCreatecharacterIDsInput, {nullable:true})
+    characterIDs?: StaffCreatecharacterIDsInput;
 }

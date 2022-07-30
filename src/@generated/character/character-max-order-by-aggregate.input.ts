@@ -10,7 +10,4 @@ export class CharacterMaxOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     malId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    anilistId?: keyof typeof SortOrder;
 }

@@ -11,10 +11,10 @@ export class StaffCountAggregateInput {
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    anilistId?: true;
+    info?: true;
 
     @Field(() => Boolean, {nullable:true})
-    info?: true;
+    characterIDs?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

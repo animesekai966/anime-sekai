@@ -7,8 +7,11 @@ export class CharacterName {
     @Field(() => String, {nullable:false})
     english!: string;
 
-    @Field(() => String, {nullable:false})
-    native!: string;
+    @Field(() => String, {nullable:true})
+    native!: string | null;
+
+    @Field(() => String, {nullable:true})
+    arabic!: string | null;
 
     @Field(() => [String], {nullable:true})
     alternates!: Array<string>;

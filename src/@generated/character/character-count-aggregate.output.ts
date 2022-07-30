@@ -12,8 +12,5 @@ export class CharacterCountAggregate {
     malId!: number;
 
     @Field(() => Int, {nullable:false})
-    anilistId!: number;
-
-    @Field(() => Int, {nullable:false})
     _all!: number;
 }

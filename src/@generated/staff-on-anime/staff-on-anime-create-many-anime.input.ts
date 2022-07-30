@@ -1,6 +1,5 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { CharacterRole } from '../prisma/character-role.enum';
 
 @InputType()
 export class StaffOnAnimeCreateManyAnimeInput {
@@ -8,8 +7,11 @@ export class StaffOnAnimeCreateManyAnimeInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => CharacterRole, {nullable:false})
-    role!: keyof typeof CharacterRole;
+    @Field(() => String, {nullable:false})
+    relationId!: string;
+
+    @Field(() => String, {nullable:false})
+    role!: string;
 
     @Field(() => String, {nullable:false})
     staffId!: string;

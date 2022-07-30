@@ -25,7 +25,7 @@ export class Episode {
     @Field(() => [Server], {nullable:true})
     servers?: Array<Server>;
 
-    @Field(() => AnimeSources, {nullable:false,defaultValue:'ANIME_X'})
+    @Field(() => AnimeSources, {nullable:false,defaultValue:'ANIME_BLKOM'})
     source!: keyof typeof AnimeSources;
 
     @Field(() => Boolean, {nullable:false,defaultValue:false})

@@ -11,11 +11,8 @@ export class CharacterCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => Int, {nullable:true})
-    malId?: number;
-
-    @Field(() => Int, {nullable:true})
-    anilistId?: number;
+    @Field(() => Int, {nullable:false})
+    malId!: number;
 
     @Field(() => CharacterNameCreateEnvelopeInput, {nullable:false})
     name!: CharacterNameCreateEnvelopeInput;

@@ -9,6 +9,9 @@ export class StaffOnAnimeCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
+    relationId!: number;
+
+    @Field(() => Int, {nullable:false})
     role!: number;
 
     @Field(() => Int, {nullable:false})

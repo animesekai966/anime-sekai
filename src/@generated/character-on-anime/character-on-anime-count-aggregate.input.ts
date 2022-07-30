@@ -8,6 +8,9 @@ export class CharacterOnAnimeCountAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
+    relationId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     role?: true;
 
     @Field(() => Boolean, {nullable:true})
@@ -15,6 +18,9 @@ export class CharacterOnAnimeCountAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     staffId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    characterId?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

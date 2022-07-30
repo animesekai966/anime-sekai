@@ -10,5 +10,11 @@ export class AnimeBroadcastUpdateInput {
     day?: EnumAnimeBroadcastDaysFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    time?: StringFieldUpdateOperationsInput;
+
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    timezone?: StringFieldUpdateOperationsInput;
+
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     string?: StringFieldUpdateOperationsInput;
 }

@@ -57,20 +57,24 @@ export class AnimeXService {
     fetchEps?: boolean;
     fetchServers?: boolean;
   }): Promise<AnimeEntity> {
-    let {
-      data: { data },
-    } = await this.axios({
-      url: slug
-        ? `v3/anime/${slug}/info?related=true`
-        : `v4/anime/mal/info?mal_url=${mal}`,
-    });
+    try {
+      let {
+        data: { data },
+      } = await this.axios({
+        url: slug
+          ? `v3/anime/${slug}/info?related=true`
+          : `v4/anime/mal/info?mal_url=${mal}`,
+      });
 
-    return {
-      ...data,
-      episodes: fetchEps
-        ? await this.getAnimeEps(data.primary_key, fetchServers)
-        : [],
-    };
+      return {
+        ...data,
+        episodes: fetchEps
+          ? await this.getAnimeEps(data.primary_key, fetchServers)
+          : [],
+      };
+    } catch {
+      return null;
+    }
   }
 
   async getAnimeEps(

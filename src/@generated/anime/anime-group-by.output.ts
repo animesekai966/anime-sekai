@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 import { AnimeCountAggregate } from './anime-count-aggregate.output';
@@ -45,7 +46,7 @@ export class AnimeGroupBy {
     @Field(() => Int, {nullable:false})
     episodesCount!: number;
 
-    @Field(() => Int, {nullable:false})
+    @Field(() => Float, {nullable:false})
     duration!: number;
 
     @Field(() => String, {nullable:false})

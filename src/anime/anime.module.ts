@@ -7,6 +7,9 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
 import { AnimeXService } from "src/anime-x/anime-x.service";
 import { AnilistService } from "src/anilist/anilist.service";
+import { UploadService } from "src/upload/upload.service";
+import { AnimeManager } from "./anime.manager";
+import { TranslateService } from "src/translate/translate.service";
 
 @Module({
   providers: [
@@ -17,6 +20,9 @@ import { AnilistService } from "src/anilist/anilist.service";
     AnimeBlkomService,
     AnimeXService,
     AnilistService,
+    UploadService,
+    AnimeManager,
+    TranslateService
   ],
   controllers: [AnimeController],
 })

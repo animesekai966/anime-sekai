@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
+import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
 
@@ -40,7 +41,7 @@ export class AnimeMaxAggregate {
     @Field(() => Int, {nullable:true})
     episodesCount?: number;
 
-    @Field(() => Int, {nullable:true})
+    @Field(() => Float, {nullable:true})
     duration?: number;
 
     @Field(() => String, {nullable:true})

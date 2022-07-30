@@ -16,9 +16,6 @@ export class CharacterOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     malId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
-    anilistId?: keyof typeof SortOrder;
-
     @Field(() => CharacterCountOrderByAggregateInput, {nullable:true})
     _count?: CharacterCountOrderByAggregateInput;
 

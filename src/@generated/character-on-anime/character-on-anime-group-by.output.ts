@@ -11,14 +11,20 @@ export class CharacterOnAnimeGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
+    @Field(() => String, {nullable:false})
+    relationId!: string;
+
     @Field(() => CharacterRole, {nullable:false})
     role!: keyof typeof CharacterRole;
 
     @Field(() => String, {nullable:false})
     animeId!: string;
 
+    @Field(() => [String], {nullable:true})
+    staffId?: Array<string>;
+
     @Field(() => String, {nullable:false})
-    staffId!: string;
+    characterId!: string;
 
     @Field(() => CharacterOnAnimeCountAggregate, {nullable:true})
     _count?: CharacterOnAnimeCountAggregate;

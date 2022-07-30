@@ -4,9 +4,11 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StaffNameCompositeFilter } from '../prisma/staff-name-composite-filter.input';
 import { ImageCompositeFilter } from '../prisma/image-composite-filter.input';
+import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { DescriptionCompositeFilter } from '../prisma/description-composite-filter.input';
 import { CharacterOnAnimeListRelationFilter } from '../character-on-anime/character-on-anime-list-relation-filter.input';
 import { StaffOnAnimeListRelationFilter } from '../staff-on-anime/staff-on-anime-list-relation-filter.input';
+import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 
 @InputType()
 export class StaffWhereInput {
@@ -26,17 +28,14 @@ export class StaffWhereInput {
     @Field(() => IntNullableFilter, {nullable:true})
     malId?: IntNullableFilter;
 
-    @Field(() => IntNullableFilter, {nullable:true})
-    anilistId?: IntNullableFilter;
-
     @Field(() => StaffNameCompositeFilter, {nullable:true})
     name?: StaffNameCompositeFilter;
 
     @Field(() => ImageCompositeFilter, {nullable:true})
     image?: ImageCompositeFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    info?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    info?: StringNullableFilter;
 
     @Field(() => DescriptionCompositeFilter, {nullable:true})
     description?: DescriptionCompositeFilter;
@@ -46,4 +45,7 @@ export class StaffWhereInput {
 
     @Field(() => StaffOnAnimeListRelationFilter, {nullable:true})
     animeRoles?: StaffOnAnimeListRelationFilter;
+
+    @Field(() => StringNullableListFilter, {nullable:true})
+    characterIDs?: StringNullableListFilter;
 }

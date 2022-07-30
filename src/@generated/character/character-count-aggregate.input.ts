@@ -11,8 +11,5 @@ export class CharacterCountAggregateInput {
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    anilistId?: true;
-
-    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }

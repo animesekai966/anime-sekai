@@ -1,14 +1,17 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { StaffUpdateOneRequiredWithoutAnimeRolesNestedInput } from '../staff/staff-update-one-required-without-anime-roles-nested.input';
-import { EnumCharacterRoleFieldUpdateOperationsInput } from '../prisma/enum-character-role-field-update-operations.input';
 
 @InputType()
 export class StaffOnAnimeUpdateWithoutAnimeInput {
 
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    relationId?: StringFieldUpdateOperationsInput;
+
     @Field(() => StaffUpdateOneRequiredWithoutAnimeRolesNestedInput, {nullable:true})
     staff?: StaffUpdateOneRequiredWithoutAnimeRolesNestedInput;
 
-    @Field(() => EnumCharacterRoleFieldUpdateOperationsInput, {nullable:true})
-    role?: EnumCharacterRoleFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    role?: StringFieldUpdateOperationsInput;
 }

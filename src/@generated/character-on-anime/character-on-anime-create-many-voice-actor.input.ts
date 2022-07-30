@@ -8,9 +8,15 @@ export class CharacterOnAnimeCreateManyVoiceActorInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => String, {nullable:false})
+    relationId!: string;
+
     @Field(() => CharacterRole, {nullable:false})
     role!: keyof typeof CharacterRole;
 
     @Field(() => String, {nullable:false})
     animeId!: string;
+
+    @Field(() => String, {nullable:false})
+    characterId!: string;
 }

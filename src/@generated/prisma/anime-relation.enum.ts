@@ -13,7 +13,8 @@ export enum AnimeRelation {
     OTHER = "OTHER",
     SOURCE = "SOURCE",
     COMPILATION = "COMPILATION",
-    CONTAINS = "CONTAINS"
+    CONTAINS = "CONTAINS",
+    RECOMMENDATION = "RECOMMENDATION"
 }
 
 
