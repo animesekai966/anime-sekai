@@ -6,6 +6,7 @@ import { Int } from '@nestjs/graphql';
 import { Server } from '../server/server.model';
 import { AnimeSources } from '../prisma/anime-sources.enum';
 import { EpisodeLanguage } from '../prisma/episode-language.enum';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class Episode {
@@ -43,6 +44,6 @@ export class Episode {
     @Field(() => Date, {nullable:false})
     createdAt!: Date;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 }

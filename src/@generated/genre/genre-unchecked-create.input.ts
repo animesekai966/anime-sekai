@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { GenreType } from '../prisma/genre-type.enum';
 import { AnimeUncheckedCreateNestedManyWithoutGenresInput } from '../anime/anime-unchecked-create-nested-many-without-genres.input';
 import { GenreCreateanimeIDsInput } from './genre-createanime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class GenreUncheckedCreateInput {
@@ -21,8 +22,8 @@ export class GenreUncheckedCreateInput {
     type?: keyof typeof GenreType;
 
     @Field(() => AnimeUncheckedCreateNestedManyWithoutGenresInput, {nullable:true})
-    animes?: AnimeUncheckedCreateNestedManyWithoutGenresInput;
+    anime?: AnimeUncheckedCreateNestedManyWithoutGenresInput;
 
-    @Field(() => GenreCreateanimeIDsInput, {nullable:true})
+    @HideField()
     animeIDs?: GenreCreateanimeIDsInput;
 }

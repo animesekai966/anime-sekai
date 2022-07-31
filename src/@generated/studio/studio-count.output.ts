@@ -6,8 +6,8 @@ import { Int } from '@nestjs/graphql';
 export class StudioCount {
 
     @Field(() => Int, {nullable:false})
-    animatedAnimes?: number;
+    animatedAnime?: number;
 
     @Field(() => Int, {nullable:false})
-    producedAnimes?: number;
+    producedAnime?: number;
 }

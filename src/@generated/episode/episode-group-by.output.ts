@@ -3,6 +3,7 @@ import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { AnimeSources } from '../prisma/anime-sources.enum';
 import { EpisodeLanguage } from '../prisma/episode-language.enum';
+import { HideField } from '@nestjs/graphql';
 import { EpisodeCountAggregate } from './episode-count-aggregate.output';
 import { EpisodeAvgAggregate } from './episode-avg-aggregate.output';
 import { EpisodeSumAggregate } from './episode-sum-aggregate.output';
@@ -39,7 +40,7 @@ export class EpisodeGroupBy {
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 
     @Field(() => EpisodeCountAggregate, {nullable:true})

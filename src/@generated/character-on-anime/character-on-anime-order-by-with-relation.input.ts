@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { AnimeOrderByWithRelationInput } from '../anime/anime-order-by-with-relation.input';
 import { StaffOrderByRelationAggregateInput } from '../staff/staff-order-by-relation-aggregate.input';
 import { CharacterOrderByWithRelationInput } from '../character/character-order-by-with-relation.input';
@@ -11,7 +12,7 @@ export class CharacterOnAnimeOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     relationId?: keyof typeof SortOrder;
 
     @Field(() => AnimeOrderByWithRelationInput, {nullable:true})
@@ -26,12 +27,12 @@ export class CharacterOnAnimeOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     role?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animeId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     staffId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     characterId?: keyof typeof SortOrder;
 }

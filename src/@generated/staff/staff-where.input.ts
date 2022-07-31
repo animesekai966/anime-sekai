@@ -9,6 +9,7 @@ import { DescriptionCompositeFilter } from '../prisma/description-composite-filt
 import { CharacterOnAnimeListRelationFilter } from '../character-on-anime/character-on-anime-list-relation-filter.input';
 import { StaffOnAnimeListRelationFilter } from '../staff-on-anime/staff-on-anime-list-relation-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffWhereInput {
@@ -46,6 +47,6 @@ export class StaffWhereInput {
     @Field(() => StaffOnAnimeListRelationFilter, {nullable:true})
     animeRoles?: StaffOnAnimeListRelationFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     characterIDs?: StringNullableListFilter;
 }

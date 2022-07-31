@@ -4,6 +4,7 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffScalarWhereInput {
@@ -26,6 +27,6 @@ export class StaffScalarWhereInput {
     @Field(() => StringNullableFilter, {nullable:true})
     info?: StringNullableFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     characterIDs?: StringNullableListFilter;
 }

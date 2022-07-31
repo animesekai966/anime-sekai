@@ -4,6 +4,7 @@ import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-fil
 import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
 import { EnumGenreTypeWithAggregatesFilter } from '../prisma/enum-genre-type-with-aggregates-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class GenreScalarWhereWithAggregatesInput {
@@ -29,6 +30,6 @@ export class GenreScalarWhereWithAggregatesInput {
     @Field(() => EnumGenreTypeWithAggregatesFilter, {nullable:true})
     type?: EnumGenreTypeWithAggregatesFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     animeIDs?: StringNullableListFilter;
 }

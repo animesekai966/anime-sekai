@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeUpdateOneRequiredWithoutCharactersNestedInput } from '../anime/anime-update-one-required-without-characters-nested.input';
 import { StaffUpdateManyWithoutCharactersNestedInput } from '../staff/staff-update-many-without-characters-nested.input';
 import { CharacterUpdateOneRequiredWithoutAnimeNestedInput } from '../character/character-update-one-required-without-anime-nested.input';
@@ -10,7 +11,7 @@ import { CharacterOnAnimeUpdatestaffIdInput } from './character-on-anime-updates
 @InputType()
 export class CharacterOnAnimeUpdateInput {
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    @HideField()
     relationId?: StringFieldUpdateOperationsInput;
 
     @Field(() => AnimeUpdateOneRequiredWithoutCharactersNestedInput, {nullable:true})
@@ -25,6 +26,6 @@ export class CharacterOnAnimeUpdateInput {
     @Field(() => EnumCharacterRoleFieldUpdateOperationsInput, {nullable:true})
     role?: EnumCharacterRoleFieldUpdateOperationsInput;
 
-    @Field(() => CharacterOnAnimeUpdatestaffIdInput, {nullable:true})
+    @HideField()
     staffId?: CharacterOnAnimeUpdatestaffIdInput;
 }

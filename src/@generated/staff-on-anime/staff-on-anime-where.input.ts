@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeRelationFilter } from '../anime/anime-relation-filter.input';
 import { StaffRelationFilter } from '../staff/staff-relation-filter.input';
 
@@ -19,7 +20,7 @@ export class StaffOnAnimeWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     relationId?: StringFilter;
 
     @Field(() => AnimeRelationFilter, {nullable:true})
@@ -31,9 +32,9 @@ export class StaffOnAnimeWhereInput {
     @Field(() => StringFilter, {nullable:true})
     role?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     animeId?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     staffId?: StringFilter;
 }

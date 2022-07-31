@@ -4,6 +4,7 @@ import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operat
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { EnumGenreTypeFieldUpdateOperationsInput } from '../prisma/enum-genre-type-field-update-operations.input';
 import { GenreUpdateanimeIDsInput } from './genre-updateanime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class GenreUncheckedUpdateManyWithoutGenresInput {
@@ -17,6 +18,6 @@ export class GenreUncheckedUpdateManyWithoutGenresInput {
     @Field(() => EnumGenreTypeFieldUpdateOperationsInput, {nullable:true})
     type?: EnumGenreTypeFieldUpdateOperationsInput;
 
-    @Field(() => GenreUpdateanimeIDsInput, {nullable:true})
+    @HideField()
     animeIDs?: GenreUpdateanimeIDsInput;
 }

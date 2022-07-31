@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { AnimeUncheckedCreateNestedManyWithoutStudiosInput } from '../anime/anime-unchecked-create-nested-many-without-studios.input';
 import { AnimeUncheckedCreateNestedManyWithoutProducersInput } from '../anime/anime-unchecked-create-nested-many-without-producers.input';
 import { StudioCreateanimatedAnimeIDsInput } from './studio-createanimated-anime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { StudioCreateproducedAnimeIDsInput } from './studio-createproduced-anime-i-ds.input';
 
 @InputType()
@@ -19,14 +20,14 @@ export class StudioUncheckedCreateInput {
     name!: string;
 
     @Field(() => AnimeUncheckedCreateNestedManyWithoutStudiosInput, {nullable:true})
-    animatedAnimes?: AnimeUncheckedCreateNestedManyWithoutStudiosInput;
+    animatedAnime?: AnimeUncheckedCreateNestedManyWithoutStudiosInput;
 
     @Field(() => AnimeUncheckedCreateNestedManyWithoutProducersInput, {nullable:true})
-    producedAnimes?: AnimeUncheckedCreateNestedManyWithoutProducersInput;
+    producedAnime?: AnimeUncheckedCreateNestedManyWithoutProducersInput;
 
-    @Field(() => StudioCreateanimatedAnimeIDsInput, {nullable:true})
+    @HideField()
     animatedAnimeIDs?: StudioCreateanimatedAnimeIDsInput;
 
-    @Field(() => StudioCreateproducedAnimeIDsInput, {nullable:true})
+    @HideField()
     producedAnimeIDs?: StudioCreateproducedAnimeIDsInput;
 }

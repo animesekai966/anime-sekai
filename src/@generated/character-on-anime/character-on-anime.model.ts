@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { Anime } from '../anime/anime.model';
 import { Staff } from '../staff/staff.model';
 import { Character } from '../character/character.model';
@@ -13,7 +14,7 @@ export class CharacterOnAnime {
     @Field(() => ID, {nullable:false})
     id!: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     relationId!: string;
 
     @Field(() => Anime, {nullable:false})
@@ -28,13 +29,13 @@ export class CharacterOnAnime {
     @Field(() => CharacterRole, {nullable:false})
     role!: keyof typeof CharacterRole;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     staffId!: Array<string>;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     characterId!: string;
 
     @Field(() => CharacterOnAnimeCount, {nullable:false})

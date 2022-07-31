@@ -42,13 +42,24 @@ export class AnimeJobs {
     }
   }
 
- // @Cron(CronExpression.EVERY_HOUR)
+  // @Cron(CronExpression.EVERY_HOUR)
   async checkNewEpsFromAnimeX() {
     for (let page = 0; page < 2; page++) {
       let pageAnimes = await this.animeXService.getLatest(page);
       for (let xEp of pageAnimes) {
         if (xEp.content.mal_url) {
-          await this.manager.addAnimeXEp(xEp.content.slug, xEp);
+          let ifAnimeExists = await this.prisma.anime.count({
+            where: {
+              malId: this.jikan.malIdFromUrl(xEp.content.mal_url),
+            },
+          });
+          if (!ifAnimeExists) {
+            await this.manager.createAnime({
+              animeXSlug: xEp.content.slug,
+            });
+          } else {
+            await this.manager.addAnimeXEp(xEp.content.slug, xEp);
+          }
         } else {
           console.log(`[SCRAPER] skipped non-mal anime ${xEp.content.name}`);
         }
@@ -56,7 +67,7 @@ export class AnimeJobs {
     }
   }
 
- // @Cron(CronExpression.EVERY_HOUR)
+  // @Cron(CronExpression.EVERY_HOUR)
   async checkNewEpsFromBlkom() {
     for (let page = 0; page < 2; page++) {
       let pageEps = await this.blkomService.getLatest(page);
@@ -66,14 +77,16 @@ export class AnimeJobs {
             malId: blkomEp.content.malId,
           },
         });
-        if (!ifAnimeExists)
+        if (!ifAnimeExists) {
           await this.manager.createAnime({
             blkomSlug: blkomEp.content_name_url,
           });
-        await this.manager.addAnimeBlkomEp(
-          blkomEp.content_name_url,
-          blkomEp.vid_num,
-        );
+        } else {
+          await this.manager.addAnimeBlkomEp(
+            blkomEp.content_name_url,
+            blkomEp.vid_num,
+          );
+        }
       }
     }
   }

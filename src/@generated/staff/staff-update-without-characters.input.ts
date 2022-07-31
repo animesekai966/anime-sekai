@@ -7,6 +7,7 @@ import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-str
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { StaffOnAnimeUpdateManyWithoutStaffNestedInput } from '../staff-on-anime/staff-on-anime-update-many-without-staff-nested.input';
 import { StaffUpdatecharacterIDsInput } from './staff-updatecharacter-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffUpdateWithoutCharactersInput {
@@ -29,6 +30,6 @@ export class StaffUpdateWithoutCharactersInput {
     @Field(() => StaffOnAnimeUpdateManyWithoutStaffNestedInput, {nullable:true})
     animeRoles?: StaffOnAnimeUpdateManyWithoutStaffNestedInput;
 
-    @Field(() => StaffUpdatecharacterIDsInput, {nullable:true})
+    @HideField()
     characterIDs?: StaffUpdatecharacterIDsInput;
 }

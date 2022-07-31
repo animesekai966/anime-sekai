@@ -7,6 +7,7 @@ import { Image } from '../image/image.model';
 import { Description } from '../description/description.model';
 import { CharacterOnAnime } from '../character-on-anime/character-on-anime.model';
 import { StaffOnAnime } from '../staff-on-anime/staff-on-anime.model';
+import { HideField } from '@nestjs/graphql';
 import { StaffCount } from './staff-count.output';
 
 @ObjectType()
@@ -36,7 +37,7 @@ export class Staff {
     @Field(() => [StaffOnAnime], {nullable:true})
     animeRoles?: Array<StaffOnAnime>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     characterIDs!: Array<string>;
 
     @Field(() => StaffCount, {nullable:false})

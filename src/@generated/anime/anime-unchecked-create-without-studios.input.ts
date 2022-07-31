@@ -18,13 +18,15 @@ import { AnimeScoreProvidersNullableCreateEnvelopeInput } from '../prisma/anime-
 import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { AnimeBroadcastNullableCreateEnvelopeInput } from '../prisma/anime-broadcast-nullable-create-envelope.input';
-import { GenreUncheckedCreateNestedManyWithoutAnimesInput } from '../genre/genre-unchecked-create-nested-many-without-animes.input';
+import { GenreUncheckedCreateNestedManyWithoutAnimeInput } from '../genre/genre-unchecked-create-nested-many-without-anime.input';
 import { EpisodeUncheckedCreateNestedManyWithoutAnimeInput } from '../episode/episode-unchecked-create-nested-many-without-anime.input';
-import { StudioUncheckedCreateNestedManyWithoutProducedAnimesInput } from '../studio/studio-unchecked-create-nested-many-without-produced-animes.input';
+import { StudioUncheckedCreateNestedManyWithoutProducedAnimeInput } from '../studio/studio-unchecked-create-nested-many-without-produced-anime.input';
 import { CharacterOnAnimeUncheckedCreateNestedManyWithoutAnimeInput } from '../character-on-anime/character-on-anime-unchecked-create-nested-many-without-anime.input';
 import { StaffOnAnimeUncheckedCreateNestedManyWithoutAnimeInput } from '../staff-on-anime/staff-on-anime-unchecked-create-nested-many-without-anime.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
+import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
 
@@ -115,14 +117,14 @@ export class AnimeUncheckedCreateWithoutStudiosInput {
     @Field(() => AnimeBroadcastNullableCreateEnvelopeInput, {nullable:true})
     broadcast?: AnimeBroadcastNullableCreateEnvelopeInput;
 
-    @Field(() => GenreUncheckedCreateNestedManyWithoutAnimesInput, {nullable:true})
-    genres?: GenreUncheckedCreateNestedManyWithoutAnimesInput;
+    @Field(() => GenreUncheckedCreateNestedManyWithoutAnimeInput, {nullable:true})
+    genres?: GenreUncheckedCreateNestedManyWithoutAnimeInput;
 
     @Field(() => EpisodeUncheckedCreateNestedManyWithoutAnimeInput, {nullable:true})
     episodes?: EpisodeUncheckedCreateNestedManyWithoutAnimeInput;
 
-    @Field(() => StudioUncheckedCreateNestedManyWithoutProducedAnimesInput, {nullable:true})
-    producers?: StudioUncheckedCreateNestedManyWithoutProducedAnimesInput;
+    @Field(() => StudioUncheckedCreateNestedManyWithoutProducedAnimeInput, {nullable:true})
+    producers?: StudioUncheckedCreateNestedManyWithoutProducedAnimeInput;
 
     @Field(() => CharacterOnAnimeUncheckedCreateNestedManyWithoutAnimeInput, {nullable:true})
     characters?: CharacterOnAnimeUncheckedCreateNestedManyWithoutAnimeInput;
@@ -133,18 +135,21 @@ export class AnimeUncheckedCreateWithoutStudiosInput {
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
 
+    @Field(() => [ExternalLinkCreateInput], {nullable:true})
+    externalLinks?: Array<ExternalLinkCreateInput>;
+
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
 
-    @Field(() => AnimeCreateproducerIDsInput, {nullable:true})
+    @HideField()
     producerIDs?: AnimeCreateproducerIDsInput;
 
-    @Field(() => AnimeCreatestudioIDsInput, {nullable:true})
+    @HideField()
     studioIDs?: AnimeCreatestudioIDsInput;
 
-    @Field(() => AnimeCreategenreIDsInput, {nullable:true})
+    @HideField()
     genreIDs?: AnimeCreategenreIDsInput;
 }

@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StudioScalarWhereInput {
@@ -25,9 +26,9 @@ export class StudioScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     animatedAnimeIDs?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     producedAnimeIDs?: StringNullableListFilter;
 }

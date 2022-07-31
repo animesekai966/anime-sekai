@@ -5,6 +5,7 @@ import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-
 import { AnimeUpdateManyWithoutStudiosNestedInput } from '../anime/anime-update-many-without-studios-nested.input';
 import { AnimeUpdateManyWithoutProducersNestedInput } from '../anime/anime-update-many-without-producers-nested.input';
 import { StudioUpdateanimatedAnimeIDsInput } from './studio-updateanimated-anime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { StudioUpdateproducedAnimeIDsInput } from './studio-updateproduced-anime-i-ds.input';
 
 @InputType()
@@ -17,14 +18,14 @@ export class StudioUpdateInput {
     name?: StringFieldUpdateOperationsInput;
 
     @Field(() => AnimeUpdateManyWithoutStudiosNestedInput, {nullable:true})
-    animatedAnimes?: AnimeUpdateManyWithoutStudiosNestedInput;
+    animatedAnime?: AnimeUpdateManyWithoutStudiosNestedInput;
 
     @Field(() => AnimeUpdateManyWithoutProducersNestedInput, {nullable:true})
-    producedAnimes?: AnimeUpdateManyWithoutProducersNestedInput;
+    producedAnime?: AnimeUpdateManyWithoutProducersNestedInput;
 
-    @Field(() => StudioUpdateanimatedAnimeIDsInput, {nullable:true})
+    @HideField()
     animatedAnimeIDs?: StudioUpdateanimatedAnimeIDsInput;
 
-    @Field(() => StudioUpdateproducedAnimeIDsInput, {nullable:true})
+    @HideField()
     producedAnimeIDs?: StudioUpdateproducedAnimeIDsInput;
 }

@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class EpisodeCountAggregate {
@@ -32,7 +33,7 @@ export class EpisodeCountAggregate {
     @Field(() => Int, {nullable:false})
     createdAt!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     animeId!: number;
 
     @Field(() => Int, {nullable:false})

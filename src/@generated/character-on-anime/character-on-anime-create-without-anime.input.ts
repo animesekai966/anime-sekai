@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { StaffCreateNestedManyWithoutCharactersInput } from '../staff/staff-create-nested-many-without-characters.input';
 import { CharacterCreateNestedOneWithoutAnimeInput } from '../character/character-create-nested-one-without-anime.input';
 import { CharacterRole } from '../prisma/character-role.enum';
@@ -11,7 +12,7 @@ export class CharacterOnAnimeCreateWithoutAnimeInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     relationId!: string;
 
     @Field(() => StaffCreateNestedManyWithoutCharactersInput, {nullable:true})
@@ -23,6 +24,6 @@ export class CharacterOnAnimeCreateWithoutAnimeInput {
     @Field(() => CharacterRole, {nullable:false})
     role!: keyof typeof CharacterRole;
 
-    @Field(() => CharacterOnAnimeCreatestaffIdInput, {nullable:true})
+    @HideField()
     staffId?: CharacterOnAnimeCreatestaffIdInput;
 }

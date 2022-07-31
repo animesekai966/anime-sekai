@@ -7,6 +7,7 @@ import { EnumAnimeSourcesFieldUpdateOperationsInput } from '../prisma/enum-anime
 import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
 import { EnumEpisodeLanguageFieldUpdateOperationsInput } from '../prisma/enum-episode-language-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class EpisodeUncheckedUpdateInput {
@@ -38,6 +39,6 @@ export class EpisodeUncheckedUpdateInput {
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    @HideField()
     animeId?: StringFieldUpdateOperationsInput;
 }

@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { StaffOnAnimeCountAggregate } from './staff-on-anime-count-aggregate.output';
 import { StaffOnAnimeMinAggregate } from './staff-on-anime-min-aggregate.output';
 import { StaffOnAnimeMaxAggregate } from './staff-on-anime-max-aggregate.output';
@@ -10,16 +11,16 @@ export class StaffOnAnimeGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     relationId!: string;
 
     @Field(() => String, {nullable:false})
     role!: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     staffId!: string;
 
     @Field(() => StaffOnAnimeCountAggregate, {nullable:true})

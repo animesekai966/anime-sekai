@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { CharacterRole } from '../prisma/character-role.enum';
 import { CharacterOnAnimeCreatestaffIdInput } from './character-on-anime-createstaff-id.input';
 
@@ -9,15 +10,15 @@ export class CharacterOnAnimeCreateManyCharacterInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     relationId!: string;
 
     @Field(() => CharacterRole, {nullable:false})
     role!: keyof typeof CharacterRole;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 
-    @Field(() => CharacterOnAnimeCreatestaffIdInput, {nullable:true})
+    @HideField()
     staffId?: CharacterOnAnimeCreatestaffIdInput;
 }

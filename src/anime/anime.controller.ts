@@ -27,11 +27,36 @@ export class AnimeController {
   async test(@Query("slug") blkomSlug: string, @Query("text") text: string) {
     //return await this.manager.addAnimeBlkomEpisodes("high-school-dxd");
 
-    return await this.blkom.getAnime(blkomSlug, true)
+    return await this.blkom.getAnime(blkomSlug, true);
   }
 
   @Get("/scrapeAllAnimes")
   async scrape() {
+    try {
+      return await this.animeJobs.checkNewAnimeFromBlkom();
+    } catch (err) {
+      console.log(err);
+      return "err";
+    }
+  }
+
+  @Get("/getAnime")
+  async getAnime() {
+    try {
+      return await this.manager.getAnimeInfo(
+        {
+          malId: 51837,
+        },
+        {},
+      );
+    } catch (err) {
+      console.log(err);
+      return "err";
+    }
+  }
+
+  @Get("/testNewEps")
+  async testNewEps() {
     try {
       return await this.animeJobs.checkNewAnimeFromBlkom();
     } catch (err) {

@@ -27,7 +27,9 @@ import { StudioListRelationFilter } from '../studio/studio-list-relation-filter.
 import { CharacterOnAnimeListRelationFilter } from '../character-on-anime/character-on-anime-list-relation-filter.input';
 import { StaffOnAnimeListRelationFilter } from '../staff-on-anime/staff-on-anime-list-relation-filter.input';
 import { AnimeRelationTypeObjectEqualityInput } from '../prisma/anime-relation-type-object-equality.input';
+import { ExternalLinkObjectEqualityInput } from '../prisma/external-link-object-equality.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeWhereInput {
@@ -146,18 +148,21 @@ export class AnimeWhereInput {
     @Field(() => [AnimeRelationTypeObjectEqualityInput], {nullable:true})
     related?: Array<AnimeRelationTypeObjectEqualityInput>;
 
+    @Field(() => [ExternalLinkObjectEqualityInput], {nullable:true})
+    externalLinks?: Array<ExternalLinkObjectEqualityInput>;
+
     @Field(() => DateTimeFilter, {nullable:true})
     updatedAt?: DateTimeFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     producerIDs?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     studioIDs?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     genreIDs?: StringNullableListFilter;
 }

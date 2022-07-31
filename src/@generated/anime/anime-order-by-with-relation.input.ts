@@ -15,6 +15,8 @@ import { StudioOrderByRelationAggregateInput } from '../studio/studio-order-by-r
 import { CharacterOnAnimeOrderByRelationAggregateInput } from '../character-on-anime/character-on-anime-order-by-relation-aggregate.input';
 import { StaffOnAnimeOrderByRelationAggregateInput } from '../staff-on-anime/staff-on-anime-order-by-relation-aggregate.input';
 import { AnimeRelationTypeOrderByCompositeAggregateInput } from '../anime-relation-type/anime-relation-type-order-by-composite-aggregate.input';
+import { ExternalLinkOrderByCompositeAggregateInput } from '../external-link/external-link-order-by-composite-aggregate.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeOrderByWithRelationInput {
@@ -124,18 +126,21 @@ export class AnimeOrderByWithRelationInput {
     @Field(() => AnimeRelationTypeOrderByCompositeAggregateInput, {nullable:true})
     related?: AnimeRelationTypeOrderByCompositeAggregateInput;
 
+    @Field(() => ExternalLinkOrderByCompositeAggregateInput, {nullable:true})
+    externalLinks?: ExternalLinkOrderByCompositeAggregateInput;
+
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     producerIDs?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     studioIDs?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     genreIDs?: keyof typeof SortOrder;
 }

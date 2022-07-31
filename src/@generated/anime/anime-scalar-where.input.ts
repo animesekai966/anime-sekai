@@ -13,6 +13,7 @@ import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeScalarWhereInput {
@@ -86,12 +87,12 @@ export class AnimeScalarWhereInput {
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     producerIDs?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     studioIDs?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     genreIDs?: StringNullableListFilter;
 }

@@ -6,6 +6,7 @@ import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
 import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
 import { StaffOnAnimeUncheckedCreateNestedManyWithoutStaffInput } from '../staff-on-anime/staff-on-anime-unchecked-create-nested-many-without-staff.input';
 import { StaffCreatecharacterIDsInput } from './staff-createcharacter-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffUncheckedCreateWithoutCharactersInput {
@@ -31,6 +32,6 @@ export class StaffUncheckedCreateWithoutCharactersInput {
     @Field(() => StaffOnAnimeUncheckedCreateNestedManyWithoutStaffInput, {nullable:true})
     animeRoles?: StaffOnAnimeUncheckedCreateNestedManyWithoutStaffInput;
 
-    @Field(() => StaffCreatecharacterIDsInput, {nullable:true})
+    @HideField()
     characterIDs?: StaffCreatecharacterIDsInput;
 }

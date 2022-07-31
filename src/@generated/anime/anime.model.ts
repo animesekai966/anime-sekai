@@ -21,6 +21,8 @@ import { Studio } from '../studio/studio.model';
 import { CharacterOnAnime } from '../character-on-anime/character-on-anime.model';
 import { StaffOnAnime } from '../staff-on-anime/staff-on-anime.model';
 import { AnimeRelationType } from '../anime-relation-type/anime-relation-type.model';
+import { ExternalLink } from '../external-link/external-link.model';
+import { HideField } from '@nestjs/graphql';
 import { AnimeCount } from './anime-count.output';
 
 @ObjectType()
@@ -131,19 +133,22 @@ export class Anime {
     @Field(() => [AnimeRelationType], {nullable:true})
     related?: Array<AnimeRelationType>;
 
+    @Field(() => [ExternalLink], {nullable:true})
+    externalLinks?: Array<ExternalLink>;
+
     @Field(() => Date, {nullable:false})
     updatedAt!: Date;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     producerIDs!: Array<string>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     studioIDs!: Array<string>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     genreIDs!: Array<string>;
 
     @Field(() => AnimeCount, {nullable:false})

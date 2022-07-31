@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffOnAnimeScalarWhereInput {
@@ -17,15 +18,15 @@ export class StaffOnAnimeScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     relationId?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
     role?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     animeId?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     staffId?: StringFilter;
 }

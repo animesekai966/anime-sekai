@@ -46,16 +46,28 @@ model Anime {
     broadcast       AnimeBroadcast?
     genres          Genre[]              @relation(references: [id], fields: [genreIDs])
     episodes        Episode[]
-    producers       Studio[]             @relation("producedAnimes", references: [id], fields: [producerIDs])
-    studios         Studio[]             @relation("animatedAnimes", references: [id], fields: [studioIDs])
+    producers       Studio[]             @relation("producedAnime", references: [id], fields: [producerIDs])
+    studios         Studio[]             @relation("animatedAnime", references: [id], fields: [studioIDs])
     characters      CharacterOnAnime[]   @relation("animeCharacter")
     staff           StaffOnAnime[]       @relation("animeStaff")
     related         AnimeRelationType[]
+    externalLinks   ExternalLink[]
     updatedAt       DateTime             @updatedAt
     createdAt       DateTime             @default(now())
+    /// @HideField({ input: true, output: true })
     producerIDs     String[]
+    /// @HideField({ input: true, output: true })
     studioIDs       String[]
+    /// @HideField({ input: true, output: true })
     genreIDs        String[]
+}
+
+type ExternalLink {
+    url      String
+    site     String?
+    type     ExternalLinkType
+    language String?
+    color    String?
 }
 
 type AnimeRelationType {
@@ -66,23 +78,30 @@ type AnimeRelationType {
 
 model StaffOnAnime {
     id         String @id @default(uuid()) @map("_id")
+    /// @HideField({ input: true, output: true })
     relationId String @unique
     anime      Anime  @relation("animeStaff", fields: [animeId], references: [id])
     staff      Staff  @relation("staffPerson", fields: [staffId], references: [id])
     role       String
+    /// @HideField({ input: true, output: true })
     animeId    String
+    /// @HideField({ input: true, output: true })
     staffId    String
 }
 
 model CharacterOnAnime {
     id          String        @id @default(uuid()) @map("_id")
+    /// @HideField({ input: true, output: true })
     relationId  String        @unique
     anime       Anime         @relation("animeCharacter", fields: [animeId], references: [id])
     voiceActors Staff[]       @relation("staffCharacter", fields: [staffId], references: [id])
     character   Character     @relation("character", fields: [characterId], references: [id])
     role        CharacterRole
+    /// @HideField({ input: true, output: true })
     animeId     String
+    /// @HideField({ input: true, output: true })
     staffId     String[]
+    /// @HideField({ input: true, output: true })
     characterId String
 }
 
@@ -132,6 +151,7 @@ model Episode {
     language  EpisodeLanguage @default(AR)
     updatedAt DateTime        @updatedAt
     createdAt DateTime        @default(now())
+    /// @HideField({ input: true, output: true })
     animeId   String
 }
 
@@ -147,9 +167,11 @@ model Studio {
     id               String   @id @default(uuid()) @map("_id")
     malId            Int      @unique
     name             String   @unique
-    animatedAnimes   Anime[]  @relation("animatedAnimes", references: [id], fields: [animatedAnimeIDs])
-    producedAnimes   Anime[]  @relation("producedAnimes", references: [id], fields: [animatedAnimeIDs])
+    animatedAnime    Anime[]  @relation("animatedAnime", references: [id], fields: [animatedAnimeIDs])
+    producedAnime    Anime[]  @relation("producedAnime", references: [id], fields: [animatedAnimeIDs])
+    /// @HideField({ input: true, output: true })
     animatedAnimeIDs String[]
+    /// @HideField({ input: true, output: true })
     producedAnimeIDs String[]
 }
 
@@ -158,7 +180,8 @@ model Genre {
     malId    Int       @unique
     name     String    @unique
     type     GenreType @default(GENRE)
-    animes   Anime[]   @relation(references: [id], fields: [animeIDs])
+    anime    Anime[]   @relation(references: [id], fields: [animeIDs])
+    /// @HideField({ input: true, output: true })
     animeIDs String[]
 }
 
@@ -187,6 +210,7 @@ model Staff {
     description  Description
     characters   CharacterOnAnime[] @relation("staffCharacter", fields: [characterIDs], references: [id])
     animeRoles   StaffOnAnime[]     @relation("staffPerson")
+    /// @HideField({ input: true, output: true })
     characterIDs String[]
 }
 
@@ -200,6 +224,7 @@ type StaffName {
 
 type Image {
     id        String   @default(uuid()) @map("_id")
+    /// @HideField({ input: true, output: true })
     source    String
     key       String
     createdAt DateTime @default(now())
@@ -328,4 +353,11 @@ enum AgeRating {
     R
     RP
     RX
+}
+
+enum ExternalLinkType {
+    INFO
+    STREAMING
+    SOCIAL
+    OTHER
 }

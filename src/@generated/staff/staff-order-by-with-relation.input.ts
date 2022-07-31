@@ -6,6 +6,7 @@ import { ImageOrderByInput } from '../image/image-order-by.input';
 import { DescriptionOrderByInput } from '../description/description-order-by.input';
 import { CharacterOnAnimeOrderByRelationAggregateInput } from '../character-on-anime/character-on-anime-order-by-relation-aggregate.input';
 import { StaffOnAnimeOrderByRelationAggregateInput } from '../staff-on-anime/staff-on-anime-order-by-relation-aggregate.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffOrderByWithRelationInput {
@@ -34,6 +35,6 @@ export class StaffOrderByWithRelationInput {
     @Field(() => StaffOnAnimeOrderByRelationAggregateInput, {nullable:true})
     animeRoles?: StaffOnAnimeOrderByRelationAggregateInput;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     characterIDs?: keyof typeof SortOrder;
 }

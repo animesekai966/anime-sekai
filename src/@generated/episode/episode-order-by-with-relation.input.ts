@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { AnimeOrderByWithRelationInput } from '../anime/anime-order-by-with-relation.input';
 import { ServerOrderByCompositeAggregateInput } from '../server/server-order-by-composite-aggregate.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class EpisodeOrderByWithRelationInput {
@@ -40,6 +41,6 @@ export class EpisodeOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animeId?: keyof typeof SortOrder;
 }

@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { StudioCountOrderByAggregateInput } from './studio-count-order-by-aggregate.input';
 import { StudioAvgOrderByAggregateInput } from './studio-avg-order-by-aggregate.input';
 import { StudioMaxOrderByAggregateInput } from './studio-max-order-by-aggregate.input';
@@ -19,10 +20,10 @@ export class StudioOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     name?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animatedAnimeIDs?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     producedAnimeIDs?: keyof typeof SortOrder;
 
     @Field(() => StudioCountOrderByAggregateInput, {nullable:true})

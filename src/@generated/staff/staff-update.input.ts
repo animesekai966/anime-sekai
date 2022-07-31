@@ -8,6 +8,7 @@ import { DescriptionUpdateEnvelopeInput } from '../description/description-updat
 import { CharacterOnAnimeUpdateManyWithoutVoiceActorsNestedInput } from '../character-on-anime/character-on-anime-update-many-without-voice-actors-nested.input';
 import { StaffOnAnimeUpdateManyWithoutStaffNestedInput } from '../staff-on-anime/staff-on-anime-update-many-without-staff-nested.input';
 import { StaffUpdatecharacterIDsInput } from './staff-updatecharacter-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffUpdateInput {
@@ -33,6 +34,6 @@ export class StaffUpdateInput {
     @Field(() => StaffOnAnimeUpdateManyWithoutStaffNestedInput, {nullable:true})
     animeRoles?: StaffOnAnimeUpdateManyWithoutStaffNestedInput;
 
-    @Field(() => StaffUpdatecharacterIDsInput, {nullable:true})
+    @HideField()
     characterIDs?: StaffUpdatecharacterIDsInput;
 }

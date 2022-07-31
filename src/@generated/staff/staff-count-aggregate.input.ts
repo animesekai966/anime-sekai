@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffCountAggregateInput {
@@ -13,7 +14,7 @@ export class StaffCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     info?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     characterIDs?: true;
 
     @Field(() => Boolean, {nullable:true})

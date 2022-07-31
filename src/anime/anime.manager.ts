@@ -59,7 +59,7 @@ export class AnimeManager {
       await this.upload.delete({ key: currentAnime.cover.key });
       let newCover = await this.upload.uploadImgAndConvertFromUrl({
         url: cover,
-        type: "anime/cover",
+        type: "animeCover",
         parentId: currentAnime.id,
       });
 
@@ -79,7 +79,7 @@ export class AnimeManager {
       await this.upload.delete({ key: currentAnime.banner.key });
       let newBanner = await this.upload.uploadImgAndConvertFromUrl({
         url: banner,
-        type: "anime/banner",
+        type: "animeBanner",
         parentId: currentAnime.id,
       });
 
@@ -169,7 +169,7 @@ export class AnimeManager {
     let animeCover = await this.upload.uploadImgAndConvertFromUrl({
       url: cover,
       parentId: animeId,
-      type: "anime/cover",
+      type: "animeCover",
     });
 
     let animeBanner =
@@ -177,7 +177,7 @@ export class AnimeManager {
       (await this.upload.uploadImgAndConvertFromUrl({
         url: banner,
         parentId: animeId,
-        type: "anime/banner",
+        type: "animeBanner",
       }));
 
     let anime = await this.prisma.anime.create({
@@ -245,8 +245,8 @@ export class AnimeManager {
         day: malDetails.broadcast?.day?.toUpperCase() as any,
       },
       description: {
-        en: enDescription,
         ar: arDescription || (await this.translator.translate(enDescription)),
+        en: enDescription,
       },
       startDate: {
         set: {
@@ -269,7 +269,7 @@ export class AnimeManager {
           ? anilistDetails.duration + "m"
           : malDetails.duration,
       ),
-      episodesCount: malDetails.episodes ?? malDetails.episodes,
+      episodesCount: malDetails.episodes || anilistDetails.episodes,
       rating: malRatingsToAnimeSekaiRatings[malDetails.rating],
       season: (malDetails.season?.toUpperCase() ||
         anilistDetails.season ||
@@ -287,7 +287,7 @@ export class AnimeManager {
             scoredBy: malDetails.scored_by,
           },
           anilist: {
-            score: anilistDetails.averageScore,
+            score: (anilistDetails.averageScore ?? 0) / 10,
             scoredBy: anilistDetails.popularity,
           },
         },
@@ -311,6 +311,13 @@ export class AnimeManager {
       status: (anilistDetails.status ||
         malStatusToAnimeSekaiStatus[malDetails.status]) as any,
       countryOfOrigin: anilistDetails.countryOfOrigin,
+      externalLinks: anilistDetails.externalLinks.map((externalLink) => ({
+        url: externalLink.url,
+        site: externalLink.site || undefined,
+        type: externalLink.type || "OTHER",
+        language: externalLink.language || undefined,
+        color: externalLink.color || undefined,
+      })),
     };
 
     let cover =
@@ -452,6 +459,7 @@ export class AnimeManager {
                   name: ep.number,
                   number: ep.rawNumber,
                   source: "ANIME_BLKOM",
+                  last: ep.last,
                   servers: ep.servers,
                 };
               }),
@@ -594,7 +602,7 @@ export class AnimeManager {
           let upload = await this.upload.uploadImgAndConvertFromUrl({
             url: cover,
             parentId: anime.id,
-            type: "anime/cover",
+            type: "animeCover",
           });
           return {
             id: upload.id,

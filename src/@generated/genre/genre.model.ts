@@ -4,6 +4,7 @@ import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { GenreType } from '../prisma/genre-type.enum';
 import { Anime } from '../anime/anime.model';
+import { HideField } from '@nestjs/graphql';
 import { GenreCount } from './genre-count.output';
 
 @ObjectType()
@@ -22,9 +23,9 @@ export class Genre {
     type!: keyof typeof GenreType;
 
     @Field(() => [Anime], {nullable:true})
-    animes?: Array<Anime>;
+    anime?: Array<Anime>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     animeIDs!: Array<string>;
 
     @Field(() => GenreCount, {nullable:false})

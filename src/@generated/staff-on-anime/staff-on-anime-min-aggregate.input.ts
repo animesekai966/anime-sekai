@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffOnAnimeMinAggregateInput {
@@ -7,15 +8,15 @@ export class StaffOnAnimeMinAggregateInput {
     @Field(() => Boolean, {nullable:true})
     id?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     relationId?: true;
 
     @Field(() => Boolean, {nullable:true})
     role?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     animeId?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     staffId?: true;
 }

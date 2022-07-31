@@ -6,6 +6,7 @@ import { EnumAnimeSourcesWithAggregatesFilter } from '../prisma/enum-anime-sourc
 import { BoolWithAggregatesFilter } from '../prisma/bool-with-aggregates-filter.input';
 import { EnumEpisodeLanguageWithAggregatesFilter } from '../prisma/enum-episode-language-with-aggregates-filter.input';
 import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class EpisodeScalarWhereWithAggregatesInput {
@@ -46,6 +47,6 @@ export class EpisodeScalarWhereWithAggregatesInput {
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     createdAt?: DateTimeWithAggregatesFilter;
 
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    @HideField()
     animeId?: StringWithAggregatesFilter;
 }

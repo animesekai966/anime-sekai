@@ -4,6 +4,7 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { AnimeListRelationFilter } from '../anime/anime-list-relation-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StudioWhereInput {
@@ -27,14 +28,14 @@ export class StudioWhereInput {
     name?: StringFilter;
 
     @Field(() => AnimeListRelationFilter, {nullable:true})
-    animatedAnimes?: AnimeListRelationFilter;
+    animatedAnime?: AnimeListRelationFilter;
 
     @Field(() => AnimeListRelationFilter, {nullable:true})
-    producedAnimes?: AnimeListRelationFilter;
+    producedAnime?: AnimeListRelationFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     animatedAnimeIDs?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
+    @HideField()
     producedAnimeIDs?: StringNullableListFilter;
 }

@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class CharacterOnAnimeCountAggregate {
@@ -8,19 +9,19 @@ export class CharacterOnAnimeCountAggregate {
     @Field(() => Int, {nullable:false})
     id!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     relationId!: number;
 
     @Field(() => Int, {nullable:false})
     role!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     animeId!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     staffId!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     characterId!: number;
 
     @Field(() => Int, {nullable:false})

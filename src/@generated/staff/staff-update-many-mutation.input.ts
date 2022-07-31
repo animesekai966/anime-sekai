@@ -6,6 +6,7 @@ import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { StaffUpdatecharacterIDsInput } from './staff-updatecharacter-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffUpdateManyMutationInput {
@@ -25,6 +26,6 @@ export class StaffUpdateManyMutationInput {
     @Field(() => DescriptionUpdateEnvelopeInput, {nullable:true})
     description?: DescriptionUpdateEnvelopeInput;
 
-    @Field(() => StaffUpdatecharacterIDsInput, {nullable:true})
+    @HideField()
     characterIDs?: StaffUpdatecharacterIDsInput;
 }

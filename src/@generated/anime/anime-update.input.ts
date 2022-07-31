@@ -22,15 +22,17 @@ import { AnimeScoreProvidersNullableUpdateEnvelopeInput } from '../prisma/anime-
 import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
 import { AnimeBroadcastNullableUpdateEnvelopeInput } from '../prisma/anime-broadcast-nullable-update-envelope.input';
-import { GenreUpdateManyWithoutAnimesNestedInput } from '../genre/genre-update-many-without-animes-nested.input';
+import { GenreUpdateManyWithoutAnimeNestedInput } from '../genre/genre-update-many-without-anime-nested.input';
 import { EpisodeUpdateManyWithoutAnimeNestedInput } from '../episode/episode-update-many-without-anime-nested.input';
-import { StudioUpdateManyWithoutProducedAnimesNestedInput } from '../studio/studio-update-many-without-produced-animes-nested.input';
-import { StudioUpdateManyWithoutAnimatedAnimesNestedInput } from '../studio/studio-update-many-without-animated-animes-nested.input';
+import { StudioUpdateManyWithoutProducedAnimeNestedInput } from '../studio/studio-update-many-without-produced-anime-nested.input';
+import { StudioUpdateManyWithoutAnimatedAnimeNestedInput } from '../studio/studio-update-many-without-animated-anime-nested.input';
 import { CharacterOnAnimeUpdateManyWithoutAnimeNestedInput } from '../character-on-anime/character-on-anime-update-many-without-anime-nested.input';
 import { StaffOnAnimeUpdateManyWithoutAnimeNestedInput } from '../staff-on-anime/staff-on-anime-update-many-without-anime-nested.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
+import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
 import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
 
@@ -118,17 +120,17 @@ export class AnimeUpdateInput {
     @Field(() => AnimeBroadcastNullableUpdateEnvelopeInput, {nullable:true})
     broadcast?: AnimeBroadcastNullableUpdateEnvelopeInput;
 
-    @Field(() => GenreUpdateManyWithoutAnimesNestedInput, {nullable:true})
-    genres?: GenreUpdateManyWithoutAnimesNestedInput;
+    @Field(() => GenreUpdateManyWithoutAnimeNestedInput, {nullable:true})
+    genres?: GenreUpdateManyWithoutAnimeNestedInput;
 
     @Field(() => EpisodeUpdateManyWithoutAnimeNestedInput, {nullable:true})
     episodes?: EpisodeUpdateManyWithoutAnimeNestedInput;
 
-    @Field(() => StudioUpdateManyWithoutProducedAnimesNestedInput, {nullable:true})
-    producers?: StudioUpdateManyWithoutProducedAnimesNestedInput;
+    @Field(() => StudioUpdateManyWithoutProducedAnimeNestedInput, {nullable:true})
+    producers?: StudioUpdateManyWithoutProducedAnimeNestedInput;
 
-    @Field(() => StudioUpdateManyWithoutAnimatedAnimesNestedInput, {nullable:true})
-    studios?: StudioUpdateManyWithoutAnimatedAnimesNestedInput;
+    @Field(() => StudioUpdateManyWithoutAnimatedAnimeNestedInput, {nullable:true})
+    studios?: StudioUpdateManyWithoutAnimatedAnimeNestedInput;
 
     @Field(() => CharacterOnAnimeUpdateManyWithoutAnimeNestedInput, {nullable:true})
     characters?: CharacterOnAnimeUpdateManyWithoutAnimeNestedInput;
@@ -139,18 +141,21 @@ export class AnimeUpdateInput {
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
 
+    @Field(() => [ExternalLinkCreateInput], {nullable:true})
+    externalLinks?: Array<ExternalLinkCreateInput>;
+
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => AnimeUpdateproducerIDsInput, {nullable:true})
+    @HideField()
     producerIDs?: AnimeUpdateproducerIDsInput;
 
-    @Field(() => AnimeUpdatestudioIDsInput, {nullable:true})
+    @HideField()
     studioIDs?: AnimeUpdatestudioIDsInput;
 
-    @Field(() => AnimeUpdategenreIDsInput, {nullable:true})
+    @HideField()
     genreIDs?: AnimeUpdategenreIDsInput;
 }

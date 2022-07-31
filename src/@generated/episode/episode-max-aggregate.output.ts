@@ -3,6 +3,7 @@ import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { AnimeSources } from '../prisma/anime-sources.enum';
 import { EpisodeLanguage } from '../prisma/episode-language.enum';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class EpisodeMaxAggregate {
@@ -34,6 +35,6 @@ export class EpisodeMaxAggregate {
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeId?: string;
 }

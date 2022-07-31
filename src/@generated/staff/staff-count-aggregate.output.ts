@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class StaffCountAggregate {
@@ -14,7 +15,7 @@ export class StaffCountAggregate {
     @Field(() => Int, {nullable:false})
     info!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     characterIDs!: number;
 
     @Field(() => Int, {nullable:false})

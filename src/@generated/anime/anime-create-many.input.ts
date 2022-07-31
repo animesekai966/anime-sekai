@@ -19,7 +19,9 @@ import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { AnimeBroadcastNullableCreateEnvelopeInput } from '../prisma/anime-broadcast-nullable-create-envelope.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
+import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
 
@@ -113,18 +115,21 @@ export class AnimeCreateManyInput {
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
 
+    @Field(() => [ExternalLinkCreateInput], {nullable:true})
+    externalLinks?: Array<ExternalLinkCreateInput>;
+
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
 
-    @Field(() => AnimeCreateproducerIDsInput, {nullable:true})
+    @HideField()
     producerIDs?: AnimeCreateproducerIDsInput;
 
-    @Field(() => AnimeCreatestudioIDsInput, {nullable:true})
+    @HideField()
     studioIDs?: AnimeCreatestudioIDsInput;
 
-    @Field(() => AnimeCreategenreIDsInput, {nullable:true})
+    @HideField()
     genreIDs?: AnimeCreategenreIDsInput;
 }

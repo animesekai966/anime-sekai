@@ -1,13 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance } from "axios";
-import * as https from "https";
-import * as http from "http";
-
-let malStatusToAnilist = {
-  "Currently Airing": "RELEASING",
-  "Finished Airing": "FINISHED",
-  "Not yet aired": "NOT_YET_RELEASED",
-};
+import https from "https";
+import http from "http";
 
 @Injectable()
 export class AnilistService {
@@ -39,7 +33,7 @@ export class AnilistService {
       } = await this.axios({
         data: {
           query: `query Query($mediaId: Int, $idMal: Int) {
-          Media(id: $mediaId, idMal: $idMal) {
+          Media(id: $mediaId, idMal: $idMal, type: ANIME) {
             id
             idMal
             title {
@@ -63,8 +57,11 @@ export class AnilistService {
             }
             season
             seasonYear
+            seasonInt
             episodes
             duration
+            chapters
+            volumes
             countryOfOrigin
             isLicensed
             source
@@ -95,20 +92,35 @@ export class AnilistService {
               name
               description
               category
-              isAdult
+              rank
+              isGeneralSpoiler
               isMediaSpoiler
+              isAdult
             }
             relations {
               edges {
-                id
-                relationType
                 node {
                   id
                   idMal
                 }
+                relationType
+              }
+              pageInfo {
+                total
+                perPage
+                currentPage
+                lastPage
+                hasNextPage
               }
             }
             characters {
+              pageInfo {
+                total
+                perPage
+                currentPage
+                lastPage
+                hasNextPage
+              }
               edges {
                 node {
                   id
@@ -120,6 +132,7 @@ export class AnilistService {
                     native
                     alternative
                     alternativeSpoiler
+                    userPreferred
                   }
                   image {
                     large
@@ -135,43 +148,6 @@ export class AnilistService {
                   age
                   bloodType
                 }
-                id
-                role
-                voiceActorRoles {
-                  voiceActor {
-                    id
-                    name {
-                      first
-                      middle
-                      last
-                      full
-                      native
-                      alternative
-                    }
-                    languageV2
-                    image {
-                      large
-                      medium
-                    }
-                    description
-                    primaryOccupations
-                    gender
-                    dateOfBirth {
-                      year
-                      month
-                      day
-                    }
-                    dateOfDeath {
-                      year
-                      month
-                      day
-                    }
-                    age
-                    yearsActive
-                    homeTown
-                    bloodType
-                  }
-                }
               }
             }
             staff {
@@ -185,7 +161,9 @@ export class AnilistService {
                     last
                     full
                     native
+                    alternative
                   }
+                  language
                   languageV2
                   image {
                     large
@@ -209,17 +187,19 @@ export class AnilistService {
                   homeTown
                   bloodType
                 }
-                role
               }
             }
             studios {
               edges {
+                isMain
                 node {
                   id
                   name
                   isAnimationStudio
+                  siteUrl
+                  isFavourite
+                  favourites
                 }
-                id
               }
             }
             isAdult
@@ -228,10 +208,10 @@ export class AnilistService {
               airingAt
               timeUntilAiring
               episode
+              mediaId
             }
             airingSchedule {
               edges {
-                id
                 node {
                   id
                   airingAt
@@ -239,6 +219,13 @@ export class AnilistService {
                   episode
                   mediaId
                 }
+              }
+              pageInfo {
+                total
+                perPage
+                currentPage
+                lastPage
+                hasNextPage
               }
             }
             externalLinks {
@@ -250,8 +237,38 @@ export class AnilistService {
               language
               color
               icon
+              notes
+              isDisabled
             }
+            rankings {
+              id
+              rank
+              type
+              format
+              year
+              season
+              allTime
+              context
+            }
+            stats {
+              scoreDistribution {
+                score
+                amount
+              }
+              statusDistribution {
+                status
+                amount
+              }
+            }
+            siteUrl
             recommendations {
+              pageInfo {
+                total
+                perPage
+                currentPage
+                lastPage
+                hasNextPage
+              }
               edges {
                 node {
                   id
@@ -260,6 +277,14 @@ export class AnilistService {
                   media {
                     id
                     idMal
+                  }
+                  mediaRecommendation {
+                    id
+                    idMal
+                  }
+                  user {
+                    id
+                    name
                   }
                 }
               }
@@ -489,5 +514,36 @@ export interface AnimeEntity {
         };
       }[];
     };
+    seasonInt: number;
+    chapters: number;
+    volumes: number;
+    rankings: {
+      id: number;
+      rank: number;
+      type: string;
+      format: string;
+      year: number;
+      season: string;
+      allTime: boolean;
+      context: string;
+    }[];
+    stats: {
+      scoreDistribution: {
+        score: number;
+        amount: number;
+      }[];
+      statusDistribution: {
+        status:
+          | "CURRENT"
+          | "PLANNING"
+          | "COMPLETED"
+          | "DROPPED"
+          | "PAUSED"
+          | "REPEATING";
+        amount: number;
+      }[];
+    };
+    siteUrl: string;
+    id: number;
   };
 }

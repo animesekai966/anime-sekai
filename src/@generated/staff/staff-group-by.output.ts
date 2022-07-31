@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { StaffCountAggregate } from './staff-count-aggregate.output';
 import { StaffAvgAggregate } from './staff-avg-aggregate.output';
 import { StaffSumAggregate } from './staff-sum-aggregate.output';
@@ -19,7 +20,7 @@ export class StaffGroupBy {
     @Field(() => String, {nullable:true})
     info?: string;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     characterIDs?: Array<string>;
 
     @Field(() => StaffCountAggregate, {nullable:true})

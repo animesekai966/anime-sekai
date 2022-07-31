@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class GenreCountAggregateInput {
@@ -16,7 +17,7 @@ export class GenreCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     type?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     animeIDs?: true;
 
     @Field(() => Boolean, {nullable:true})

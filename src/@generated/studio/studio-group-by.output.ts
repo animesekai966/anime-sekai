@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { StudioCountAggregate } from './studio-count-aggregate.output';
 import { StudioAvgAggregate } from './studio-avg-aggregate.output';
 import { StudioSumAggregate } from './studio-sum-aggregate.output';
@@ -19,10 +20,10 @@ export class StudioGroupBy {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     animatedAnimeIDs?: Array<string>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     producedAnimeIDs?: Array<string>;
 
     @Field(() => StudioCountAggregate, {nullable:true})

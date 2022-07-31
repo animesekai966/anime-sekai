@@ -5,6 +5,7 @@ import { StaffNameCreateEnvelopeInput } from '../staff-name/staff-name-create-en
 import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
 import { DescriptionCreateEnvelopeInput } from '../description/description-create-envelope.input';
 import { StaffCreatecharacterIDsInput } from './staff-createcharacter-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffCreateManyInput {
@@ -27,6 +28,6 @@ export class StaffCreateManyInput {
     @Field(() => DescriptionCreateEnvelopeInput, {nullable:false})
     description!: DescriptionCreateEnvelopeInput;
 
-    @Field(() => StaffCreatecharacterIDsInput, {nullable:true})
+    @HideField()
     characterIDs?: StaffCreatecharacterIDsInput;
 }

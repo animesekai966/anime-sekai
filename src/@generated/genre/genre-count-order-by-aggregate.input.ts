@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class GenreCountOrderByAggregateInput {
@@ -17,6 +18,6 @@ export class GenreCountOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     type?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animeIDs?: keyof typeof SortOrder;
 }

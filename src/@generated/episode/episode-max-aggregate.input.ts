@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class EpisodeMaxAggregateInput {
@@ -31,6 +32,6 @@ export class EpisodeMaxAggregateInput {
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     animeId?: true;
 }

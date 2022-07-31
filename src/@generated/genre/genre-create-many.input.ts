@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { GenreType } from '../prisma/genre-type.enum';
 import { GenreCreateanimeIDsInput } from './genre-createanime-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class GenreCreateManyInput {
@@ -19,6 +20,6 @@ export class GenreCreateManyInput {
     @Field(() => GenreType, {nullable:true})
     type?: keyof typeof GenreType;
 
-    @Field(() => GenreCreateanimeIDsInput, {nullable:true})
+    @HideField()
     animeIDs?: GenreCreateanimeIDsInput;
 }

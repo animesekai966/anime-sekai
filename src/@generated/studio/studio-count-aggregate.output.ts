@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class StudioCountAggregate {
@@ -14,10 +15,10 @@ export class StudioCountAggregate {
     @Field(() => Int, {nullable:false})
     name!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     animatedAnimeIDs!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     producedAnimeIDs!: number;
 
     @Field(() => Int, {nullable:false})

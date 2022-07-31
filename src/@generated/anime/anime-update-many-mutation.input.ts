@@ -23,8 +23,10 @@ import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
 import { AnimeBroadcastNullableUpdateEnvelopeInput } from '../prisma/anime-broadcast-nullable-update-envelope.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
+import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
+import { HideField } from '@nestjs/graphql';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
 import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
 
@@ -115,18 +117,21 @@ export class AnimeUpdateManyMutationInput {
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
 
+    @Field(() => [ExternalLinkCreateInput], {nullable:true})
+    externalLinks?: Array<ExternalLinkCreateInput>;
+
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => AnimeUpdateproducerIDsInput, {nullable:true})
+    @HideField()
     producerIDs?: AnimeUpdateproducerIDsInput;
 
-    @Field(() => AnimeUpdatestudioIDsInput, {nullable:true})
+    @HideField()
     studioIDs?: AnimeUpdatestudioIDsInput;
 
-    @Field(() => AnimeUpdategenreIDsInput, {nullable:true})
+    @HideField()
     genreIDs?: AnimeUpdategenreIDsInput;
 }

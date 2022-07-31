@@ -1,5 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class StaffOnAnimeCreateManyInput {
@@ -7,15 +8,15 @@ export class StaffOnAnimeCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     relationId!: string;
 
     @Field(() => String, {nullable:false})
     role!: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     staffId!: string;
 }

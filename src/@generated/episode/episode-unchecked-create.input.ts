@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { ServerCreateInput } from '../server/server-create.input';
 import { AnimeSources } from '../prisma/anime-sources.enum';
 import { EpisodeLanguage } from '../prisma/episode-language.enum';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class EpisodeUncheckedCreateInput {
@@ -38,6 +39,6 @@ export class EpisodeUncheckedCreateInput {
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     animeId!: string;
 }

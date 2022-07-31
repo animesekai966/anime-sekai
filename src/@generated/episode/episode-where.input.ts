@@ -8,6 +8,7 @@ import { EnumAnimeSourcesFilter } from '../prisma/enum-anime-sources-filter.inpu
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumEpisodeLanguageFilter } from '../prisma/enum-episode-language-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class EpisodeWhereInput {
@@ -54,6 +55,6 @@ export class EpisodeWhereInput {
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     animeId?: StringFilter;
 }

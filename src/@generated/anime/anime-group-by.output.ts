@@ -7,6 +7,7 @@ import { AnimeSeason } from '../prisma/anime-season.enum';
 import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
+import { HideField } from '@nestjs/graphql';
 import { AnimeCountAggregate } from './anime-count-aggregate.output';
 import { AnimeAvgAggregate } from './anime-avg-aggregate.output';
 import { AnimeSumAggregate } from './anime-sum-aggregate.output';
@@ -76,13 +77,13 @@ export class AnimeGroupBy {
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     producerIDs?: Array<string>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     studioIDs?: Array<string>;
 
-    @Field(() => [String], {nullable:true})
+    @HideField()
     genreIDs?: Array<string>;
 
     @Field(() => AnimeCountAggregate, {nullable:true})
