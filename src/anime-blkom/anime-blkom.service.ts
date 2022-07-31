@@ -1,9 +1,13 @@
-import { Injectable } from "@nestjs/common";
-import { load } from "cheerio/lib/slim";
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import https from "https";
 import http from "http";
+import axios from "axios";
+import { Injectable } from "@nestjs/common";
+import { load } from "cheerio/lib/slim";
+import { AxiosInstance } from "axios";
+import { wrapper } from "axios-cookiejar-support";
+import { CookieJar } from "tough-cookie";
 import { JikanService } from "src/jikan/jikan.service";
+
 const fetchServers = [
   "https://blkomFetch.sekai9666.repl.co",
   "https://blkomFetch1.sekai9666.repl.co",
@@ -18,55 +22,69 @@ const fetchServers = [
   "https://blkomFetch10.sekai9666.repl.co",
 ];
 
+const USE_PROXY = false;
 const PROXY_URL = `https://anime-sekai-proxy.onrender.com/`;
 
 @Injectable()
 export class AnimeBlkomService {
   axios: AxiosInstance;
   constructor(private jikan: JikanService) {
-    this.axios = axios.create({
-      baseURL: `${PROXY_URL}animeblkom.net:443`,
-      httpAgent: new http.Agent({ keepAlive: true }),
-      httpsAgent: new https.Agent({ keepAlive: true }),
-      headers: {
-        "x-requested-with": "XMLHttpRequest",
-      },
-    });
+    const jar = new CookieJar();
+    this.axios = wrapper(
+      axios.create({
+        baseURL: USE_PROXY
+          ? `${PROXY_URL}animeblkom.net:443`
+          : "https://animeblkom.net",
+        httpAgent: new http.Agent({ keepAlive: true }),
+        httpsAgent: new https.Agent({ keepAlive: true }),
+        headers: {
+          "x-requested-with": "XMLHttpRequest",
+        },
+      }),
+    );
   }
 
   async getAnimeList(page = 0): Promise<AnimeEntity[]> {
-    let { data } = await this.axios({ url: "/anime-list?page=" + page++ });
-    let slugs: string[] = [];
-    let $ = load(data);
-    $(`div.poster > a`).each((_, el) => {
-      slugs.push(
-        String(el.attributes.find((att) => att.name === "href")?.value)
-          .replace(/\/(anime|watch)\//, "")
-          .replace(/\//g, ""),
-      );
-    });
+    try {
+      let { data } = await this.axios({ url: "/anime-list?page=" + page++ });
+      let slugs: string[] = [];
+      let $ = load(data);
+      $(`div.poster > a`).each((_, el) => {
+        slugs.push(
+          String(el.attributes.find((att) => att.name === "href")?.value)
+            .replace(/\/(anime|watch)\//, "")
+            .replace(/\//g, ""),
+        );
+      });
 
-    return Promise.all(
-      slugs.map(async (slug) => {
-        let content = await this.getAnime(slug, false);
-        return content;
-      }),
-    );
+      return Promise.all(
+        slugs.map(async (slug) => {
+          let content = await this.getAnime(slug, false);
+          return content;
+        }),
+      );
+    } catch {
+      return await this.getAnimeList(page);
+    }
   }
 
   async getLatest(page = 0, getContent = false): Promise<LatestAnimeEntity[]> {
-    let { data } = await this.axios({ url: "/get-videos?page=" + page });
-    return Promise.all(
-      data.map(async (obj: LatestAnimeEntity) => {
-        let content = getContent
-          ? await this.getAnime(obj.content_name_url, false)
-          : {};
-        return {
-          ...obj,
-          content,
-        };
-      }),
-    );
+    try {
+      let { data } = await this.axios({ url: "/get-videos?page=" + page });
+      return Promise.all(
+        data.map(async (obj: LatestAnimeEntity) => {
+          let content = getContent
+            ? await this.getAnime(obj.content_name_url, false)
+            : {};
+          return {
+            ...obj,
+            content,
+          };
+        }),
+      );
+    } catch {
+      return await this.getLatest(page, getContent);
+    }
   }
 
   async getAnimeEpServers(slug: string, ep = 1): Promise<AnimeEpServer[]> {
@@ -173,6 +191,7 @@ export class AnimeBlkomService {
             url: `https://animeblkom.com/watch/${slug}`,
             rawNumber: 1,
             number: "MOVIE",
+            last: true,
             servers: [],
           });
         } else {
@@ -187,6 +206,7 @@ export class AnimeBlkomService {
               url,
               rawNumber,
               number: String($(`a > span:nth-child(3)`).text()).trim(),
+              last: !!$(`a > span:nth-child(4)`).text(),
               servers: [],
             });
           });
@@ -239,6 +259,7 @@ export interface AnimeEntity {
     url: string;
     rawNumber: number;
     number: string;
+    last: boolean;
     servers: {
       name: string;
       translatedBy: string;
