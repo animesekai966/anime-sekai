@@ -23,22 +23,22 @@ const b2 = new S3({
 const uploadTypeDetails: UploadDetailsType = {
   animeBanner: {
     quality: 100,
-    service: "b2",
+    service: "r2",
     path: "anime/banner",
   },
   animeCover: {
     quality: 90,
-    service: "b2",
+    service: "r2",
     path: "anime/cover",
   },
   character: {
     quality: 50,
-    service: "r2",
+    service: "b2",
     path: "character",
   },
   staff: {
     quality: 50,
-    service: "r2",
+    service: "b2",
     path: "staff",
   },
 };

@@ -311,13 +311,15 @@ export class AnimeManager {
       status: (anilistDetails.status ||
         malStatusToAnimeSekaiStatus[malDetails.status]) as any,
       countryOfOrigin: anilistDetails.countryOfOrigin,
-      externalLinks: anilistDetails.externalLinks.map((externalLink) => ({
-        url: externalLink.url,
-        site: externalLink.site || undefined,
-        type: externalLink.type || "OTHER",
-        language: externalLink.language || undefined,
-        color: externalLink.color || undefined,
-      })),
+      externalLinks: {
+        set: anilistDetails.externalLinks.map((externalLink) => ({
+          url: externalLink.url,
+          site: externalLink.site || undefined,
+          type: (externalLink.type || "OTHER") as any,
+          language: externalLink.language || undefined,
+          color: externalLink.color || undefined,
+        })),
+      },
     };
 
     let cover =
