@@ -22,7 +22,7 @@ const fetchServers = [
   "https://blkomFetch10.sekai9666.repl.co",
 ];
 
-const USE_PROXY = false;
+const USE_PROXY = true;
 const PROXY_URL = `https://blkomFetch1.sekai9666.repl.co/`;
 
 @Injectable()
