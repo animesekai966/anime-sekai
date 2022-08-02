@@ -213,7 +213,10 @@ export class AnimeManager {
         romaji: malDetails.title || anilistDetails.title.romaji,
         english: malDetails.title_english || anilistDetails.title.english,
         native: malDetails.title_japanese || anilistDetails.title.native,
-        synonyms: [...malDetails.title_synonyms, ...anilistDetails.synonyms] as any,
+        synonyms: [
+          ...malDetails.title_synonyms,
+          ...anilistDetails.synonyms,
+        ] as any,
       },
     };
 
@@ -257,8 +260,8 @@ export class AnimeManager {
       season: (malDetails.season?.toUpperCase() ||
         anilistDetails.season ||
         undefined) as any,
-      source: (malDetails.source?.toUpperCase()?.replace(/ /g, "_") ||
-        anilistDetails.source ||
+      source: (anilistDetails.source ||
+        malDetails.source?.toUpperCase()?.replace(/ /g, "_") ||
         undefined) as any,
       isAdult:
         anilistDetails.isAdult ?? NsfwRatings.includes(malDetails.rating),

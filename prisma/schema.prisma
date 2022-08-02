@@ -290,6 +290,7 @@ enum AnimeRelation {
     COMPILATION
     CONTAINS
     RECOMMENDATION
+    MIXED_MEDIA
 }
 
 enum AnimeStatus {

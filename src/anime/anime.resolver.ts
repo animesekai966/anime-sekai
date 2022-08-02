@@ -19,8 +19,13 @@ import { Genre } from "src/@generated/genre/genre.model";
 import { StaffOnAnime } from "src/@generated/staff-on-anime/staff-on-anime.model";
 import { Studio } from "src/@generated/studio/studio.model";
 import { PrismaService } from "src/prisma/prisma.service";
+import { PageInput } from "src/util.graphql";
 import { AnimeService } from "./anime.service";
-import { RelatedAnime } from "./entities/anime.entity";
+import {
+  AnimePage,
+  AnimeRelatedPage,
+  RelatedAnime,
+} from "./entities/anime.entity";
 
 @Resolver(() => Anime)
 export class AnimeResolver {
@@ -47,7 +52,7 @@ export class AnimeResolver {
     return anime;
   }
 
-  @Query(() => [Anime], { name: "animeList" })
+  @Query(() => AnimePage, { name: "animeList" })
   async findAll(
     @Args("AnimeWhereInput", { nullable: true })
     animeWhereInput: AnimeWhereInput,
@@ -55,13 +60,17 @@ export class AnimeResolver {
     orderBy: AnimeOrderByWithRelationInput,
     @Args("search", { nullable: true })
     search: string,
-  ) {
-    const anime = await this.animeService.findMany({
+    @Args("pagination", { nullable: true })
+    pagination: PageInput,
+  ): Promise<AnimePage> {
+    const animePaginated = await this.animeService.findMany({
       where: animeWhereInput,
       orderBy: orderBy,
       search,
+      pagination,
     });
-    return anime;
+
+    return animePaginated;
   }
 
   @ResolveField("characters", () => [CharacterOnAnime])
@@ -100,8 +109,12 @@ export class AnimeResolver {
     return this.animeService.getAnimeStudios(id);
   }
 
-  @ResolveField("related", () => [RelatedAnime])
-  async getAnimeRelated(@Parent() anime: Anime): Promise<RelatedAnime[]> {
+  @ResolveField("related", () => AnimeRelatedPage)
+  async getAnimeRelated(
+    @Parent() anime: Anime,
+    @Args("pagination", { nullable: true })
+    pagination: PageInput,
+  ): Promise<AnimeRelatedPage> {
     let { related } = anime;
     let result = await this.animeService.findMany({
       where: {
@@ -109,11 +122,17 @@ export class AnimeResolver {
           in: related.map((anime) => anime.malId),
         },
       },
+      pagination,
     });
 
-    return result.map((anime) => ({
-      relation: related.find((ani) => ani.malId == anime.malId).type,
-      anime,
-    }));
+    /**/
+
+    return {
+      pageInfo: result.pageInfo,
+      anime: result.anime.map((anime) => ({
+        relation: related.find((ani) => ani.malId == anime.malId).type,
+        anime,
+      })),
+    };
   }
 }

@@ -5,6 +5,6 @@ export class AppController {
   constructor() {}
   @Get("/")
   home() {
-    return "hi";
+    return "Made With ❤️ By Sekai966 (https://github.com/ig4e)";
   }
 }

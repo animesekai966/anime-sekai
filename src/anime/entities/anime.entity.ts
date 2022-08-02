@@ -1,7 +1,8 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { Anime } from "src/@generated/anime/anime.model";
+import { BasePage } from "src/util.graphql";
 
-@ObjectType({})
+@ObjectType()
 export class RelatedAnime {
   @Field()
   relation: string;
@@ -9,4 +10,14 @@ export class RelatedAnime {
   anime: Anime;
 }
 
+@ObjectType()
+export class AnimePage extends BasePage {
+  @Field(() => [Anime])
+  anime: Anime[];
+}
 
+@ObjectType()
+export class AnimeRelatedPage extends BasePage {
+  @Field(() => [RelatedAnime])
+  anime: RelatedAnime[];
+}
