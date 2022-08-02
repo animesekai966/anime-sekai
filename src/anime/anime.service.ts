@@ -18,33 +18,13 @@ export class AnimeService {
     private anilist: AnilistService,
   ) {}
 
-  /*
-
-       characters: {
-          include: {
-            character: true,
-            voiceActors: true,
-          },
-        },
-        episodes: true,
-        genres: true,
-        producers: true,
-        staff: {
-          include: {
-            staff: true,
-          },
-        },
-        studios: true,
-
-  */
-
   async getAnime(
     where: AnimeWhereInput,
     orderBy: AnimeOrderByWithRelationInput,
   ) {
-    return await this.prisma.anime.findFirst({
+    return await this.prisma.anime.findMany({
       where: where as any,
-      orderBy,
+      orderBy: orderBy,
     });
   }
 
@@ -56,6 +36,55 @@ export class AnimeService {
       include: {
         character: true,
         voiceActors: true,
+      },
+    });
+  }
+
+  async getAnimeEpisodes(id: string) {
+    return this.prisma.episode.findMany({
+      where: {
+        animeId: id,
+      },
+    });
+  }
+
+  async getAnimeGenres(id: string) {
+    return this.prisma.genre.findMany({
+      where: {
+        animeIDs: {
+          has: id,
+        },
+      },
+    });
+  }
+
+  async getAnimeProducers(id: string) {
+    return this.prisma.studio.findMany({
+      where: {
+        producedAnimeIDs: {
+          has: id,
+        },
+      },
+    });
+  }
+
+  async getAnimeStudios(id: string) {
+    return this.prisma.studio.findMany({
+      where: {
+        animatedAnimeIDs: {
+          has: id,
+        },
+      },
+    });
+  }
+
+  async getAnimeStaff(id: string) {
+    return this.prisma.staffOnAnime.findMany({
+      where: {
+        animeId: id,
+      },
+      include: {
+        staff: true,
       },
     });
   }

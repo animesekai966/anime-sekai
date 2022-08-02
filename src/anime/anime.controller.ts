@@ -24,10 +24,10 @@ export class AnimeController {
     private animeJobs: AnimeJobs,
   ) {}
   @Get("/test")
-  async test(@Query("slug") blkomSlug: string, @Query("text") text: string) {
+  async test(@Query("slug") slug: string, @Query("text") text: string) {
     //return await this.manager.addAnimeBlkomEpisodes("high-school-dxd");
 
-    return await this.manager.createAnime({ animeXSlug: "5c3fK9DLsRrsC" });
+    return await this.manager.createAnime({ animeXSlug: slug });
   }
 
   @Get("/scrapeAllAnimes")
