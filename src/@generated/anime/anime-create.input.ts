@@ -97,8 +97,8 @@ export class AnimeCreateInput {
     @Field(() => Boolean, {nullable:false})
     isAdult!: boolean;
 
-    @Field(() => AgeRating, {nullable:false})
-    rating!: keyof typeof AgeRating;
+    @Field(() => AgeRating, {nullable:true})
+    rating?: keyof typeof AgeRating;
 
     @Field(() => AnimeSource, {nullable:false})
     source!: keyof typeof AnimeSource;

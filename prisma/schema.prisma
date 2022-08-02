@@ -37,7 +37,7 @@ model Anime {
     countryOfOrigin String?              @default("ja")
     isLicensed      Boolean
     isAdult         Boolean
-    rating          AgeRating
+    rating          AgeRating            @default(PG13)
     source          AnimeSource
     trailer         AnimeTrailer
     score           AnimeScoreProviders?

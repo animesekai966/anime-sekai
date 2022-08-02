@@ -27,7 +27,7 @@ export class AnimeXService {
 
     return data.map((ep) => ({
       number: ep.number,
-      rawNumber: Number(String(ep.number)?.match(/([0-9]+\.?[0-9]+)/g)?.[0]),
+      rawNumber: Number(String(ep.number)?.match(/^[+-]?(\d*\.)?\d+$/g)?.[0]),
       last: !!ep.last,
       filler: !!ep.filler,
       content: {
@@ -92,7 +92,7 @@ export class AnimeXService {
           return {
             number: ep.number,
             rawNumber: Number(
-              String(ep.number)?.match(/([0-9]+\.?[0-9]+)/g)?.[0],
+              String(ep.number)?.match(/^[+-]?(\d*\.)?\d+$/g)?.[0],
             ),
             last: !!ep.last,
             filler: !!ep.filler,

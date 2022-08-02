@@ -91,7 +91,7 @@ export class Anime {
     @Field(() => Boolean, {nullable:false})
     isAdult!: boolean;
 
-    @Field(() => AgeRating, {nullable:false})
+    @Field(() => AgeRating, {nullable:false,defaultValue:'PG13'})
     rating!: keyof typeof AgeRating;
 
     @Field(() => AnimeSource, {nullable:false})

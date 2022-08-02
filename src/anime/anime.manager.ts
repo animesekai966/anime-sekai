@@ -107,6 +107,8 @@ export class AnimeManager {
         score: animeObject.score,
         broadcast: animeObject.broadcast,
         externalLinks: animeObject.externalLinks,
+        rating: animeObject.rating,
+        season: animeObject.season,
       },
     });
 
@@ -170,7 +172,8 @@ export class AnimeManager {
         animeXId: animeXId,
         slug: animeObject.title.set.romaji
           .toLowerCase()
-          .replace(/[^aA-zZ]/gm, "_"),
+          .replace(/[^(aA-zZ)|0-9]/gm, "_")
+          .replace(/_+/g, "_"),
         ...animeObject,
         cover: {
           id: animeCover.id,
@@ -250,7 +253,7 @@ export class AnimeManager {
           : malDetails.duration,
       ),
       episodesCount: malDetails.episodes || anilistDetails.episodes,
-      rating: malRatingsToAnimeSekaiRatings[malDetails.rating],
+      rating: malRatingsToAnimeSekaiRatings[malDetails.rating] || undefined,
       season: (malDetails.season?.toUpperCase() ||
         anilistDetails.season ||
         undefined) as any,

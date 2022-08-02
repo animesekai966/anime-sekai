@@ -31,6 +31,7 @@ export class AnimeJobs {
   async checkNewEpsFromAnimeX() {
     for (let page = 0; page < 2; page++) {
       let pageAnimes = await this.animeXService.getLatest(page);
+      console.log(`[SCRAPER] Scraping Page ${page}`)
       for (let xEp of pageAnimes) {
         if (xEp.content.mal_url) {
           let ifAnimeExists = await this.prisma.anime.count({
@@ -44,6 +45,7 @@ export class AnimeJobs {
             });
           } else {
             await this.manager.addAnimeXEp(xEp.content.slug, xEp);
+            console.log("[SCRAPER] Added/Updated new Ep");
           }
         } else {
           console.log(`[SCRAPER] skipped non-mal anime ${xEp.content.name}`);
