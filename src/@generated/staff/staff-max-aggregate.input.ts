@@ -9,7 +9,4 @@ export class StaffMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     malId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    info?: true;
 }

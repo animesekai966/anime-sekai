@@ -655,7 +655,6 @@ export class AnimeManager {
               nativeFamily: String(staff.family_name),
               alternates: staff.alternate_names,
             },
-            info: staff.about,
           },
         });
       }

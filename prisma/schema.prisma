@@ -205,7 +205,6 @@ model Staff {
     malId        Int?               @unique
     name         StaffName
     image        Image
-    info         String?
     description  Description
     characters   CharacterOnAnime[] @relation("staffCharacter", fields: [characterIDs], references: [id])
     animeRoles   StaffOnAnime[]     @relation("staffPerson")
@@ -338,6 +337,7 @@ enum AnimeSource {
     MULTIMEDIA_PROJECT
     PICTURE_BOOK
     BOOK
+    UNKNOWN
 }
 
 enum ServerQuality {

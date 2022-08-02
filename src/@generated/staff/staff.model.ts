@@ -25,9 +25,6 @@ export class Staff {
     @Field(() => Image, {nullable:false})
     image?: Image;
 
-    @Field(() => String, {nullable:true})
-    info!: string | null;
-
     @Field(() => Description, {nullable:false})
     description?: Description;
 

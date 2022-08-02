@@ -16,7 +16,8 @@ export enum AnimeSource {
     COMIC = "COMIC",
     MULTIMEDIA_PROJECT = "MULTIMEDIA_PROJECT",
     PICTURE_BOOK = "PICTURE_BOOK",
-    BOOK = "BOOK"
+    BOOK = "BOOK",
+    UNKNOWN = "UNKNOWN"
 }
 
 
