@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { AnimeCreateInput } from "src/@generated/anime/anime-create.input";
 import { AnilistService } from "src/anilist/anilist.service";
-import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
 import { AnimeXService, LatestAnimeEntity } from "src/anime-x/anime-x.service";
 import {
   JikanService,
@@ -19,7 +18,6 @@ import ms from "ms";
 export class AnimeManager {
   constructor(
     private jikan: JikanService,
-    private blkom: AnimeBlkomService,
     private animeX: AnimeXService,
     private prisma: PrismaService,
     private anilist: AnilistService,
@@ -28,19 +26,18 @@ export class AnimeManager {
   ) {}
 
   async updateAnime({
-    blkomSlug,
     animeXSlug,
+    malUrl,
   }: {
-    blkomSlug: string;
-    animeXSlug: string;
+    animeXSlug?: string;
+    malUrl?: string;
   }) {
-    let animeBlkomDetails = await this.blkom.getAnime(blkomSlug);
     let animeXDetails = await this.animeX.getAnime({
       slug: animeXSlug,
-      mal: animeBlkomDetails.mal,
+      mal: malUrl,
     });
-    let malId =
-      animeBlkomDetails.malId ?? this.jikan.malIdFromUrl(animeXDetails.mal);
+
+    let malId = this.jikan.malIdFromUrl(animeXDetails.mal);
     if (!malId) return;
     let currentAnime = await this.prisma.anime.findUnique({
       where: {
@@ -51,7 +48,7 @@ export class AnimeManager {
     let { animeObject, cover, banner, IDs } = await this.getAnimeInfo(
       { malId },
       {
-        arDescription: animeBlkomDetails.story || animeXDetails.story,
+        arDescription: animeXDetails.story,
       },
     );
 
@@ -108,6 +105,8 @@ export class AnimeManager {
         openings: animeObject.openings,
         episodesCount: animeObject.episodesCount,
         score: animeObject.score,
+        broadcast: animeObject.broadcast,
+        externalLinks: animeObject.externalLinks,
       },
     });
 
@@ -117,37 +116,20 @@ export class AnimeManager {
   }
 
   async createAnime({
-    blkomSlug,
+    malUrl,
     animeXSlug,
   }: {
-    blkomSlug?: string;
+    malUrl?: string;
     animeXSlug?: string;
   }) {
-    let malUrl: string = null;
-    let malId: number = null;
-    let animeBlkomId: string = null;
-    let animeXId: string = null;
-    let arStory = "";
+    let animeXDetails = await this.animeX.getAnime({
+      slug: animeXSlug,
+      mal: malUrl,
+    });
 
-    if (blkomSlug) {
-      let animeBlkomDetails = await this.blkom.getAnime(blkomSlug);
-      malId = animeBlkomDetails.malId;
-      malUrl = animeBlkomDetails.mal;
-      animeBlkomId = animeBlkomDetails.slug;
-      arStory = animeBlkomDetails.story;
-    }
-
-    if (animeXSlug || malUrl) {
-      let animeXDetails = await this.animeX.getAnime({
-        slug: animeXSlug,
-        mal: malUrl,
-      });
-      if (animeXDetails) {
-        if (!malId) malId = this.jikan.malIdFromUrl(animeXDetails.mal);
-        animeXId = animeXDetails.primary_key;
-        if (!arStory) arStory = animeXDetails.story;
-      }
-    }
+    let malId = this.jikan.malIdFromUrl(animeXDetails.mal);
+    let animeXId = animeXDetails.primary_key;
+    let arStory = animeXDetails.story;
 
     if (!malId) return null;
 
@@ -186,7 +168,6 @@ export class AnimeManager {
         malId: IDs.malId,
         anilistId: IDs.anilistId,
         animeXId: animeXId,
-        animeBlkomId: animeBlkomId,
         slug: animeObject.title.set.romaji
           .toLowerCase()
           .replace(/[^aA-zZ]/gm, "_"),
@@ -205,8 +186,7 @@ export class AnimeManager {
     });
 
     console.log(`[CREATED] ${anime.title.romaji}`);
-    if (animeBlkomId) await this.addAnimeBlkomEpisodes(animeBlkomId);
-    if (animeXId) await this.addAnimeXEpisodes(animeXId, anime.id);
+    await this.addAnimeXEpisodes(animeXId, anime.id);
     await this.addAnimeGenres(malId);
     await this.addAnimeStudiosAndProducers(malId);
     await this.addAnimeCovers(malId);
@@ -429,85 +409,6 @@ export class AnimeManager {
     console.log(
       `[UPDATED] ${anime.title.romaji}, added ${ep.number} new animeX eps`,
     );
-  }
-
-  async addAnimeBlkomEpisodes(slug: string) {
-    let animeBlkomDetails = await this.blkom.getAnime(slug, true);
-    let anime = await this.prisma.anime.findUnique({
-      where: {
-        malId: animeBlkomDetails.malId,
-      },
-      include: {
-        episodes: true,
-      },
-    });
-
-    let newEps = animeBlkomDetails.episodes.filter((ep) => {
-      return !anime.episodes.find(
-        (dbEp) => dbEp.source === "ANIME_BLKOM" && dbEp.number == ep.rawNumber,
-      );
-    });
-
-    if (newEps.length > 0) {
-      await this.prisma.anime.update({
-        where: {
-          malId: animeBlkomDetails.malId,
-        },
-        data: {
-          episodes: {
-            createMany: {
-              data: newEps.map((ep) => {
-                return {
-                  name: ep.number,
-                  number: ep.rawNumber,
-                  source: "ANIME_BLKOM",
-                  last: ep.last,
-                  servers: ep.servers,
-                };
-              }),
-            },
-          },
-        },
-      });
-    }
-    console.log(
-      `[UPDATED] ${anime.title.romaji}, added ${newEps.length} new blkom eps`,
-    );
-  }
-
-  async addAnimeBlkomEp(slug: string, number: number) {
-    let animeBlkomDetails = await this.blkom.getAnime(slug);
-    let ep = await this.blkom.getAnimeEpServers(slug, number);
-    let anime = await this.prisma.anime.findUnique({
-      where: { malId: animeBlkomDetails.malId },
-      include: { episodes: true },
-    });
-
-    let ifAlreadyExsits = anime.episodes.find(
-      (dbEp) => dbEp.source === "ANIME_BLKOM" && dbEp.number === number,
-    );
-
-    if (ifAlreadyExsits)
-      return console.log(`[SCRAPE] Skipped ${number}ep Already In Db`);
-    await this.prisma.anime.update({
-      where: {
-        malId: anime.malId,
-      },
-      data: {
-        episodes: {
-          create: [
-            {
-              name: String(number),
-              number: number,
-              source: "ANIME_BLKOM",
-              filler: false,
-              last: false,
-              servers: ep,
-            },
-          ],
-        },
-      },
-    });
   }
 
   async addAnimeGenres(malId: number) {
