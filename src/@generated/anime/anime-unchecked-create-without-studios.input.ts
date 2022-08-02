@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { ImageNullableCreateEnvelopeInput } from '../prisma/image-nullable-create-envelope.input';
 import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
 import { ImageCreateInput } from '../image/image-create.input';
@@ -26,7 +27,6 @@ import { StaffOnAnimeUncheckedCreateNestedManyWithoutAnimeInput } from '../staff
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
-import { HideField } from '@nestjs/graphql';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
 
@@ -42,7 +42,7 @@ export class AnimeUncheckedCreateWithoutStudiosInput {
     @Field(() => Int, {nullable:false})
     anilistId!: number;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeXId?: string;
 
     @Field(() => ImageNullableCreateEnvelopeInput, {nullable:true})

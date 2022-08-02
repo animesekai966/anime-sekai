@@ -20,7 +20,7 @@ export class AnimeOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     anilistId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animeXId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

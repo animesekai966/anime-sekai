@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 import { ImageNullableUpdateEnvelopeInput } from '../prisma/image-nullable-update-envelope.input';
 import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
 import { ImageCreateInput } from '../image/image-create.input';
@@ -30,7 +31,6 @@ import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relat
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
-import { HideField } from '@nestjs/graphql';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
 import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
 
@@ -43,7 +43,7 @@ export class AnimeUpdateWithoutProducersInput {
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     anilistId?: IntFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    @HideField()
     animeXId?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => ImageNullableUpdateEnvelopeInput, {nullable:true})

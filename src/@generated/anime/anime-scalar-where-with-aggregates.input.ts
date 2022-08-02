@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
 import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
 import { StringNullableWithAggregatesFilter } from '../prisma/string-nullable-with-aggregates-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { EnumAnimeFormatWithAggregatesFilter } from '../prisma/enum-anime-format-with-aggregates-filter.input';
 import { EnumAnimeStatusWithAggregatesFilter } from '../prisma/enum-anime-status-with-aggregates-filter.input';
 import { EnumAnimeSeasonWithAggregatesFilter } from '../prisma/enum-anime-season-with-aggregates-filter.input';
@@ -13,7 +14,6 @@ import { EnumAgeRatingWithAggregatesFilter } from '../prisma/enum-age-rating-wit
 import { EnumAnimeSourceWithAggregatesFilter } from '../prisma/enum-anime-source-with-aggregates-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
-import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeScalarWhereWithAggregatesInput {
@@ -36,7 +36,7 @@ export class AnimeScalarWhereWithAggregatesInput {
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     anilistId?: IntWithAggregatesFilter;
 
-    @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
+    @HideField()
     animeXId?: StringNullableWithAggregatesFilter;
 
     @Field(() => EnumAnimeFormatWithAggregatesFilter, {nullable:true})

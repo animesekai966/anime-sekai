@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { ImageNullableCompositeFilter } from '../prisma/image-nullable-composite-filter.input';
 import { ImageCompositeFilter } from '../prisma/image-composite-filter.input';
 import { ImageObjectEqualityInput } from '../prisma/image-object-equality.input';
@@ -29,7 +30,6 @@ import { StaffOnAnimeListRelationFilter } from '../staff-on-anime/staff-on-anime
 import { AnimeRelationTypeObjectEqualityInput } from '../prisma/anime-relation-type-object-equality.input';
 import { ExternalLinkObjectEqualityInput } from '../prisma/external-link-object-equality.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeWhereInput {
@@ -52,7 +52,7 @@ export class AnimeWhereInput {
     @Field(() => IntFilter, {nullable:true})
     anilistId?: IntFilter;
 
-    @Field(() => StringNullableFilter, {nullable:true})
+    @HideField()
     animeXId?: StringNullableFilter;
 
     @Field(() => ImageNullableCompositeFilter, {nullable:true})

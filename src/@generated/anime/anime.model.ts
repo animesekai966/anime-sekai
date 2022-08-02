@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { Image } from '../image/image.model';
 import { AnimeTitle } from '../anime-title/anime-title.model';
 import { AnimeFormat } from '../prisma/anime-format.enum';
@@ -22,7 +23,6 @@ import { CharacterOnAnime } from '../character-on-anime/character-on-anime.model
 import { StaffOnAnime } from '../staff-on-anime/staff-on-anime.model';
 import { AnimeRelationType } from '../anime-relation-type/anime-relation-type.model';
 import { ExternalLink } from '../external-link/external-link.model';
-import { HideField } from '@nestjs/graphql';
 import { AnimeCount } from './anime-count.output';
 
 @ObjectType()
@@ -37,7 +37,7 @@ export class Anime {
     @Field(() => Int, {nullable:false})
     anilistId!: number;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeXId!: string | null;
 
     @Field(() => Image, {nullable:true})

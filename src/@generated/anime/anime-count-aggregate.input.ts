@@ -14,7 +14,7 @@ export class AnimeCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     anilistId?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     animeXId?: true;
 
     @Field(() => Boolean, {nullable:true})

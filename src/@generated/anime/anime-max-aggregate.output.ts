@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
@@ -20,7 +21,7 @@ export class AnimeMaxAggregate {
     @Field(() => Int, {nullable:true})
     anilistId?: number;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeXId?: string;
 
     @Field(() => AnimeFormat, {nullable:true})

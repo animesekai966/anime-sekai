@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { EnumAnimeFormatFilter } from '../prisma/enum-anime-format-filter.input';
 import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
@@ -13,7 +14,6 @@ import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
 import { EnumAnimeSourceFilter } from '../prisma/enum-anime-source-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeScalarWhereInput {
@@ -36,7 +36,7 @@ export class AnimeScalarWhereInput {
     @Field(() => IntFilter, {nullable:true})
     anilistId?: IntFilter;
 
-    @Field(() => StringNullableFilter, {nullable:true})
+    @HideField()
     animeXId?: StringNullableFilter;
 
     @Field(() => EnumAnimeFormatFilter, {nullable:true})

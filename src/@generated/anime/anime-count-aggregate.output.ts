@@ -15,7 +15,7 @@ export class AnimeCountAggregate {
     @Field(() => Int, {nullable:false})
     anilistId!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     animeXId!: number;
 
     @Field(() => Int, {nullable:false})
