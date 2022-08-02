@@ -511,7 +511,7 @@ export class AnimeManager {
           let upload = await this.upload.uploadImgAndConvertFromUrl({
             url: cover,
             parentId: anime.id,
-            type: "animeCover",
+            type: "altAnimeCover",
           });
           return {
             id: upload.id,

@@ -31,6 +31,11 @@ const uploadTypeDetails: UploadDetailsType = {
     service: "r2",
     path: "anime/cover",
   },
+  altAnimeCover: {
+    quality: 75,
+    service: "r2",
+    path: "anime/alternative/cover",
+  },
   character: {
     quality: 50,
     service: "b2",
@@ -55,7 +60,12 @@ export class UploadService {
   }: {
     url: string;
     parentId: string;
-    type: "animeBanner" | "animeCover" | "character" | "staff";
+    type:
+      | "animeBanner"
+      | "animeCover"
+      | "character"
+      | "staff"
+      | "altAnimeCover";
   }) {
     const uploadId = v4();
     const settings = uploadTypeDetails[type];
@@ -65,7 +75,7 @@ export class UploadService {
     let createOptions = {
       Key: key,
       Body: await sharp(data)
-        .webp({ quality: settings.quality, effort: 6 })
+        .webp({ quality: settings.quality, effort: 6, smartSubsample: true })
         .toBuffer(),
       ContentType: "image/webp",
       CacheControl: "max-age=31536000",
