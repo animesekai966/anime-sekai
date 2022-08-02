@@ -1,7 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from "@nestjs/graphql";
+import { Character } from "src/@generated/character/character.model";
+import { BasePage } from "src/util.graphql";
+
 
 @ObjectType()
-export class Character {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+export class CharacterPage extends BasePage {
+  @Field(() => [Character])
+  characters: Character[];
 }

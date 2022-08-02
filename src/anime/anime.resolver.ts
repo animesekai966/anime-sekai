@@ -1,30 +1,22 @@
 import { NotFoundException } from "@nestjs/common";
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Int,
-  ResolveField,
-  Parent,
-} from "@nestjs/graphql";
-import { AnimeOrderByRelationAggregateInput } from "src/@generated/anime/anime-order-by-relation-aggregate.input";
+import { Resolver, Query, Args, ResolveField, Parent } from "@nestjs/graphql";
 import { AnimeOrderByWithRelationInput } from "src/@generated/anime/anime-order-by-with-relation.input";
 import { AnimeWhereInput } from "src/@generated/anime/anime-where.input";
 import { Anime } from "src/@generated/anime/anime.model";
-import { CharacterOnAnime } from "src/@generated/character-on-anime/character-on-anime.model";
-import { Character } from "src/@generated/character/character.model";
 import { Episode } from "src/@generated/episode/episode.model";
 import { Genre } from "src/@generated/genre/genre.model";
 import { StaffOnAnime } from "src/@generated/staff-on-anime/staff-on-anime.model";
 import { Studio } from "src/@generated/studio/studio.model";
+import { CharactersService } from "src/characters/characters.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PageInput } from "src/util.graphql";
 import { AnimeService } from "./anime.service";
 import {
   AnimePage,
   AnimeRelatedPage,
+  CharacterOnAnimePage,
   RelatedAnime,
+  StaffOnAnimePage,
 } from "./entities/anime.entity";
 
 @Resolver(() => Anime)
@@ -32,6 +24,7 @@ export class AnimeResolver {
   constructor(
     private readonly animeService: AnimeService,
     private readonly prisma: PrismaService,
+    private readonly charactersService: CharactersService,
   ) {}
 
   @Query(() => Anime, { name: "anime" })
@@ -73,16 +66,24 @@ export class AnimeResolver {
     return animePaginated;
   }
 
-  @ResolveField("characters", () => [CharacterOnAnime])
-  getAnimeCharacters(@Parent() anime: Anime) {
+  @ResolveField("characters", () => CharacterOnAnimePage)
+  getAnimeCharacters(
+    @Parent() anime: Anime,
+    @Args("pagination", { nullable: true })
+    pagination?: PageInput,
+  ) {
     let { id } = anime;
-    return this.animeService.getAnimeCharacters(id);
+    return this.animeService.getAnimeCharacters({ id, pagination });
   }
 
-  @ResolveField("staff", () => [StaffOnAnime])
-  getAnimeStaff(@Parent() anime: Anime) {
+  @ResolveField("staff", () => StaffOnAnimePage)
+  getAnimeStaff(
+    @Parent() anime: Anime,
+    @Args("pagination", { nullable: true })
+    pagination?: PageInput,
+  ) {
     let { id } = anime;
-    return this.animeService.getAnimeStaff(id);
+    return this.animeService.getAnimeStaff({ id, pagination });
   }
 
   @ResolveField("episodes", () => [Episode])

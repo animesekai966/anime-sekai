@@ -11,6 +11,7 @@ import { UploadService } from "src/upload/upload.service";
 import { AnimeManager } from "./anime.manager";
 import { TranslateService } from "src/translate/translate.service";
 import { AnimeJobs } from "./anime.jobs";
+import { CharactersService } from "src/characters/characters.service";
 
 @Module({
   providers: [
@@ -24,7 +25,8 @@ import { AnimeJobs } from "./anime.jobs";
     UploadService,
     AnimeManager,
     TranslateService,
-    AnimeJobs
+    AnimeJobs,
+    CharactersService
   ],
   controllers: [AnimeController],
 })

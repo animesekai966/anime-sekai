@@ -2,15 +2,36 @@ import { Injectable } from "@nestjs/common";
 import { AnimeOrderByWithRelationInput } from "src/@generated/anime/anime-order-by-with-relation.input";
 import { AnimeWhereInput } from "src/@generated/anime/anime-where.input";
 import { PrismaService } from "src/prisma/prisma.service";
-import { PageInput } from "src/util.graphql";
-import { AnimePage } from "./entities/anime.entity";
+import { getPageInfo, PageInput } from "src/util.graphql";
+import {
+  AnimePage,
+  CharacterOnAnimePage,
+  StaffOnAnimePage,
+} from "./entities/anime.entity";
 import _ from "lodash";
+
+import { StaffOnAnimeWhereInput } from "src/@generated/staff-on-anime/staff-on-anime-where.input";
+import { CharacterOnAnimeWhereInput } from "src/@generated/character-on-anime/character-on-anime-where.input";
 
 export interface AnimeFilterInput {
   where?: AnimeWhereInput;
   orderBy?: AnimeOrderByWithRelationInput;
   search?: string;
   pagination?: PageInput;
+}
+
+export interface AnimeFieldResolversInput {
+  id?: string;
+  pagination?: PageInput;
+}
+
+export interface AnimeCharactersFieldResolverInput
+  extends AnimeFieldResolversInput {
+  where?: CharacterOnAnimeWhereInput;
+  include?: any;
+}
+export interface AnimeStaffFieldResolverInput extends AnimeFieldResolversInput {
+  where?: StaffOnAnimeWhereInput;
 }
 
 @Injectable()
@@ -41,10 +62,9 @@ export class AnimeService {
     );
     const searchResult = search && (await this.prisma.searchAnime(search));
     if (searchResult) where.id = { in: searchResult.map((res) => res.id) };
-    const pageSize = pagination.perPage < 50 ? pagination.perPage : 50;
     const animeCount = await this.prisma.anime.count({ where });
-    const offset = pagination.page * pageSize;
-    const lastPage = Math.floor(animeCount / pageSize);
+    const { pageInfo, offset } = getPageInfo({ pagination, count: animeCount });
+
     const anime = await this.prisma.anime.findMany({
       where,
       orderBy: orderBy,
@@ -52,37 +72,47 @@ export class AnimeService {
         _count: true,
       },
       skip: offset,
-      take: pageSize,
+      take: pageInfo.perPage,
     });
 
-    console.log(pagination);
-
     return {
-      pageInfo: {
-        total: animeCount,
-        perPage: pageSize,
-        currentPage: pagination.page,
-        lastPage: lastPage,
-        hasNextPage: pagination.page < lastPage,
-      },
+      pageInfo,
       anime,
     };
   }
 
-  async getAnimeCharacters(id: string) {
-    return this.prisma.characterOnAnime.findMany({
-      where: {
-        animeId: id,
-      },
-      include: {
+  async getAnimeCharacters({
+    id,
+    pagination,
+    where,
+    include,
+  }: AnimeCharactersFieldResolverInput): Promise<CharacterOnAnimePage> {
+    const whereQuery = where || {
+      animeId: id,
+    };
+    let { pageInfo, offset } = getPageInfo({
+      pagination,
+      count: await this.prisma.characterOnAnime.count({ where }),
+    });
+
+    const characters = await this.prisma.characterOnAnime.findMany({
+      where: whereQuery,
+      include: include || {
         character: true,
         voiceActors: true,
         _count: true,
       },
+      skip: offset,
+      take: pageInfo.perPage,
     });
+
+    return {
+      pageInfo,
+      characters,
+    };
   }
 
-  async getAnimeEpisodes(id: string) {
+  async getAnimeEpisodes(id) {
     return this.prisma.episode.findMany({
       where: {
         animeId: id,
@@ -120,14 +150,31 @@ export class AnimeService {
     });
   }
 
-  async getAnimeStaff(id: string) {
-    return this.prisma.staffOnAnime.findMany({
-      where: {
-        animeId: id,
-      },
+  async getAnimeStaff({
+    id,
+    pagination,
+    where,
+  }: AnimeStaffFieldResolverInput): Promise<StaffOnAnimePage> {
+    const whereQuery = where || {
+      animeId: id,
+    };
+    const { pageInfo, offset } = getPageInfo({
+      pagination,
+      count: await this.prisma.staffOnAnime.count({ where }),
+    });
+
+    const staff = await this.prisma.staffOnAnime.findMany({
+      where: whereQuery,
       include: {
         staff: true,
       },
+      skip: offset,
+      take: pageInfo.perPage,
     });
+
+    return {
+      pageInfo,
+      staff,
+    };
   }
 }

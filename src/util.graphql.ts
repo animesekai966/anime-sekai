@@ -1,4 +1,5 @@
 import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
+import _ from "lodash";
 
 @InputType({})
 export class PageInput {
@@ -26,4 +27,35 @@ export class PageInfo {
 export class BasePage {
   @Field(() => PageInfo)
   pageInfo: PageInfo;
+}
+
+export function getPageInfo({
+  pagination,
+  count,
+}: {
+  pagination: PageInput;
+  count: number;
+}) {
+  pagination = _.merge(
+    {
+      page: 0,
+      perPage: 25,
+    },
+    pagination,
+  );
+
+  const pageSize = pagination.perPage < 50 ? pagination.perPage : 50;
+  const offset = pagination.page * pageSize;
+  const lastPage = Math.floor(count / pageSize);
+
+  return {
+    pageInfo: {
+      total: count,
+      perPage: pageSize,
+      currentPage: pagination.page,
+      lastPage: lastPage,
+      hasNextPage: pagination.page < lastPage,
+    },
+    offset,
+  };
 }

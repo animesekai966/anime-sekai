@@ -12,7 +12,9 @@ import { CharacterOrderByWithRelationInput } from "src/@generated/character/char
 import { CharacterWhereInput } from "src/@generated/character/character-where.input";
 import { Character } from "src/@generated/character/character.model";
 import { PrismaService } from "src/prisma/prisma.service";
+import { PageInput } from "src/util.graphql";
 import { CharactersService } from "./characters.service";
+import { CharacterPage } from "./entities/character.entity";
 
 @Resolver(() => Character)
 export class CharactersResolver {
@@ -21,14 +23,17 @@ export class CharactersResolver {
     private prisma: PrismaService,
   ) {}
 
-  @Query(() => [Character], { name: "characters" })
+  @Query(() => CharacterPage, { name: "characters" })
   findAll(
     @Args("CharacterWhereInput", { nullable: true })
     where?: CharacterWhereInput,
     @Args("CharacterOrderBy", { nullable: true })
     orderBy?: CharacterOrderByWithRelationInput,
-  ) {
-    return this.charactersService.findAll({ where, orderBy });
+    @Args("pagination", { nullable: true })
+    pagination?: PageInput,
+  ): Promise<CharacterPage> {
+    
+    return this.charactersService.findAll({ where, orderBy, pagination });
   }
 
   @Query(() => Character, { name: "character" })
