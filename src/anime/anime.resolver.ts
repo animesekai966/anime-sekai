@@ -30,6 +30,24 @@ export class AnimeResolver {
   ) {}
 
   @Query(() => Anime, { name: "anime" })
+  async findOne(
+    @Args("AnimeWhereInput", { nullable: true })
+    animeWhereInput: AnimeWhereInput,
+    @Args("AnimeOrderBy", { nullable: true })
+    orderBy: AnimeOrderByWithRelationInput,
+    @Args("search", { nullable: true })
+    search: string,
+  ) {
+    const anime = await this.animeService.findFirst({
+      where: animeWhereInput,
+      orderBy: orderBy,
+      search,
+    });
+    if (!anime) throw new NotFoundException("Anime Not Found");
+    return anime;
+  }
+
+  @Query(() => [Anime], { name: "animeList" })
   async findAll(
     @Args("AnimeWhereInput", { nullable: true })
     animeWhereInput: AnimeWhereInput,
@@ -38,12 +56,11 @@ export class AnimeResolver {
     @Args("search", { nullable: true })
     search: string,
   ) {
-    const anime = await this.animeService.getAnime({
+    const anime = await this.animeService.findMany({
       where: animeWhereInput,
       orderBy: orderBy,
       search,
     });
-    if (!anime) throw new NotFoundException("Anime Not Found");
     return anime;
   }
 
@@ -86,7 +103,7 @@ export class AnimeResolver {
   @ResolveField("related", () => [RelatedAnime])
   async getAnimeRelated(@Parent() anime: Anime): Promise<RelatedAnime[]> {
     let { related } = anime;
-    let result = await this.animeService.findManyAnime({
+    let result = await this.animeService.findMany({
       where: {
         malId: {
           in: related.map((anime) => anime.malId),

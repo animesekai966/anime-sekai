@@ -33,6 +33,7 @@ export class AnimeController {
   @Get("/scrapeAllAnimes")
   async scrape() {
     try {
+      console.log("started");
       return await this.animeJobs.checkNewAnimeFromAnimeX();
     } catch (err) {
       console.log(err);

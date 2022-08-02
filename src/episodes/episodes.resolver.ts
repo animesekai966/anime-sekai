@@ -44,7 +44,7 @@ export class EpisodesResolver {
   @ResolveField("anime", () => Anime)
   getEpisodeAnime(@Parent() episode: Episode) {
     let { animeId } = episode;
-    return this.animeService.getAnime({
+    return this.animeService.findFirst({
       where: {
         id: {
           equals: animeId,

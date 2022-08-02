@@ -15,7 +15,7 @@ export interface AnimeFilterInput {
 export class AnimeService {
   constructor(private prisma: PrismaService) {}
 
-  async getAnime({ where = {}, search = "", orderBy = {} }: AnimeFilterInput) {
+  async findFirst({ where = {}, search = "", orderBy = {} }: AnimeFilterInput) {
     let searchResult = search && (await this.prisma.searchAnime(search, 1));
     if (searchResult) where.id = { in: searchResult.map((res) => res.id) };
     return await this.prisma.anime.findFirst({
@@ -24,7 +24,7 @@ export class AnimeService {
     });
   }
 
-  async findManyAnime({
+  async findMany({
     where = {},
     search = "",
     orderBy = {},

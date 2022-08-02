@@ -18,6 +18,7 @@ model Anime {
     id              String               @id @default(uuid()) @map("_id")
     malId           Int                  @unique
     anilistId       Int                  @unique
+    /// @HideField({ input: true, output: true })
     animeXId        String?
     //-------------------------------------//
     banner          Image?
