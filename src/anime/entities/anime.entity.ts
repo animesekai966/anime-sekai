@@ -8,3 +8,5 @@ export class RelatedAnime {
   @Field(() => Anime)
   anime: Anime;
 }
+
+

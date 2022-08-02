@@ -17,6 +17,7 @@ export class AnimeJobs {
   async checkNewAnimeFromAnimeX() {
     for (let page = 0; page < 70; page++) {
       let pageAnimes = await this.animeXService.getAnimeList(page);
+      console.log(`[SCRAPER] Scraping Page ${page}`);
       for (let xAnime of pageAnimes) {
         if (xAnime.mal) {
           await this.manager.createAnime({ animeXSlug: xAnime.primary_key });
@@ -31,7 +32,7 @@ export class AnimeJobs {
   async checkNewEpsFromAnimeX() {
     for (let page = 0; page < 2; page++) {
       let pageAnimes = await this.animeXService.getLatest(page);
-      console.log(`[SCRAPER] Scraping Page ${page}`)
+      console.log(`[SCRAPER] Scraping Page ${page}`);
       for (let xEp of pageAnimes) {
         if (xEp.content.mal_url) {
           let ifAnimeExists = await this.prisma.anime.count({

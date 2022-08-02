@@ -213,9 +213,7 @@ export class AnimeManager {
         romaji: malDetails.title || anilistDetails.title.romaji,
         english: malDetails.title_english || anilistDetails.title.english,
         native: malDetails.title_japanese || anilistDetails.title.native,
-        synonyms: {
-          set: [...malDetails.title_synonyms, ...anilistDetails.synonyms],
-        },
+        synonyms: [...malDetails.title_synonyms, ...anilistDetails.synonyms] as any,
       },
     };
 
