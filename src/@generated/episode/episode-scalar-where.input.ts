@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { IntFilter } from '../prisma/int-filter.input';
+import { FloatFilter } from '../prisma/float-filter.input';
 import { EnumAnimeSourcesFilter } from '../prisma/enum-anime-sources-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumEpisodeLanguageFilter } from '../prisma/enum-episode-language-filter.input';
@@ -23,8 +23,8 @@ export class EpisodeScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    number?: IntFilter;
+    @Field(() => FloatFilter, {nullable:true})
+    number?: FloatFilter;
 
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;

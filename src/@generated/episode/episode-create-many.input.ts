@@ -1,6 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { Int } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
 import { ServerCreateInput } from '../server/server-create.input';
 import { AnimeSources } from '../prisma/anime-sources.enum';
 import { EpisodeLanguage } from '../prisma/episode-language.enum';
@@ -12,7 +12,7 @@ export class EpisodeCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => Int, {nullable:false})
+    @Field(() => Float, {nullable:false})
     number!: number;
 
     @Field(() => String, {nullable:false})

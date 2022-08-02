@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
-import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
+import { FloatWithAggregatesFilter } from '../prisma/float-with-aggregates-filter.input';
 import { EnumAnimeSourcesWithAggregatesFilter } from '../prisma/enum-anime-sources-with-aggregates-filter.input';
 import { BoolWithAggregatesFilter } from '../prisma/bool-with-aggregates-filter.input';
 import { EnumEpisodeLanguageWithAggregatesFilter } from '../prisma/enum-episode-language-with-aggregates-filter.input';
@@ -23,8 +23,8 @@ export class EpisodeScalarWhereWithAggregatesInput {
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     id?: StringWithAggregatesFilter;
 
-    @Field(() => IntWithAggregatesFilter, {nullable:true})
-    number?: IntWithAggregatesFilter;
+    @Field(() => FloatWithAggregatesFilter, {nullable:true})
+    number?: FloatWithAggregatesFilter;
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     name?: StringWithAggregatesFilter;

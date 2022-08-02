@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Anime } from '../anime/anime.model';
-import { Int } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
 import { Server } from '../server/server.model';
 import { AnimeSources } from '../prisma/anime-sources.enum';
 import { EpisodeLanguage } from '../prisma/episode-language.enum';
@@ -17,7 +17,7 @@ export class Episode {
     @Field(() => Anime, {nullable:false})
     anime?: Anime;
 
-    @Field(() => Int, {nullable:false})
+    @Field(() => Float, {nullable:false})
     number!: number;
 
     @Field(() => String, {nullable:false})

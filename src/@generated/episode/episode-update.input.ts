@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { AnimeUpdateOneRequiredWithoutEpisodesNestedInput } from '../anime/anime-update-one-required-without-episodes-nested.input';
-import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { ServerCreateInput } from '../server/server-create.input';
 import { EnumAnimeSourcesFieldUpdateOperationsInput } from '../prisma/enum-anime-sources-field-update-operations.input';
@@ -15,8 +15,8 @@ export class EpisodeUpdateInput {
     @Field(() => AnimeUpdateOneRequiredWithoutEpisodesNestedInput, {nullable:true})
     anime?: AnimeUpdateOneRequiredWithoutEpisodesNestedInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    number?: IntFieldUpdateOperationsInput;
+    @Field(() => FloatFieldUpdateOperationsInput, {nullable:true})
+    number?: FloatFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     name?: StringFieldUpdateOperationsInput;
