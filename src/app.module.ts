@@ -17,6 +17,7 @@ import { TranslateService } from "./translate/translate.service";
 import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
 import { EpisodesModule } from "./episodes/episodes.module";
 import { CharactersModule } from "./characters/characters.module";
+import { StaffModule } from './staff/staff.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CharactersModule } from "./characters/characters.module";
     AnimeModule,
     EpisodesModule,
     CharactersModule,
+    StaffModule,
   ],
   controllers: [AppController, AnimeBlkomController, AnimeXController],
   providers: [

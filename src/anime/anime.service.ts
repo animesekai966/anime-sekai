@@ -35,6 +35,9 @@ export class AnimeService {
     return await this.prisma.anime.findMany({
       where,
       orderBy: orderBy,
+      include: {
+        _count: true,
+      },
     });
   }
 
@@ -46,6 +49,7 @@ export class AnimeService {
       include: {
         character: true,
         voiceActors: true,
+        _count: true,
       },
     });
   }

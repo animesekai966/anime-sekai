@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { AnimeCreateInput } from "src/@generated/anime/anime-create.input";
 import { AnilistService } from "src/anilist/anilist.service";
-import { AnimeXService, LatestAnimeEntity } from "src/sources/anime-x/anime-x.service";
+import {
+  AnimeXService,
+  LatestAnimeEntity,
+} from "src/sources/anime-x/anime-x.service";
 import {
   JikanService,
   malRatingsToAnimeSekaiRatings,
@@ -648,6 +651,7 @@ export class AnimeManager {
               english: String(staff.name),
               arabic: String(await this.translator.translate(staff.name, true)),
               native: String(staff.family_name + staff.given_name),
+              nativeFamily: String(staff.family_name),
               alternates: staff.alternate_names,
             },
             info: staff.about,
