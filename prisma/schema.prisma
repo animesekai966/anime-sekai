@@ -141,7 +141,7 @@ type AnimeBroadcast {
 model Episode {
     id        String          @id @default(uuid()) @map("_id")
     anime     Anime           @relation(references: [id], fields: [animeId])
-    number    Int
+    number    Float
     name      String
     servers   Server[]
     source    AnimeSources    @default(ANIME_BLKOM)
