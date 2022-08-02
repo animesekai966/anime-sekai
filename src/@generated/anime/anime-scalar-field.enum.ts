@@ -2,11 +2,9 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum AnimeScalarFieldEnum {
     id = "id",
-    slug = "slug",
     malId = "malId",
     anilistId = "anilistId",
     animeXId = "animeXId",
-    animeBlkomId = "animeBlkomId",
     format = "format",
     status = "status",
     season = "season",

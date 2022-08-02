@@ -19,6 +19,7 @@ import { StaffOnAnime } from "src/@generated/staff-on-anime/staff-on-anime.model
 import { Studio } from "src/@generated/studio/studio.model";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AnimeService } from "./anime.service";
+import { RelatedAnime } from "./entities/anime.entity";
 
 @Resolver(() => Anime)
 export class AnimeResolver {
@@ -27,14 +28,19 @@ export class AnimeResolver {
     private readonly prisma: PrismaService,
   ) {}
 
-  @Query(() => [Anime], { name: "anime" })
+  @Query(() => Anime, { name: "anime" })
   findAll(
     @Args("AnimeWhereInput", { nullable: true })
     animeWhereInput: AnimeWhereInput,
     @Args("AnimeOrderBy", { nullable: true })
     orderBy: AnimeOrderByWithRelationInput,
+    @Args("search", { nullable: true })
+    search: string,
   ) {
-    return this.animeService.getAnime(animeWhereInput, orderBy as any);
+    return this.animeService.getAnime({
+      where: animeWhereInput,
+      orderBy: orderBy,
+    });
   }
 
   @ResolveField("characters", () => [CharacterOnAnime])
@@ -71,5 +77,22 @@ export class AnimeResolver {
   getAnimeStudios(@Parent() anime: Anime) {
     let { id } = anime;
     return this.animeService.getAnimeStudios(id);
+  }
+
+  @ResolveField("related", () => [RelatedAnime])
+  async getAnimeRelated(@Parent() anime: Anime): Promise<RelatedAnime[]> {
+    let { related } = anime;
+    let result = await this.animeService.findManyAnime({
+      where: {
+        malId: {
+          in: related.map((anime) => anime.malId),
+        },
+      },
+    });
+
+    return result.map((anime) => ({
+      relation: related.find((ani) => ani.malId == anime.malId).type,
+      anime,
+    }));
   }
 }

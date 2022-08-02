@@ -8,6 +8,12 @@ import { AnimeXService } from "src/anime-x/anime-x.service";
 import { JikanService } from "src/jikan/jikan.service";
 import { PrismaService } from "src/prisma/prisma.service";
 
+export interface AnimeFilterInput {
+  where?: AnimeWhereInput;
+  orderBy?: AnimeOrderByWithRelationInput;
+  search?: string;
+}
+
 @Injectable()
 export class AnimeService {
   constructor(
@@ -18,10 +24,14 @@ export class AnimeService {
     private anilist: AnilistService,
   ) {}
 
-  async getAnime(
-    where: AnimeWhereInput,
-    orderBy: AnimeOrderByWithRelationInput,
-  ) {
+  async getAnime({ where, search, orderBy }: AnimeFilterInput) {
+    return await this.prisma.anime.findFirst({
+      where: where as any,
+      orderBy: orderBy,
+    });
+  }
+
+  async findManyAnime({ where, search, orderBy }: AnimeFilterInput) {
     return await this.prisma.anime.findMany({
       where: where as any,
       orderBy: orderBy,

@@ -10,9 +10,6 @@ export class AnimeCountOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    slug?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     malId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -20,9 +17,6 @@ export class AnimeCountOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     animeXId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    animeBlkomId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     format?: keyof typeof SortOrder;

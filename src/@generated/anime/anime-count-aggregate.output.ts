@@ -10,9 +10,6 @@ export class AnimeCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
-    slug!: number;
-
-    @Field(() => Int, {nullable:false})
     malId!: number;
 
     @Field(() => Int, {nullable:false})
@@ -20,9 +17,6 @@ export class AnimeCountAggregate {
 
     @Field(() => Int, {nullable:false})
     animeXId!: number;
-
-    @Field(() => Int, {nullable:false})
-    animeBlkomId!: number;
 
     @Field(() => Int, {nullable:false})
     format!: number;

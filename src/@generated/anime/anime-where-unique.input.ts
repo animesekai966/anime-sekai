@@ -8,9 +8,6 @@ export class AnimeWhereUniqueInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:true})
-    slug?: string;
-
     @Field(() => Int, {nullable:true})
     malId?: number;
 

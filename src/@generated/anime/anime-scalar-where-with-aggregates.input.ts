@@ -30,9 +30,6 @@ export class AnimeScalarWhereWithAggregatesInput {
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     id?: StringWithAggregatesFilter;
 
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    slug?: StringWithAggregatesFilter;
-
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     malId?: IntWithAggregatesFilter;
 
@@ -41,9 +38,6 @@ export class AnimeScalarWhereWithAggregatesInput {
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
     animeXId?: StringNullableWithAggregatesFilter;
-
-    @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
-    animeBlkomId?: StringNullableWithAggregatesFilter;
 
     @Field(() => EnumAnimeFormatWithAggregatesFilter, {nullable:true})
     format?: EnumAnimeFormatWithAggregatesFilter;

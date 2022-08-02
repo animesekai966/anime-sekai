@@ -20,9 +20,6 @@ export class AnimeGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
-
     @Field(() => Int, {nullable:false})
     malId!: number;
 
@@ -31,9 +28,6 @@ export class AnimeGroupBy {
 
     @Field(() => String, {nullable:true})
     animeXId?: string;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId?: string;
 
     @Field(() => AnimeFormat, {nullable:false})
     format!: keyof typeof AnimeFormat;

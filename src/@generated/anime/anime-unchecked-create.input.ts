@@ -37,9 +37,6 @@ export class AnimeUncheckedCreateInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
-
     @Field(() => Int, {nullable:false})
     malId!: number;
 
@@ -48,9 +45,6 @@ export class AnimeUncheckedCreateInput {
 
     @Field(() => String, {nullable:true})
     animeXId?: string;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId?: string;
 
     @Field(() => ImageNullableCreateEnvelopeInput, {nullable:true})
     banner?: ImageNullableCreateEnvelopeInput;

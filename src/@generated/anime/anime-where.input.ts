@@ -46,9 +46,6 @@ export class AnimeWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    slug?: StringFilter;
-
     @Field(() => IntFilter, {nullable:true})
     malId?: IntFilter;
 
@@ -57,9 +54,6 @@ export class AnimeWhereInput {
 
     @Field(() => StringNullableFilter, {nullable:true})
     animeXId?: StringNullableFilter;
-
-    @Field(() => StringNullableFilter, {nullable:true})
-    animeBlkomId?: StringNullableFilter;
 
     @Field(() => ImageNullableCompositeFilter, {nullable:true})
     banner?: ImageNullableCompositeFilter;

@@ -31,9 +31,6 @@ export class Anime {
     @Field(() => ID, {nullable:false})
     id!: string;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
-
     @Field(() => Int, {nullable:false})
     malId!: number;
 
@@ -42,9 +39,6 @@ export class Anime {
 
     @Field(() => String, {nullable:true})
     animeXId!: string | null;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId!: string | null;
 
     @Field(() => Image, {nullable:true})
     banner?: Image | null;

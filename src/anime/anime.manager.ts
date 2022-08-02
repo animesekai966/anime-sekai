@@ -170,10 +170,6 @@ export class AnimeManager {
         malId: IDs.malId,
         anilistId: IDs.anilistId,
         animeXId: animeXId,
-        slug: animeObject.title.set.romaji
-          .toLowerCase()
-          .replace(/[^(aA-zZ)|0-9]/gm, "_")
-          .replace(/_+/g, "_"),
         ...animeObject,
         cover: {
           id: animeCover.id,
@@ -573,8 +569,8 @@ export class AnimeManager {
         (voiceActor) => voiceActor.language === "Japanese",
       );
       await this.createAnimeCharacter(character.character.id);
-      for (let stafff of jaStaff) {
-        await this.createAnimeStaff(stafff.person.id);
+      for (let epStaff of jaStaff) {
+        await this.createAnimeStaff(epStaff.person.id);
       }
     }
 

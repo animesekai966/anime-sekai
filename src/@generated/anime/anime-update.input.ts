@@ -1,6 +1,5 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { ImageNullableUpdateEnvelopeInput } from '../prisma/image-nullable-update-envelope.input';
@@ -39,9 +38,6 @@ import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
 @InputType()
 export class AnimeUpdateInput {
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    slug?: StringFieldUpdateOperationsInput;
-
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     malId?: IntFieldUpdateOperationsInput;
 
@@ -50,9 +46,6 @@ export class AnimeUpdateInput {
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     animeXId?: NullableStringFieldUpdateOperationsInput;
-
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    animeBlkomId?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => ImageNullableUpdateEnvelopeInput, {nullable:true})
     banner?: ImageNullableUpdateEnvelopeInput;

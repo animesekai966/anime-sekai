@@ -30,9 +30,6 @@ export class AnimeScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    slug?: StringFilter;
-
     @Field(() => IntFilter, {nullable:true})
     malId?: IntFilter;
 
@@ -41,9 +38,6 @@ export class AnimeScalarWhereInput {
 
     @Field(() => StringNullableFilter, {nullable:true})
     animeXId?: StringNullableFilter;
-
-    @Field(() => StringNullableFilter, {nullable:true})
-    animeBlkomId?: StringNullableFilter;
 
     @Field(() => EnumAnimeFormatFilter, {nullable:true})
     format?: EnumAnimeFormatFilter;

@@ -8,9 +8,6 @@ export class AnimeMaxAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    slug?: true;
-
-    @Field(() => Boolean, {nullable:true})
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
@@ -18,9 +15,6 @@ export class AnimeMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     animeXId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    animeBlkomId?: true;
 
     @Field(() => Boolean, {nullable:true})
     format?: true;

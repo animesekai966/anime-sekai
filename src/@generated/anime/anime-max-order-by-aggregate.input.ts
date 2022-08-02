@@ -9,9 +9,6 @@ export class AnimeMaxOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    slug?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     malId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -19,9 +16,6 @@ export class AnimeMaxOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     animeXId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    animeBlkomId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     format?: keyof typeof SortOrder;

@@ -14,9 +14,6 @@ export class AnimeMaxAggregate {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:true})
-    slug?: string;
-
     @Field(() => Int, {nullable:true})
     malId?: number;
 
@@ -25,9 +22,6 @@ export class AnimeMaxAggregate {
 
     @Field(() => String, {nullable:true})
     animeXId?: string;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId?: string;
 
     @Field(() => AnimeFormat, {nullable:true})
     format?: keyof typeof AnimeFormat;
