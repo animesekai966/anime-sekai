@@ -1,7 +1,16 @@
-import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from "@nestjs/graphql";
 import { AnimeOrderByWithRelationInput } from "src/@generated/anime/anime-order-by-with-relation.input";
 import { AnimeWhereInput } from "src/@generated/anime/anime-where.input";
 import { Anime } from "src/@generated/anime/anime.model";
+import { CharacterOnAnime } from "src/@generated/character-on-anime/character-on-anime.model";
 import { AnimeService } from "./anime.service";
 
 @Resolver(() => Anime)
@@ -15,16 +24,12 @@ export class AnimeResolver {
     @Args("AnimeOrderBy", { nullable: true })
     orderBy: AnimeOrderByWithRelationInput,
   ) {
-    return this.animeService.find(animeWhereInput, orderBy);
+    return this.animeService.getAnime(animeWhereInput, orderBy);
   }
 
-  @Query(() => [Anime], { name: "animes" })
-  find(
-    @Args("AnimeWhereInput", { nullable: true })
-    animeWhereInput: AnimeWhereInput,
-    @Args("AnimeOrderBy", { nullable: true })
-    orderBy: AnimeOrderByWithRelationInput,
-  ) {
-    return this.animeService.findAll(animeWhereInput, orderBy);
+  @ResolveField("characters", () => [CharacterOnAnime])
+  getAnimeCharacters(@Parent() anime: Anime) {
+    let { id } = anime;
+    return this.animeService.getAnimeCharacters(id);
   }
 }

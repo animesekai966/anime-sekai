@@ -27,13 +27,13 @@ export class AnimeController {
   async test(@Query("slug") blkomSlug: string, @Query("text") text: string) {
     //return await this.manager.addAnimeBlkomEpisodes("high-school-dxd");
 
-    return await this.blkom.getAnime(blkomSlug, true);
+    return await this.manager.createAnime({ animeXSlug: "5c3fK9DLsRrsC" });
   }
 
   @Get("/scrapeAllAnimes")
   async scrape() {
     try {
-      return await this.animeJobs.checkNewAnimeFromBlkom();
+      return await this.animeJobs.checkNewAnimeFromAnimeX();
     } catch (err) {
       console.log(err);
       return "err";
@@ -58,39 +58,10 @@ export class AnimeController {
   @Get("/testNewEps")
   async testNewEps() {
     try {
-      return await this.animeJobs.checkNewAnimeFromBlkom();
+      return await this.animeJobs.checkNewAnimeFromAnimeX();
     } catch (err) {
       console.log(err);
       return "err";
     }
-  }
-}
-
-async function translate(text: string) {
-  if (!text) return "";
-  try {
-    let { data } = await axios({
-      method: "post",
-      url: "https://web-api.itranslateapp.com/v3/texts/translate",
-      headers: {
-        accept: "application/json",
-        "api-key": "d2aefeac9dc661bc98eebd6cc12f0b82",
-        "content-type": "application/json",
-      },
-      data: {
-        source: {
-          dialect: "en",
-          text: text,
-        },
-        target: {
-          dialect: "ar",
-        },
-      },
-    });
-
-    return data.target.text;
-  } catch (err) {
-    console.log(`[TRANSLATE] err `, err);
-    return await translate(text);
   }
 }

@@ -337,6 +337,7 @@ enum AnimeSource {
     COMIC
     MULTIMEDIA_PROJECT
     PICTURE_BOOK
+    BOOK
 }
 
 enum ServerQuality {
