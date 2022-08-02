@@ -53,6 +53,10 @@ export class AnimeService {
       where: {
         animeId: id,
       },
+      include: {
+        character: true,
+        voiceActors: true,
+      },
     });
   }
 }

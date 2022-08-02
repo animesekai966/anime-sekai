@@ -32,4 +32,5 @@ export class AnimeResolver {
     let { id } = anime;
     return this.animeService.getAnimeCharacters(id);
   }
+
 }
