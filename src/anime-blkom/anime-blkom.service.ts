@@ -23,7 +23,7 @@ const fetchServers = [
 ];
 
 const USE_PROXY = true;
-const PROXY_URL = `https://blkomFetch1.sekai9666.repl.co/`;
+const PROXY_URL = `https://cloudt-d.herokuapp.com/api/fetch/`;
 
 @Injectable()
 export class AnimeBlkomService {
@@ -39,6 +39,7 @@ export class AnimeBlkomService {
         httpsAgent: new https.Agent({ keepAlive: true }),
         headers: {
           "x-requested-with": "XMLHttpRequest",
+          "x-url-index": "blkomNet",
         },
       }),
     );
@@ -109,7 +110,7 @@ export class AnimeBlkomService {
       console.log(`[EP SCRAPER] ${ep}`);
       return servers;
     } catch (err) {
-      //console.log(err);
+      //console.log(err.message);
       return await this.getAnimeEpServers(slug, ep);
     }
   }
@@ -136,7 +137,6 @@ export class AnimeBlkomService {
   }
 
   async getAnime(slug: string, eps = false): Promise<AnimeEntity> {
-    console.log("hi");
     try {
       let { data } = await this.axios({ url: "/anime/" + slug });
       let $ = load(data);
@@ -222,7 +222,7 @@ export class AnimeBlkomService {
 
       return animeData;
     } catch (err) {
-      //console.log(err);
+      console.log(err);
       return this.getAnime(slug, eps);
     }
   }
