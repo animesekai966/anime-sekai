@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, Res } from "@nestjs/common";
 import { AnilistService } from "src/anilist/anilist.service";
 import { AnimeBlkomService } from "src/sources/anime-blkom/anime-blkom.service";
 import { AnimeXService } from "src/sources/anime-x/anime-x.service";
@@ -9,6 +9,7 @@ import { AnimeManager } from "./anime.manager";
 import axios from "axios";
 import { TranslateService } from "src/translate/translate.service";
 import { AnimeJobs } from "./anime.jobs";
+import { Response } from "express";
 
 @Controller("anime")
 export class AnimeController {
@@ -31,10 +32,11 @@ export class AnimeController {
   }
 
   @Get("/scrapeAllAnimes")
-  async scrape() {
+  async scrape(@Res() res: Response) {
     try {
       console.log("started");
-      return await this.animeJobs.checkNewAnimeFromAnimeX();
+      res.send("started eheeeee");
+      await this.animeJobs.checkNewAnimeFromAnimeX();
     } catch (err) {
       console.log(err);
       return "err";
