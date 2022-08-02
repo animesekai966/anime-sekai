@@ -1,8 +1,8 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { AnilistService } from "src/anilist/anilist.service";
-import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
-import { AnimeXService } from "src/anime-x/anime-x.service";
-import { JikanService } from "src/jikan/jikan.service";
+import { AnimeBlkomService } from "src/sources/anime-blkom/anime-blkom.service";
+import { AnimeXService } from "src/sources/anime-x/anime-x.service";
+import { JikanService } from "src/sources/jikan/jikan.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { UploadService } from "src/upload/upload.service";
 import { AnimeManager } from "./anime.manager";

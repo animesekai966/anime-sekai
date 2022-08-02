@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { AnimeManager } from "./anime.manager";
-import { AnimeXService } from "src/anime-x/anime-x.service";
+import { AnimeXService } from "src/sources/anime-x/anime-x.service";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { PrismaService } from "src/prisma/prisma.service";
-import { JikanService } from "src/jikan/jikan.service";
+import { JikanService } from "src/sources/jikan/jikan.service";
 
 @Injectable()
 export class AnimeJobs {

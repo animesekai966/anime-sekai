@@ -1,3 +1,4 @@
+import { NotFoundException } from "@nestjs/common";
 import {
   Resolver,
   Query,
@@ -29,7 +30,7 @@ export class AnimeResolver {
   ) {}
 
   @Query(() => Anime, { name: "anime" })
-  findAll(
+  async findAll(
     @Args("AnimeWhereInput", { nullable: true })
     animeWhereInput: AnimeWhereInput,
     @Args("AnimeOrderBy", { nullable: true })
@@ -37,10 +38,13 @@ export class AnimeResolver {
     @Args("search", { nullable: true })
     search: string,
   ) {
-    return this.animeService.getAnime({
+    const anime = await this.animeService.getAnime({
       where: animeWhereInput,
       orderBy: orderBy,
+      search,
     });
+    if (!anime) throw new NotFoundException("Anime Not Found");
+    return anime;
   }
 
   @ResolveField("characters", () => [CharacterOnAnime])

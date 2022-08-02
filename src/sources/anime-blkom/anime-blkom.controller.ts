@@ -1,7 +1,7 @@
 import { Controller, Get, Header, Param, Query, Res } from "@nestjs/common";
 import axios from "axios";
 import { Response } from "express";
-import { DiscordService } from "src/discord/discord.service";
+import { DiscordService } from "src/sources/discord/discord.service";
 import { AnimeBlkomService } from "./anime-blkom.service";
 
 @Controller("anime-blkom")

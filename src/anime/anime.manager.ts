@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { AnimeCreateInput } from "src/@generated/anime/anime-create.input";
 import { AnilistService } from "src/anilist/anilist.service";
-import { AnimeXService, LatestAnimeEntity } from "src/anime-x/anime-x.service";
+import { AnimeXService, LatestAnimeEntity } from "src/sources/anime-x/anime-x.service";
 import {
   JikanService,
   malRatingsToAnimeSekaiRatings,
   malStatusToAnimeSekaiStatus,
   NsfwRatings,
-} from "src/jikan/jikan.service";
+} from "src/sources/jikan/jikan.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { UploadService } from "src/upload/upload.service";
 import { v4 } from "uuid";
@@ -210,6 +210,9 @@ export class AnimeManager {
         romaji: malDetails.title || anilistDetails.title.romaji,
         english: malDetails.title_english || anilistDetails.title.english,
         native: malDetails.title_japanese || anilistDetails.title.native,
+        synonyms: {
+          set: [...malDetails.title_synonyms, ...anilistDetails.synonyms],
+        },
       },
     };
 

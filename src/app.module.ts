@@ -4,17 +4,19 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ScheduleModule } from "@nestjs/schedule";
 import { PrismaService } from "./prisma/prisma.service";
-import { AnimeXService } from "./anime-x/anime-x.service";
-import { AnimeBlkomService } from "./anime-blkom/anime-blkom.service";
-import { JikanService } from "./jikan/jikan.service";
+import { AnimeXService } from "./sources/anime-x/anime-x.service";
+import { AnimeBlkomService } from "./sources/anime-blkom/anime-blkom.service";
+import { JikanService } from "./sources/jikan/jikan.service";
 import { AnilistService } from "./anilist/anilist.service";
-import { AnimeBlkomController } from "./anime-blkom/anime-blkom.controller";
-import { DiscordService } from "./discord/discord.service";
-import { AnimeXController } from "./anime-x/anime-x.controller";
+import { AnimeBlkomController } from "./sources/anime-blkom/anime-blkom.controller";
+import { DiscordService } from "./sources/discord/discord.service";
+import { AnimeXController } from "./sources/anime-x/anime-x.controller";
 import { AnimeModule } from "./anime/anime.module";
 import { UploadService } from "./upload/upload.service";
 import { TranslateService } from "./translate/translate.service";
 import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
+import { EpisodesModule } from "./episodes/episodes.module";
+import { CharactersModule } from "./characters/characters.module";
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
     }),
     ScheduleModule.forRoot(),
     AnimeModule,
+    EpisodesModule,
+    CharactersModule,
   ],
   controllers: [AppController, AnimeBlkomController, AnimeXController],
   providers: [
