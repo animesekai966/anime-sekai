@@ -12,6 +12,8 @@ import _ from "lodash";
 
 import { StaffOnAnimeWhereInput } from "src/@generated/staff-on-anime/staff-on-anime-where.input";
 import { CharacterOnAnimeWhereInput } from "src/@generated/character-on-anime/character-on-anime-where.input";
+import Fuse from "fuse.js";
+import { Anime } from "src/@generated/anime/anime.model";
 
 export interface AnimeFilterInput {
   where?: AnimeWhereInput;
@@ -68,9 +70,13 @@ export class AnimeService {
       take: pageInfo.perPage,
     });
 
+    const fuse = new Fuse(anime, {
+      keys: ["title.romaji", "title.english", "title.native", "title.synonyms"],
+    });
+
     return {
       pageInfo,
-      anime,
+      anime: fuse.search(search).map((d) => d.item),
     };
   }
 

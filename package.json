@@ -50,6 +50,7 @@
     "discord.js": "^14.1.2",
     "express": "4.17.1",
     "express-http-proxy": "^1.6.3",
+    "fuse.js": "^6.6.2",
     "google-translate-api": "^2.3.0",
     "got": "^12.3.0",
     "graphql": "^16.5.0",
