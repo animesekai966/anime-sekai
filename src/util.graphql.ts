@@ -30,7 +30,7 @@ export class BasePage {
 }
 
 export function getPageInfo({
-  pagination,
+  pagination = {},
   count,
 }: {
   pagination: PageInput;
