@@ -356,7 +356,7 @@ export class AnimeManager {
               data: newEps.map((ep) => {
                 return {
                   name: ep.number,
-                  number: ep.rawNumber,
+                  number: ep.rawNumber || 0,
                   source: "ANIME_X",
                   filler: ep.filler,
                   last: ep.last,
