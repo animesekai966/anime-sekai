@@ -28,7 +28,7 @@ export class AnimeJobs {
     }
   }
 
-  // @Cron(CronExpression.EVERY_HOUR)
+  @Cron(CronExpression.EVERY_HOUR)
   async checkNewEpsFromAnimeX() {
     for (let page = 0; page < 2; page++) {
       let pageAnimes = await this.animeXService.getLatest(page);
