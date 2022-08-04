@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance } from "axios";
-import  https from "https";
-import  http from "http";
+import https from "https";
+import http from "http";
 import translate from "translate";
 
 @Injectable()
@@ -18,7 +18,7 @@ export class TranslateService {
     if (!text) return "";
     try {
       if (needsGoogle) {
-        return await translate(text, "ar");
+        return await translate(text, { from: "en", to: "ar" });
       } else {
         let { data } = await this.axios({
           method: "post",
