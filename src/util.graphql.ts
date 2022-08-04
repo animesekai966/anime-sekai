@@ -36,15 +36,10 @@ export function getPageInfo({
   pagination: PageInput;
   count: number;
 }) {
-  pagination = _.merge(
-    {
-      page: 0,
-      perPage: 25,
-    },
-    pagination,
-  );
+  if (!pagination.page) pagination.page = 0;
+  if (!pagination.page) pagination.perPage = 25;
 
-  const pageSize = pagination.perPage < 50 ? pagination.perPage : 50;
+  const pageSize = pagination.perPage < 150 ? pagination.perPage : 50;
   const offset = pagination.page * pageSize;
   const lastPage = Math.floor(count / pageSize);
 

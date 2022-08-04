@@ -53,13 +53,6 @@ export class AnimeService {
     orderBy = {},
     pagination,
   }: AnimeFilterInput): Promise<AnimePage> {
-    pagination = _.merge(
-      {
-        page: 0,
-        perPage: 25,
-      },
-      pagination,
-    );
     const searchResult = search && (await this.prisma.searchAnime(search));
     if (searchResult) where.id = { in: searchResult.map((res) => res.id) };
     const animeCount = await this.prisma.anime.count({ where });
