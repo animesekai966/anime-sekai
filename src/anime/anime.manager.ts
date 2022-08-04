@@ -141,15 +141,17 @@ export class AnimeManager {
     let isAlreadyInDb = await this.prisma.anime.count({
       where: { malId: malId },
     });
-
     if (isAlreadyInDb) return null;
 
-    let { animeObject, cover, banner, IDs } = await this.getAnimeInfo(
+    let animeData = await this.getAnimeInfo(
       { malId },
       {
         arDescription: arStory,
       },
     );
+
+    if (!animeData) return null;
+    let { animeObject, cover, banner, IDs } = animeData;
 
     let animeId = v4();
 
@@ -358,11 +360,13 @@ export class AnimeManager {
                   source: "ANIME_X",
                   filler: ep.filler,
                   last: ep.last,
-                  servers: ep.servers.map((server) => ({
-                    name: server.server,
-                    translatedBy: server.fansub,
-                    url: server.link,
-                  })),
+                  servers: ep.servers
+                    ? ep.servers?.map((server) => ({
+                        name: server.server,
+                        translatedBy: server.fansub,
+                        url: server.link,
+                      }))
+                    : [],
                 };
               }),
             },
@@ -405,11 +409,13 @@ export class AnimeManager {
             source: "ANIME_X",
             filler: ep.filler,
             last: ep.last,
-            servers: animeXEp.map((server) => ({
-              name: server.server,
-              translatedBy: server.fansub,
-              url: server.link,
-            })),
+            servers: animeXEp
+              ? animeXEp?.map((server) => ({
+                  name: server.server,
+                  translatedBy: server.fansub,
+                  url: server.link,
+                }))
+              : [],
           },
         },
       },
