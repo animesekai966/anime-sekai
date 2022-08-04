@@ -205,7 +205,8 @@ export class AnimeManager {
       arDescription = undefined,
     }: { arDescription?: string; animeBlkomId?: string; animeXId?: string },
   ) {
-    let malDetails = await this.jikan.getAnimeRaw(malId);
+    let malDetails = await this.jikan.getAnimeRaw(malId).catch((err) => null);
+    if (!malDetails) return;
     let anilistDetails = await this.anilist.getAnimeDetails({ malId });
 
     let title: AnimeCreateInput["title"] = {
@@ -250,10 +251,12 @@ export class AnimeManager {
           year: anilistDetails.endDate.year ?? malDetails.aired.prop.to.year,
         },
       },
-      duration: ms(
-        anilistDetails.duration
-          ? anilistDetails.duration + "m"
-          : malDetails.duration,
+      duration: Number(
+        ms(
+          anilistDetails.duration
+            ? anilistDetails.duration + "m"
+            : malDetails.duration,
+        ),
       ),
       episodesCount: malDetails.episodes || anilistDetails.episodes,
       rating: malRatingsToAnimeSekaiRatings[malDetails.rating] || undefined,
