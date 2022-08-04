@@ -76,7 +76,7 @@ export class AnimeService {
 
     return {
       pageInfo,
-      anime: fuse.search(search).map((d) => d.item),
+      anime: search ? fuse.search(search).map((d) => d.item) : anime,
     };
   }
 
