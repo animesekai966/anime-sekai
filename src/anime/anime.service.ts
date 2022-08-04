@@ -89,9 +89,10 @@ export class AnimeService {
     const whereQuery = where || {
       animeId: id,
     };
+
     let { pageInfo, offset } = getPageInfo({
       pagination,
-      count: await this.prisma.characterOnAnime.count({ where }),
+      count: await this.prisma.characterOnAnime.count({ where: whereQuery }),
     });
 
     const characters = await this.prisma.characterOnAnime.findMany({
