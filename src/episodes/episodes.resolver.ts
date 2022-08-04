@@ -12,6 +12,8 @@ import { EpisodeOrderByWithRelationInput } from "src/@generated/episode/episode-
 import { EpisodeWhereInput } from "src/@generated/episode/episode-where.input";
 import { Episode } from "src/@generated/episode/episode.model";
 import { AnimeService } from "src/anime/anime.service";
+import { PageInput } from "src/util.graphql";
+import { EpisodePage } from "./entities/episode.entity";
 import { EpisodesService } from "./episodes.service";
 
 @Resolver(() => Episode)
@@ -21,14 +23,16 @@ export class EpisodesResolver {
     private animeService: AnimeService,
   ) {}
 
-  @Query(() => [Episode], { name: "episodes" })
+  @Query(() => EpisodePage, { name: "episodes" })
   findAll(
     @Args("EpisodeWhereInput", { nullable: true })
     where?: EpisodeWhereInput,
     @Args("EpisodeOrderBy", { nullable: true })
     orderBy?: EpisodeOrderByWithRelationInput,
+    @Args("pagination", { nullable: true })
+    pagination?: PageInput,
   ) {
-    return this.episodesService.findAll({ where, orderBy });
+    return this.episodesService.findAll({ where, orderBy, pagination });
   }
 
   @Query(() => Episode, { name: "episode" })
