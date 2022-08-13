@@ -55,17 +55,15 @@ export class AnimeService {
     orderBy = {},
     pagination,
   }: AnimeFilterInput): Promise<AnimePage> {
-    const searchResult = search && (await this.prisma.searchAnime(search));
+    const searchResult = search ? await this.prisma.searchAnime(search) : null;
     if (searchResult) where.id = { in: searchResult.map((res) => res.id) };
+
     const animeCount = await this.prisma.anime.count({ where });
     const { pageInfo, offset } = getPageInfo({ pagination, count: animeCount });
 
     const anime = await this.prisma.anime.findMany({
       where,
       orderBy: orderBy,
-      include: {
-        _count: true,
-      },
       skip: offset,
       take: pageInfo.perPage,
     });
@@ -100,7 +98,6 @@ export class AnimeService {
       include: include || {
         character: true,
         voiceActors: true,
-        _count: true,
       },
       skip: offset,
       take: pageInfo.perPage,

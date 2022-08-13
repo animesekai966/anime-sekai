@@ -20,9 +20,6 @@ export class StaffService {
     const staff = await this.prisma.staff.findMany({
       where,
       orderBy,
-      include: {
-        _count: true,
-      },
       skip: offset,
       take: pageInfo.perPage,
     });
@@ -36,9 +33,6 @@ export class StaffService {
     return this.prisma.staff.findFirst({
       where,
       orderBy,
-      include: {
-        _count: true,
-      },
     });
   }
 }
