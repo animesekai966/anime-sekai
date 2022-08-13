@@ -141,7 +141,11 @@ export class AnimeManager {
     let isAlreadyInDb = await this.prisma.anime.count({
       where: { malId: malId },
     });
-    if (isAlreadyInDb) return null;
+
+    if (isAlreadyInDb)
+      return console.log(
+        "[SCRAPER] skipped already in db " + animeXDetails.name,
+      );
 
     let animeData = await this.getAnimeInfo(
       { malId },
@@ -150,7 +154,11 @@ export class AnimeManager {
       },
     );
 
-    if (!animeData) return null;
+    if (!animeData)
+      return console.log(
+        "[SCRAPER] skipped empty mal Data " + animeXDetails.name,
+      );
+      
     let { animeObject, cover, banner, IDs } = animeData;
 
     let animeId = v4();
