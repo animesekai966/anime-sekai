@@ -17,7 +17,7 @@ import { Anime } from "src/@generated/anime/anime.model";
 
 export interface AnimeFilterInput {
   where?: AnimeWhereInput;
-  orderBy?: AnimeOrderByWithRelationInput;
+  orderBy?: AnimeOrderByWithRelationInput[];
   search?: string;
   pagination?: PageInput;
 }
@@ -40,7 +40,7 @@ export interface AnimeStaffFieldResolverInput extends AnimeFieldResolversInput {
 export class AnimeService {
   constructor(private prisma: PrismaService) {}
 
-  async findFirst({ where = {}, search = "", orderBy = {} }: AnimeFilterInput) {
+  async findFirst({ where = {}, search = "", orderBy = [] }: AnimeFilterInput) {
     let searchResult = search && (await this.prisma.searchAnime(search, 1));
     if (searchResult) where.id = { in: searchResult.map((res) => res.id) };
     return await this.prisma.anime.findFirst({
@@ -52,7 +52,7 @@ export class AnimeService {
   async findMany({
     where = {},
     search = "",
-    orderBy = {},
+    orderBy = [],
     pagination,
   }: AnimeFilterInput): Promise<AnimePage> {
     const searchResult = search ? await this.prisma.searchAnime(search) : null;

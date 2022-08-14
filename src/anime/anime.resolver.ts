@@ -31,11 +31,17 @@ export class AnimeResolver {
   async findOne(
     @Args("AnimeWhereInput", { nullable: true })
     animeWhereInput: AnimeWhereInput,
-    @Args("AnimeOrderBy", { nullable: true })
-    orderBy: AnimeOrderByWithRelationInput,
+    @Args("AnimeOrderBy", {
+      nullable: true,
+
+      type() {
+        return [AnimeOrderByWithRelationInput];
+      },
+    })
+    orderBy: AnimeOrderByWithRelationInput[],
     @Args("search", { nullable: true })
     search: string,
-  ) {
+  ): Promise<Anime> {
     const anime = await this.animeService.findFirst({
       where: animeWhereInput,
       orderBy: orderBy,
@@ -49,8 +55,13 @@ export class AnimeResolver {
   async findAll(
     @Args("AnimeWhereInput", { nullable: true })
     animeWhereInput: AnimeWhereInput,
-    @Args("AnimeOrderBy", { nullable: true })
-    orderBy: AnimeOrderByWithRelationInput,
+    @Args("AnimeOrderBy", {
+      nullable: true,
+      type() {
+        return [AnimeOrderByWithRelationInput];
+      },
+    })
+    orderBy: AnimeOrderByWithRelationInput[],
     @Args("search", { nullable: true })
     search: string,
     @Args("pagination", { nullable: true })

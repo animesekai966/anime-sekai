@@ -17,7 +17,7 @@ generator nestgraphql {
 model Anime {
     id              String               @id @default(uuid()) @map("_id")
     malId           Int                  @unique
-    anilistId       Int?                 @unique
+    anilistId       Int?
     /// @HideField({ input: true, output: true })
     animeXId        String?
     //-------------------------------------//
