@@ -166,7 +166,7 @@ export class AnimeManager {
 
     let animeId = v4();
 
-    /*let animeCover = await this.upload.uploadImgAndConvertFromUrl({
+    let animeCover = await this.upload.uploadImgAndConvertFromUrl({
       url: cover,
       parentId: animeId,
       type: "animeCover",
@@ -209,7 +209,7 @@ export class AnimeManager {
     await this.addAnimeCharacters(malId);
     await this.addAnimeStaff(malId);
 
-    return anime;*/
+    return anime;
   }
 
   async getAnimeInfo(
