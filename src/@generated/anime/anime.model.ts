@@ -34,8 +34,8 @@ export class Anime {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId!: number | null;
 
     @HideField()
     animeXId!: string | null;

@@ -34,8 +34,8 @@ export class AnimeCreateManyInput {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId?: number;
 
     @HideField()
     animeXId?: string;

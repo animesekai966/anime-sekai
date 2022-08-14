@@ -184,7 +184,7 @@ export class AnimeManager {
       data: {
         id: animeId,
         malId: IDs.malId,
-        anilistId: IDs.anilistId,
+        anilistId: IDs.anilistId ?? undefined,
         animeXId: animeXId,
         ...animeObject,
         cover: {

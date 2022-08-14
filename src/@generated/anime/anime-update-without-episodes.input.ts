@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { HideField } from '@nestjs/graphql';
 import { ImageNullableUpdateEnvelopeInput } from '../prisma/image-nullable-update-envelope.input';
@@ -12,7 +13,6 @@ import { EnumAnimeStatusFieldUpdateOperationsInput } from '../prisma/enum-anime-
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAnimeSeasonFieldUpdateOperationsInput } from '../prisma/enum-anime-season-field-update-operations.input';
-import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { NullableFloatFieldUpdateOperationsInput } from '../prisma/nullable-float-field-update-operations.input';
 import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
@@ -40,8 +40,8 @@ export class AnimeUpdateWithoutEpisodesInput {
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     malId?: IntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    anilistId?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    anilistId?: NullableIntFieldUpdateOperationsInput;
 
     @HideField()
     animeXId?: NullableStringFieldUpdateOperationsInput;
