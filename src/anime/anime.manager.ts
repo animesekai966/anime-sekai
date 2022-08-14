@@ -333,8 +333,8 @@ export class AnimeManager {
     };
 
     let cover =
-      anilistDetails.coverImage.extraLarge ||
-      anilistDetails.coverImage.large ||
+      anilistDetails?.coverImage?.extraLarge ||
+      anilistDetails?.coverImage?.large ||
       malDetails.images.jpg.large_image_url ||
       malDetails.images.jpg.image_url;
     let banner = anilistDetails.bannerImage;
