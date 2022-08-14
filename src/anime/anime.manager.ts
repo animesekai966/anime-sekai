@@ -337,7 +337,7 @@ export class AnimeManager {
       anilistDetails?.coverImage?.large ||
       malDetails.images.jpg.large_image_url ||
       malDetails.images.jpg.image_url;
-    let banner = anilistDetails.bannerImage;
+    let banner = anilistDetails?.bannerImage;
 
     return {
       animeObject,
