@@ -136,7 +136,10 @@ export class AnimeManager {
     let animeXId = animeXDetails.primary_key;
     let arStory = animeXDetails.story;
 
-    if (!malId) return null;
+    if (!malId)
+      return console.log(
+        `[SCRAPER] cannot extract malId from ${animeXDetails.mal} in ${animeXDetails.name}`,
+      );
 
     let isAlreadyInDb = await this.prisma.anime.count({
       where: { malId: malId },
@@ -158,7 +161,7 @@ export class AnimeManager {
       return console.log(
         "[SCRAPER] skipped empty mal Data " + animeXDetails.name,
       );
-      
+
     let { animeObject, cover, banner, IDs } = animeData;
 
     let animeId = v4();

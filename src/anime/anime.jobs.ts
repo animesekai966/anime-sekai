@@ -15,7 +15,7 @@ export class AnimeJobs {
   ) {}
 
   async checkNewAnimeFromAnimeX() {
-    for (let page = 0; page < 70; page++) {
+    for (let page = 0; page < 75; page++) {
       let pageAnimes = await this.animeXService.getAnimeList(page);
       console.log(`[SCRAPER] Scraping Page ${page}`);
       for (let xAnime of pageAnimes) {
