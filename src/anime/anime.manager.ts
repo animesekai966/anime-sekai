@@ -166,7 +166,7 @@ export class AnimeManager {
 
     let animeId = v4();
 
-    let animeCover = await this.upload.uploadImgAndConvertFromUrl({
+    /*let animeCover = await this.upload.uploadImgAndConvertFromUrl({
       url: cover,
       parentId: animeId,
       type: "animeCover",
@@ -209,7 +209,7 @@ export class AnimeManager {
     await this.addAnimeCharacters(malId);
     await this.addAnimeStaff(malId);
 
-    return anime;
+    return anime;*/
   }
 
   async getAnimeInfo(
@@ -219,30 +219,30 @@ export class AnimeManager {
     }: { arDescription?: string; animeBlkomId?: string; animeXId?: string },
   ) {
     let malDetails = await this.jikan.getAnimeRaw(malId).catch((err) => null);
-    if (!malDetails) return;
+    if (!malDetails) return null;
     let anilistDetails = await this.anilist.getAnimeDetails({ malId });
 
     let title: AnimeCreateInput["title"] = {
       set: {
-        romaji: malDetails.title || anilistDetails.title.romaji,
-        english: malDetails.title_english || anilistDetails.title.english,
-        native: malDetails.title_japanese || anilistDetails.title.native,
+        romaji: malDetails?.title || anilistDetails?.title?.romaji,
+        english: malDetails?.title_english || anilistDetails?.title?.english,
+        native: malDetails?.title_japanese || anilistDetails?.title?.native,
         synonyms: [
-          ...malDetails.title_synonyms,
-          ...anilistDetails.synonyms,
+          ...(malDetails?.title_synonyms || []),
+          ...(anilistDetails?.synonyms || []),
         ] as any,
       },
     };
 
-    let enDescription = malDetails.synopsis || anilistDetails.description;
+    let enDescription = malDetails?.synopsis || anilistDetails?.description;
 
     let animeObject = {
       title,
       broadcast: {
-        time: malDetails.broadcast.time,
-        timezone: malDetails.broadcast.timezone,
-        string: malDetails.broadcast.string,
-        day: malDetails.broadcast?.day?.toUpperCase() as any,
+        time: malDetails?.broadcast?.time,
+        timezone: malDetails?.broadcast?.timezone,
+        string: malDetails?.broadcast?.string,
+        day: malDetails?.broadcast?.day?.toUpperCase() as any,
       },
       description: {
         ar: arDescription || (await this.translator.translate(enDescription)),
@@ -250,77 +250,85 @@ export class AnimeManager {
       },
       startDate: {
         set: {
-          day: anilistDetails.startDate.day ?? malDetails.aired.prop.from.day,
+          day:
+            anilistDetails?.startDate?.day ??
+            malDetails?.aired?.prop?.from?.day,
           month:
-            anilistDetails.startDate.month ?? malDetails.aired.prop.from.month,
+            anilistDetails?.startDate?.month ??
+            malDetails?.aired?.prop?.from?.month,
           year:
-            anilistDetails.startDate.year ?? malDetails.aired.prop.from.year,
+            anilistDetails?.startDate?.year ??
+            malDetails?.aired?.prop?.from?.year,
         },
       },
       endDate: {
         set: {
-          day: anilistDetails.endDate.day ?? malDetails.aired.prop.to.day,
-          month: anilistDetails.endDate.month ?? malDetails.aired.prop.to.month,
-          year: anilistDetails.endDate.year ?? malDetails.aired.prop.to.year,
+          day: anilistDetails?.endDate?.day ?? malDetails?.aired?.prop?.to?.day,
+          month:
+            anilistDetails?.endDate?.month ??
+            malDetails?.aired?.prop?.to?.month,
+          year:
+            anilistDetails?.endDate?.year ?? malDetails?.aired?.prop?.to?.year,
         },
       },
       duration: Number(
         ms(
-          anilistDetails.duration
+          anilistDetails?.duration
             ? anilistDetails.duration + "m"
-            : malDetails.duration,
+            : malDetails?.duration,
         ),
       ),
-      episodesCount: malDetails.episodes || anilistDetails.episodes,
-      rating: malRatingsToAnimeSekaiRatings[malDetails.rating] || undefined,
-      season: (malDetails.season?.toUpperCase() ||
-        anilistDetails.season ||
+      episodesCount: malDetails?.episodes || anilistDetails?.episodes,
+      rating: malRatingsToAnimeSekaiRatings[malDetails?.rating] || undefined,
+      season: (malDetails?.season?.toUpperCase() ||
+        anilistDetails?.season ||
         undefined) as any,
-      source: (anilistDetails.source ||
-        malDetails.source?.toUpperCase()?.replace(/ /g, "_") ||
+      source: (anilistDetails?.source ||
+        malDetails?.source?.toUpperCase()?.replace(/ /g, "_") ||
         undefined) as any,
       isAdult:
-        anilistDetails.isAdult ?? NsfwRatings.includes(malDetails.rating),
-      isLicensed: anilistDetails.isLicensed ?? malDetails.approved,
+        anilistDetails?.isAdult ?? NsfwRatings.includes(malDetails?.rating),
+      isLicensed: anilistDetails?.isLicensed ?? malDetails?.approved,
       score: {
         set: {
           mal: {
-            score: malDetails.score,
-            scoredBy: malDetails.scored_by,
+            score: malDetails?.score,
+            scoredBy: malDetails?.scored_by,
           },
           anilist: {
-            score: (anilistDetails.averageScore ?? 0) / 10,
-            scoredBy: anilistDetails.popularity,
+            score: (anilistDetails?.averageScore ?? 0) / 10,
+            scoredBy: anilistDetails?.popularity,
           },
         },
       },
       trailer: {
         set: {
           thumbnail:
-            malDetails.trailer?.images?.maximum_image_url ||
-            anilistDetails.trailer?.thumbnail,
-          url: malDetails.trailer?.url || anilistDetails.trailer?.site,
+            malDetails?.trailer?.images?.maximum_image_url ||
+            anilistDetails?.trailer?.thumbnail,
+          url: malDetails?.trailer?.url || anilistDetails?.trailer?.site,
         },
       },
-      format: (malDetails.type?.toUpperCase()?.replace(/ /g, "_") ||
-        anilistDetails.format) as any,
+      format: (malDetails?.type?.toUpperCase()?.replace(/ /g, "_") ||
+        anilistDetails?.format) as any,
       openings: {
-        set: malDetails.theme?.openings,
+        set: malDetails?.theme?.openings,
       },
       endings: {
-        set: malDetails.theme?.endings,
+        set: malDetails?.theme?.endings,
       },
-      status: (anilistDetails.status ||
-        malStatusToAnimeSekaiStatus[malDetails.status]) as any,
-      countryOfOrigin: anilistDetails.countryOfOrigin,
+      status: (anilistDetails?.status ||
+        malStatusToAnimeSekaiStatus[malDetails?.status]) as any,
+      countryOfOrigin: anilistDetails?.countryOfOrigin,
       externalLinks: {
-        set: anilistDetails.externalLinks.map((externalLink) => ({
-          url: externalLink.url,
-          site: externalLink.site || undefined,
-          type: (externalLink.type || "OTHER") as any,
-          language: externalLink.language || undefined,
-          color: externalLink.color || undefined,
-        })),
+        set:
+          anilistDetails?.externalLinks?.map((externalLink) => ({
+            url: externalLink.url,
+            site: externalLink.site || undefined,
+            type: (externalLink.type || "OTHER") as any,
+            language: externalLink.language || undefined,
+            color: externalLink.color || undefined,
+          })) || [],
       },
     };
 
@@ -335,7 +343,7 @@ export class AnimeManager {
       animeObject,
       cover,
       banner,
-      IDs: { malId: malDetails.mal_id, anilistId: anilistDetails.id },
+      IDs: { malId: malDetails?.mal_id, anilistId: anilistDetails?.id },
     };
   }
 

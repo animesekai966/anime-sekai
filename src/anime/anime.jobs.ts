@@ -15,10 +15,11 @@ export class AnimeJobs {
   ) {}
 
   async checkNewAnimeFromAnimeX() {
-    for (let page = 0; page < 75; page++) {
+    for (let page = 40; page < 75; page++) {
       let pageAnimes = await this.animeXService.getAnimeList(page);
       console.log(`[SCRAPER] Scraping Page ${page}`);
       for (let xAnime of pageAnimes) {
+        console.log("[SCRAPER] checking " + xAnime.name);
         if (xAnime.mal) {
           await this.manager.createAnime({ animeXSlug: xAnime.primary_key });
         } else {
@@ -30,7 +31,7 @@ export class AnimeJobs {
 
   @Cron(CronExpression.EVERY_HOUR)
   async checkNewEpsFromAnimeX() {
-    for (let page = 0; page < 2; page++) {
+    for (let page = 0; page < 4; page++) {
       let pageAnimes = await this.animeXService.getLatest(page);
       console.log(`[SCRAPER] Scraping Page ${page}`);
       for (let xEp of pageAnimes) {
