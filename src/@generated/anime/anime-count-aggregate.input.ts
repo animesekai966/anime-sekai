@@ -54,9 +54,6 @@ export class AnimeCountAggregateInput {
     endings?: true;
 
     @Field(() => Boolean, {nullable:true})
-    recommendations?: true;
-
-    @Field(() => Boolean, {nullable:true})
     updatedAt?: true;
 
     @Field(() => Boolean, {nullable:true})

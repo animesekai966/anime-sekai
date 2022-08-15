@@ -20,7 +20,6 @@ import { AnimeCreateopeningsInput } from './anime-createopenings.input';
 import { AnimeCreateendingsInput } from './anime-createendings.input';
 import { AnimeBroadcastNullableCreateEnvelopeInput } from '../prisma/anime-broadcast-nullable-create-envelope.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
-import { AnimeCreaterecommendationsInput } from './anime-createrecommendations.input';
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
@@ -109,9 +108,6 @@ export class AnimeCreateManyInput {
 
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
-
-    @Field(() => AnimeCreaterecommendationsInput, {nullable:true})
-    recommendations?: AnimeCreaterecommendationsInput;
 
     @Field(() => [ExternalLinkCreateInput], {nullable:true})
     externalLinks?: Array<ExternalLinkCreateInput>;

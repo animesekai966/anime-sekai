@@ -75,9 +75,6 @@ export class AnimeScalarWhereWithAggregatesInput {
     @Field(() => StringNullableListFilter, {nullable:true})
     endings?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
-    recommendations?: StringNullableListFilter;
-
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     updatedAt?: DateTimeWithAggregatesFilter;
 

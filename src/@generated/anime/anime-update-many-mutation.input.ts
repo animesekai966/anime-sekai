@@ -23,7 +23,6 @@ import { AnimeUpdateopeningsInput } from './anime-updateopenings.input';
 import { AnimeUpdateendingsInput } from './anime-updateendings.input';
 import { AnimeBroadcastNullableUpdateEnvelopeInput } from '../prisma/anime-broadcast-nullable-update-envelope.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
-import { AnimeUpdaterecommendationsInput } from './anime-updaterecommendations.input';
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
@@ -110,9 +109,6 @@ export class AnimeUpdateManyMutationInput {
 
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
-
-    @Field(() => AnimeUpdaterecommendationsInput, {nullable:true})
-    recommendations?: AnimeUpdaterecommendationsInput;
 
     @Field(() => [ExternalLinkCreateInput], {nullable:true})
     externalLinks?: Array<ExternalLinkCreateInput>;

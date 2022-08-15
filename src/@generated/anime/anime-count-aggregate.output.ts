@@ -55,9 +55,6 @@ export class AnimeCountAggregate {
     endings!: number;
 
     @Field(() => Int, {nullable:false})
-    recommendations!: number;
-
-    @Field(() => Int, {nullable:false})
     updatedAt!: number;
 
     @Field(() => Int, {nullable:false})

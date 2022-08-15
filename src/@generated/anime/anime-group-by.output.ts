@@ -65,9 +65,6 @@ export class AnimeGroupBy {
     @Field(() => [String], {nullable:true})
     endings?: Array<string>;
 
-    @Field(() => [String], {nullable:true})
-    recommendations?: Array<string>;
-
     @Field(() => Date, {nullable:false})
     updatedAt!: Date | string;
 

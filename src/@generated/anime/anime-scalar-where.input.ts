@@ -75,9 +75,6 @@ export class AnimeScalarWhereInput {
     @Field(() => StringNullableListFilter, {nullable:true})
     endings?: StringNullableListFilter;
 
-    @Field(() => StringNullableListFilter, {nullable:true})
-    recommendations?: StringNullableListFilter;
-
     @Field(() => DateTimeFilter, {nullable:true})
     updatedAt?: DateTimeFilter;
 

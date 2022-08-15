@@ -17,7 +17,6 @@ export enum AnimeScalarFieldEnum {
     source = "source",
     openings = "openings",
     endings = "endings",
-    recommendations = "recommendations",
     updatedAt = "updatedAt",
     createdAt = "createdAt",
     producerIDs = "producerIDs",

@@ -120,9 +120,6 @@ export class AnimeOrderByWithRelationInput {
     @Field(() => AnimeRelationTypeOrderByCompositeAggregateInput, {nullable:true})
     related?: AnimeRelationTypeOrderByCompositeAggregateInput;
 
-    @Field(() => SortOrder, {nullable:true})
-    recommendations?: keyof typeof SortOrder;
-
     @Field(() => ExternalLinkOrderByCompositeAggregateInput, {nullable:true})
     externalLinks?: ExternalLinkOrderByCompositeAggregateInput;
 
