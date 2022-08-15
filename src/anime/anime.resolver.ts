@@ -127,10 +127,13 @@ export class AnimeResolver {
     @Parent() anime: Anime,
     @Args("pagination", { nullable: true })
     pagination: PageInput,
+    @Args("RelatedAnimeWhereInput", { nullable: true })
+    RelatedAnimeWhereInput: AnimeWhereInput,
   ): Promise<AnimeRelatedPage> {
     let { related } = anime;
     let result = await this.animeService.findMany({
       where: {
+        ...RelatedAnimeWhereInput,
         malId: {
           in: related.map((anime) => anime.malId),
         },
