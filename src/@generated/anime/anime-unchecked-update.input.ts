@@ -29,6 +29,7 @@ import { StudioUncheckedUpdateManyWithoutAnimatedAnimeNestedInput } from '../stu
 import { CharacterOnAnimeUncheckedUpdateManyWithoutAnimeNestedInput } from '../character-on-anime/character-on-anime-unchecked-update-many-without-anime-nested.input';
 import { StaffOnAnimeUncheckedUpdateManyWithoutAnimeNestedInput } from '../staff-on-anime/staff-on-anime-unchecked-update-many-without-anime-nested.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
+import { AnimeUpdaterecommendationsInput } from './anime-updaterecommendations.input';
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
@@ -133,6 +134,9 @@ export class AnimeUncheckedUpdateInput {
 
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
+
+    @Field(() => AnimeUpdaterecommendationsInput, {nullable:true})
+    recommendations?: AnimeUpdaterecommendationsInput;
 
     @Field(() => [ExternalLinkCreateInput], {nullable:true})
     externalLinks?: Array<ExternalLinkCreateInput>;

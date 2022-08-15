@@ -127,6 +127,9 @@ export class Anime {
     @Field(() => [AnimeRelationType], {nullable:true})
     related?: Array<AnimeRelationType>;
 
+    @Field(() => [String], {nullable:true})
+    recommendations!: Array<string>;
+
     @Field(() => [ExternalLink], {nullable:true})
     externalLinks?: Array<ExternalLink>;
 

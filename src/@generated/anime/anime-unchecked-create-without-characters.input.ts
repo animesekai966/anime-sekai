@@ -25,6 +25,7 @@ import { StudioUncheckedCreateNestedManyWithoutProducedAnimeInput } from '../stu
 import { StudioUncheckedCreateNestedManyWithoutAnimatedAnimeInput } from '../studio/studio-unchecked-create-nested-many-without-animated-anime.input';
 import { StaffOnAnimeUncheckedCreateNestedManyWithoutAnimeInput } from '../staff-on-anime/staff-on-anime-unchecked-create-nested-many-without-anime.input';
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
+import { AnimeCreaterecommendationsInput } from './anime-createrecommendations.input';
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
@@ -128,6 +129,9 @@ export class AnimeUncheckedCreateWithoutCharactersInput {
 
     @Field(() => [AnimeRelationTypeCreateInput], {nullable:true})
     related?: Array<AnimeRelationTypeCreateInput>;
+
+    @Field(() => AnimeCreaterecommendationsInput, {nullable:true})
+    recommendations?: AnimeCreaterecommendationsInput;
 
     @Field(() => [ExternalLinkCreateInput], {nullable:true})
     externalLinks?: Array<ExternalLinkCreateInput>;

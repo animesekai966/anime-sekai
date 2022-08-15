@@ -55,6 +55,9 @@ export class AnimeCountOrderByAggregateInput {
     endings?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    recommendations?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

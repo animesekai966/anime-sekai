@@ -142,6 +142,9 @@ export class AnimeWhereInput {
     @Field(() => [AnimeRelationTypeObjectEqualityInput], {nullable:true})
     related?: Array<AnimeRelationTypeObjectEqualityInput>;
 
+    @Field(() => StringNullableListFilter, {nullable:true})
+    recommendations?: StringNullableListFilter;
+
     @Field(() => [ExternalLinkObjectEqualityInput], {nullable:true})
     externalLinks?: Array<ExternalLinkObjectEqualityInput>;
 

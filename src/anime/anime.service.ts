@@ -157,7 +157,7 @@ export class AnimeService {
     };
     const { pageInfo, offset } = getPageInfo({
       pagination,
-      count: await this.prisma.staffOnAnime.count({ where }),
+      count: await this.prisma.staffOnAnime.count({ where: whereQuery }),
     });
 
     const staff = await this.prisma.staffOnAnime.findMany({

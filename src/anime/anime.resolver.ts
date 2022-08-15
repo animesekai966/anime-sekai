@@ -48,6 +48,7 @@ export class AnimeResolver {
       search,
     });
     if (!anime) throw new NotFoundException("Anime Not Found");
+    
     return anime;
   }
 

@@ -6,6 +6,7 @@ import {
   LatestAnimeEntity,
 } from "src/sources/anime-x/anime-x.service";
 import {
+  AnimeFullRaw,
   JikanService,
   malRatingsToAnimeSekaiRatings,
   malStatusToAnimeSekaiStatus,
@@ -218,7 +219,7 @@ export class AnimeManager {
       arDescription = undefined,
     }: { arDescription?: string; animeBlkomId?: string; animeXId?: string },
   ) {
-    let malDetails = await this.jikan.getAnimeRaw(malId).catch((err) => null);
+    let malDetails: AnimeFullRaw = await this.jikan.getAnimeRaw(malId).catch((err) => null);
     if (!malDetails) return null;
     let anilistDetails = await this.anilist.getAnimeDetails({ malId });
 
