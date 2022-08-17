@@ -48,6 +48,7 @@ export class AnimeJobs {
           } else {
             await this.manager.addAnimeXEp(xEp.content.slug, xEp);
             console.log("[SCRAPER] Added/Updated new Ep");
+            await this.manager.updateAnime({ animeXSlug: xEp.content.slug });
           }
         } else {
           console.log(`[SCRAPER] skipped non-mal anime ${xEp.content.name}`);
