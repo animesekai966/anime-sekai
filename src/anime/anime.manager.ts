@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { AnimeCreateInput } from "src/@generated/anime/anime-create.input";
-import { AnilistService } from "src/anilist/anilist.service";
+import { AnilistService } from "src/sources/anilist/anilist.service";
 import {
   AnimeXService,
   LatestAnimeEntity,

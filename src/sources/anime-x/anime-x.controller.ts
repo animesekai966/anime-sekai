@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { AnilistService } from "src/anilist/anilist.service";
+import { AnilistService } from "src/sources/anilist/anilist.service";
 import { AnimeXService } from "./anime-x.service";
 
 @Controller("anime-x")

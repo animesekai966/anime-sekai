@@ -7,7 +7,7 @@ import { PrismaService } from "./prisma/prisma.service";
 import { AnimeXService } from "./sources/anime-x/anime-x.service";
 import { AnimeBlkomService } from "./sources/anime-blkom/anime-blkom.service";
 import { JikanService } from "./sources/jikan/jikan.service";
-import { AnilistService } from "./anilist/anilist.service";
+import { AnilistService } from "./sources/anilist/anilist.service";
 import { AnimeBlkomController } from "./sources/anime-blkom/anime-blkom.controller";
 import { DiscordService } from "./sources/discord/discord.service";
 import { AnimeXController } from "./sources/anime-x/anime-x.controller";

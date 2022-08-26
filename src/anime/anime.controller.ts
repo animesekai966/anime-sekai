@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Res } from "@nestjs/common";
-import { AnilistService } from "src/anilist/anilist.service";
+import { AnilistService } from "src/sources/anilist/anilist.service";
 import { AnimeBlkomService } from "src/sources/anime-blkom/anime-blkom.service";
 import { AnimeXService } from "src/sources/anime-x/anime-x.service";
 import { JikanService } from "src/sources/jikan/jikan.service";
