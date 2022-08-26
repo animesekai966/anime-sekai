@@ -1,6 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { ServerCreateInput } from '../server/server-create.input';
 import { EnumAnimeSourcesFieldUpdateOperationsInput } from '../prisma/enum-anime-sources-field-update-operations.input';
@@ -11,8 +11,8 @@ import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-up
 @InputType()
 export class EpisodeUncheckedUpdateManyWithoutEpisodesInput {
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    number?: IntFieldUpdateOperationsInput;
+    @Field(() => FloatFieldUpdateOperationsInput, {nullable:true})
+    number?: FloatFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     name?: StringFieldUpdateOperationsInput;

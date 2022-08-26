@@ -10,7 +10,4 @@ export class StaffMinAggregate {
 
     @Field(() => Int, {nullable:true})
     malId?: number;
-
-    @Field(() => String, {nullable:true})
-    info?: string;
 }

@@ -2,7 +2,9 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
 import { IntFilter } from '../prisma/int-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { ImageNullableCompositeFilter } from '../prisma/image-nullable-composite-filter.input';
 import { ImageCompositeFilter } from '../prisma/image-composite-filter.input';
 import { ImageObjectEqualityInput } from '../prisma/image-object-equality.input';
@@ -12,7 +14,6 @@ import { EnumAnimeStatusFilter } from '../prisma/enum-anime-status-filter.input'
 import { DescriptionCompositeFilter } from '../prisma/description-composite-filter.input';
 import { FuzzyDateCompositeFilter } from '../prisma/fuzzy-date-composite-filter.input';
 import { EnumAnimeSeasonFilter } from '../prisma/enum-anime-season-filter.input';
-import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { FloatNullableFilter } from '../prisma/float-nullable-filter.input';
 import { BoolFilter } from '../prisma/bool-filter.input';
 import { EnumAgeRatingFilter } from '../prisma/enum-age-rating-filter.input';
@@ -29,7 +30,6 @@ import { StaffOnAnimeListRelationFilter } from '../staff-on-anime/staff-on-anime
 import { AnimeRelationTypeObjectEqualityInput } from '../prisma/anime-relation-type-object-equality.input';
 import { ExternalLinkObjectEqualityInput } from '../prisma/external-link-object-equality.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeWhereInput {
@@ -46,20 +46,14 @@ export class AnimeWhereInput {
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    slug?: StringFilter;
-
     @Field(() => IntFilter, {nullable:true})
     malId?: IntFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    anilistId?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    anilistId?: IntNullableFilter;
 
-    @Field(() => StringNullableFilter, {nullable:true})
+    @HideField()
     animeXId?: StringNullableFilter;
-
-    @Field(() => StringNullableFilter, {nullable:true})
-    animeBlkomId?: StringNullableFilter;
 
     @Field(() => ImageNullableCompositeFilter, {nullable:true})
     banner?: ImageNullableCompositeFilter;

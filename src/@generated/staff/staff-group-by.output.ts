@@ -17,9 +17,6 @@ export class StaffGroupBy {
     @Field(() => Int, {nullable:true})
     malId?: number;
 
-    @Field(() => String, {nullable:true})
-    info?: string;
-
     @HideField()
     characterIDs?: Array<string>;
 

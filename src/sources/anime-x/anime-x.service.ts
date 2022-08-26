@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import  https from "https";
-import  http from "http";
+import https from "https";
+import http from "http";
 
 @Injectable()
 export class AnimeXService {
@@ -25,16 +25,16 @@ export class AnimeXService {
       data: { data },
     } = await this.axios({ url: "v4/episodes/newest-episodes/" + offset });
 
-    return data.map((anime) => ({
-      number: anime.number,
-      rawNumber: Number(String(anime.number)?.match(/([0-9]+)/g)?.[0]),
-      last: !!anime.last,
-      filler: !!anime.filler,
+    return data.map((ep) => ({
+      number: ep.number,
+      rawNumber: Number(String(ep.number)?.match(/^[+-]?(\d*\.)?\d+$/g)?.[0]),
+      last: !!ep.last,
+      filler: !!ep.filler,
       content: {
-        name: anime.content.name,
-        slug: anime.content.slug,
-        poster: anime.content.poster,
-        mal_url: anime.content.mal_url,
+        name: ep.content.name,
+        slug: ep.content.slug,
+        poster: ep.content.poster,
+        mal_url: ep.content.mal_url,
       },
     }));
   }
@@ -91,7 +91,9 @@ export class AnimeXService {
         data.map(async (ep: any) => {
           return {
             number: ep.number,
-            rawNumber: Number(String(ep.number)?.match(/([0-9]+)/g)?.[0]),
+            rawNumber: Number(
+              String(ep.number)?.match(/^[+-]?(\d*\.)?\d+$/g)?.[0],
+            ),
             last: !!ep.last,
             filler: !!ep.filler,
             servers: fetchServers
@@ -105,7 +107,10 @@ export class AnimeXService {
     }
   }
 
-  async getAnimeEpServers(slug: string, epNum: string): Promise<AnimeEpEntity["servers"]> {
+  async getAnimeEpServers(
+    slug: string,
+    epNum: string,
+  ): Promise<AnimeEpEntity["servers"]> {
     let {
       data: { data },
     } = await this.axios({ url: `v4/episodes/${slug}/play/` + epNum });

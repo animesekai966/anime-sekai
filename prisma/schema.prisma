@@ -16,11 +16,10 @@ generator nestgraphql {
 
 model Anime {
     id              String               @id @default(uuid()) @map("_id")
-    slug            String               @unique
     malId           Int                  @unique
-    anilistId       Int                  @unique
+    anilistId       Int?
+    /// @HideField({ input: true, output: true })
     animeXId        String?
-    animeBlkomId    String?
     //-------------------------------------//
     banner          Image?
     cover           Image
@@ -37,7 +36,7 @@ model Anime {
     countryOfOrigin String?              @default("ja")
     isLicensed      Boolean
     isAdult         Boolean
-    rating          AgeRating
+    rating          AgeRating            @default(PG13)
     source          AnimeSource
     trailer         AnimeTrailer
     score           AnimeScoreProviders?
@@ -142,7 +141,7 @@ type AnimeBroadcast {
 model Episode {
     id        String          @id @default(uuid()) @map("_id")
     anime     Anime           @relation(references: [id], fields: [animeId])
-    number    Int
+    number    Float
     name      String
     servers   Server[]
     source    AnimeSources    @default(ANIME_BLKOM)
@@ -206,7 +205,6 @@ model Staff {
     malId        Int?               @unique
     name         StaffName
     image        Image
-    info         String?
     description  Description
     characters   CharacterOnAnime[] @relation("staffCharacter", fields: [characterIDs], references: [id])
     animeRoles   StaffOnAnime[]     @relation("staffPerson")
@@ -291,6 +289,7 @@ enum AnimeRelation {
     COMPILATION
     CONTAINS
     RECOMMENDATION
+    MIXED_MEDIA
 }
 
 enum AnimeStatus {
@@ -337,6 +336,8 @@ enum AnimeSource {
     COMIC
     MULTIMEDIA_PROJECT
     PICTURE_BOOK
+    BOOK
+    UNKNOWN
 }
 
 enum ServerQuality {

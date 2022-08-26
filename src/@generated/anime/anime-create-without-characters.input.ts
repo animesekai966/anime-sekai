@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { ImageNullableCreateEnvelopeInput } from '../prisma/image-nullable-create-envelope.input';
 import { ImageCreateEnvelopeInput } from '../image/image-create-envelope.input';
 import { ImageCreateInput } from '../image/image-create.input';
@@ -26,7 +27,6 @@ import { StaffOnAnimeCreateNestedManyWithoutAnimeInput } from '../staff-on-anime
 import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relation-type-create.input';
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { AnimeCreateproducerIDsInput } from './anime-createproducer-i-ds.input';
-import { HideField } from '@nestjs/graphql';
 import { AnimeCreatestudioIDsInput } from './anime-createstudio-i-ds.input';
 import { AnimeCreategenreIDsInput } from './anime-creategenre-i-ds.input';
 
@@ -36,20 +36,14 @@ export class AnimeCreateWithoutCharactersInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
-
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId?: number;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeXId?: string;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId?: string;
 
     @Field(() => ImageNullableCreateEnvelopeInput, {nullable:true})
     banner?: ImageNullableCreateEnvelopeInput;
@@ -96,8 +90,8 @@ export class AnimeCreateWithoutCharactersInput {
     @Field(() => Boolean, {nullable:false})
     isAdult!: boolean;
 
-    @Field(() => AgeRating, {nullable:false})
-    rating!: keyof typeof AgeRating;
+    @Field(() => AgeRating, {nullable:true})
+    rating?: keyof typeof AgeRating;
 
     @Field(() => AnimeSource, {nullable:false})
     source!: keyof typeof AnimeSource;

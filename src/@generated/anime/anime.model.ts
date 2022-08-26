@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { Image } from '../image/image.model';
 import { AnimeTitle } from '../anime-title/anime-title.model';
 import { AnimeFormat } from '../prisma/anime-format.enum';
@@ -22,7 +23,6 @@ import { CharacterOnAnime } from '../character-on-anime/character-on-anime.model
 import { StaffOnAnime } from '../staff-on-anime/staff-on-anime.model';
 import { AnimeRelationType } from '../anime-relation-type/anime-relation-type.model';
 import { ExternalLink } from '../external-link/external-link.model';
-import { HideField } from '@nestjs/graphql';
 import { AnimeCount } from './anime-count.output';
 
 @ObjectType()
@@ -31,20 +31,14 @@ export class Anime {
     @Field(() => ID, {nullable:false})
     id!: string;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
-
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId!: number | null;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeXId!: string | null;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId!: string | null;
 
     @Field(() => Image, {nullable:true})
     banner?: Image | null;
@@ -91,7 +85,7 @@ export class Anime {
     @Field(() => Boolean, {nullable:false})
     isAdult!: boolean;
 
-    @Field(() => AgeRating, {nullable:false})
+    @Field(() => AgeRating, {nullable:false,defaultValue:'PG13'})
     rating!: keyof typeof AgeRating;
 
     @Field(() => AnimeSource, {nullable:false})

@@ -23,9 +23,6 @@ export class StaffOrderByWithRelationInput {
     @Field(() => ImageOrderByInput, {nullable:true})
     image?: ImageOrderByInput;
 
-    @Field(() => SortOrder, {nullable:true})
-    info?: keyof typeof SortOrder;
-
     @Field(() => DescriptionOrderByInput, {nullable:true})
     description?: DescriptionOrderByInput;
 

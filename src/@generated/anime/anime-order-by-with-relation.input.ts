@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { ImageOrderByInput } from '../image/image-order-by.input';
 import { ImageOrderByCompositeAggregateInput } from '../image/image-order-by-composite-aggregate.input';
 import { AnimeTitleOrderByInput } from '../anime-title/anime-title-order-by.input';
@@ -16,7 +17,6 @@ import { CharacterOnAnimeOrderByRelationAggregateInput } from '../character-on-a
 import { StaffOnAnimeOrderByRelationAggregateInput } from '../staff-on-anime/staff-on-anime-order-by-relation-aggregate.input';
 import { AnimeRelationTypeOrderByCompositeAggregateInput } from '../anime-relation-type/anime-relation-type-order-by-composite-aggregate.input';
 import { ExternalLinkOrderByCompositeAggregateInput } from '../external-link/external-link-order-by-composite-aggregate.input';
-import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class AnimeOrderByWithRelationInput {
@@ -25,19 +25,13 @@ export class AnimeOrderByWithRelationInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    slug?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     malId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     anilistId?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     animeXId?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    animeBlkomId?: keyof typeof SortOrder;
 
     @Field(() => ImageOrderByInput, {nullable:true})
     banner?: ImageOrderByInput;

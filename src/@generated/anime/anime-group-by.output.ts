@@ -1,13 +1,13 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { AnimeFormat } from '../prisma/anime-format.enum';
 import { AnimeStatus } from '../prisma/anime-status.enum';
 import { AnimeSeason } from '../prisma/anime-season.enum';
 import { Float } from '@nestjs/graphql';
 import { AgeRating } from '../prisma/age-rating.enum';
 import { AnimeSource } from '../prisma/anime-source.enum';
-import { HideField } from '@nestjs/graphql';
 import { AnimeCountAggregate } from './anime-count-aggregate.output';
 import { AnimeAvgAggregate } from './anime-avg-aggregate.output';
 import { AnimeSumAggregate } from './anime-sum-aggregate.output';
@@ -20,20 +20,14 @@ export class AnimeGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
-
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:false})
-    anilistId!: number;
+    @Field(() => Int, {nullable:true})
+    anilistId?: number;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     animeXId?: string;
-
-    @Field(() => String, {nullable:true})
-    animeBlkomId?: string;
 
     @Field(() => AnimeFormat, {nullable:false})
     format!: keyof typeof AnimeFormat;

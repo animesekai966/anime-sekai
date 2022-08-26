@@ -22,9 +22,6 @@ export class StaffCreateManyInput {
     @Field(() => ImageCreateEnvelopeInput, {nullable:false})
     image!: ImageCreateEnvelopeInput;
 
-    @Field(() => String, {nullable:true})
-    info?: string;
-
     @Field(() => DescriptionCreateEnvelopeInput, {nullable:false})
     description!: DescriptionCreateEnvelopeInput;
 

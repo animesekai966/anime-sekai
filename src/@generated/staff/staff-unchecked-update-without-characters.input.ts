@@ -3,7 +3,6 @@ import { InputType } from '@nestjs/graphql';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { StaffNameUpdateEnvelopeInput } from '../staff-name/staff-name-update-envelope.input';
 import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
-import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { StaffOnAnimeUncheckedUpdateManyWithoutStaffNestedInput } from '../staff-on-anime/staff-on-anime-unchecked-update-many-without-staff-nested.input';
 import { StaffUpdatecharacterIDsInput } from './staff-updatecharacter-i-ds.input';
@@ -20,9 +19,6 @@ export class StaffUncheckedUpdateWithoutCharactersInput {
 
     @Field(() => ImageUpdateEnvelopeInput, {nullable:true})
     image?: ImageUpdateEnvelopeInput;
-
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    info?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => DescriptionUpdateEnvelopeInput, {nullable:true})
     description?: DescriptionUpdateEnvelopeInput;

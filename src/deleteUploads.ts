@@ -12,7 +12,7 @@ const b2 = new S3({
   signatureVersion: "v4",
 });
 
-let DANGER = true;
+let DANGER = false;
 
 async function deleteR2() {
   let allObjects = await r2

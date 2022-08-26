@@ -1,14 +1,15 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, Res } from "@nestjs/common";
 import { AnilistService } from "src/anilist/anilist.service";
-import { AnimeBlkomService } from "src/anime-blkom/anime-blkom.service";
-import { AnimeXService } from "src/anime-x/anime-x.service";
-import { JikanService } from "src/jikan/jikan.service";
+import { AnimeBlkomService } from "src/sources/anime-blkom/anime-blkom.service";
+import { AnimeXService } from "src/sources/anime-x/anime-x.service";
+import { JikanService } from "src/sources/jikan/jikan.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { UploadService } from "src/upload/upload.service";
 import { AnimeManager } from "./anime.manager";
 import axios from "axios";
 import { TranslateService } from "src/translate/translate.service";
 import { AnimeJobs } from "./anime.jobs";
+import { Response } from "express";
 
 @Controller("anime")
 export class AnimeController {
@@ -24,16 +25,16 @@ export class AnimeController {
     private animeJobs: AnimeJobs,
   ) {}
   @Get("/test")
-  async test(@Query("slug") blkomSlug: string, @Query("text") text: string) {
-    //return await this.manager.addAnimeBlkomEpisodes("high-school-dxd");
-
-    return await this.blkom.getAnime(blkomSlug, true);
+  async test(@Query("slug") slug: string, @Query("text") text: string) {
+ 
   }
 
   @Get("/scrapeAllAnimes")
-  async scrape() {
+  async scrape(@Res() res: Response) {
     try {
-      return await this.animeJobs.checkNewAnimeFromBlkom();
+      console.log("started");
+      res.send("started eheeeee");
+      await this.animeJobs.checkNewAnimeFromAnimeX();
     } catch (err) {
       console.log(err);
       return "err";
@@ -58,39 +59,10 @@ export class AnimeController {
   @Get("/testNewEps")
   async testNewEps() {
     try {
-      return await this.animeJobs.checkNewAnimeFromBlkom();
+      return await this.animeJobs.checkNewAnimeFromAnimeX();
     } catch (err) {
       console.log(err);
       return "err";
     }
-  }
-}
-
-async function translate(text: string) {
-  if (!text) return "";
-  try {
-    let { data } = await axios({
-      method: "post",
-      url: "https://web-api.itranslateapp.com/v3/texts/translate",
-      headers: {
-        accept: "application/json",
-        "api-key": "d2aefeac9dc661bc98eebd6cc12f0b82",
-        "content-type": "application/json",
-      },
-      data: {
-        source: {
-          dialect: "en",
-          text: text,
-        },
-        target: {
-          dialect: "ar",
-        },
-      },
-    });
-
-    return data.target.text;
-  } catch (err) {
-    console.log(`[TRANSLATE] err `, err);
-    return await translate(text);
   }
 }

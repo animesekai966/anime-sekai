@@ -1,5 +1,5 @@
-import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { INestApplication, Injectable, OnModuleInit } from "@nestjs/common";
+import { PrismaClient } from "@prisma/client";
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -8,33 +8,44 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   }
 
   async enableShutdownHooks(app: INestApplication) {
-    this.$on('beforeExit', async () => {
+    this.$on("beforeExit", async () => {
       await app.close();
     });
   }
 
-  async searchAnime(query: string, limit: number = 50) {
-    this.$runCommandRaw({
-      aggregate: 'Anime',
+  async searchAnime(
+    query: string,
+    limit: number = 50,
+  ): Promise<{ id: string; score: number }[]> {
+    let {
+      cursor: { firstBatch },
+    } = (await this.$runCommandRaw({
+      aggregate: "Anime",
+      explain: false,
       pipeline: [
         {
           $search: {
-            index: 'default',
+            index: "default",
             text: {
               query: query,
               path: {
-                wildcard: '*',
+                wildcard: "*",
               },
             },
           },
         },
         {
           $project: {
-            score: { $meta: 'searchScore' },
+            score: { $meta: "searchScore" },
           },
         },
         { $limit: limit },
       ],
-    });
+    })) as any;
+
+    return firstBatch.map((result) => ({
+      id: result._id,
+      score: result.score,
+    }));
   }
 }

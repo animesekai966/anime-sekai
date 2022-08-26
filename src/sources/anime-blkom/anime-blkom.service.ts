@@ -6,7 +6,7 @@ import { load } from "cheerio/lib/slim";
 import { AxiosInstance } from "axios";
 import { wrapper } from "axios-cookiejar-support";
 import { CookieJar } from "tough-cookie";
-import { JikanService } from "src/jikan/jikan.service";
+import { JikanService } from "src/sources/jikan/jikan.service";
 
 const fetchServers = [
   "https://blkomFetch.sekai9666.repl.co",

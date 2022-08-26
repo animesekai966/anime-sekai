@@ -12,9 +12,6 @@ export class StaffCountAggregate {
     @Field(() => Int, {nullable:false})
     malId!: number;
 
-    @Field(() => Int, {nullable:false})
-    info!: number;
-
     @HideField()
     characterIDs!: number;
 

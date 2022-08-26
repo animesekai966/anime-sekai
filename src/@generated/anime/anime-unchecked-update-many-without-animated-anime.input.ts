@@ -1,8 +1,9 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 import { ImageNullableUpdateEnvelopeInput } from '../prisma/image-nullable-update-envelope.input';
 import { ImageUpdateEnvelopeInput } from '../image/image-update-envelope.input';
 import { ImageCreateInput } from '../image/image-create.input';
@@ -12,7 +13,6 @@ import { EnumAnimeStatusFieldUpdateOperationsInput } from '../prisma/enum-anime-
 import { DescriptionUpdateEnvelopeInput } from '../description/description-update-envelope.input';
 import { FuzzyDateUpdateEnvelopeInput } from '../fuzzy-date/fuzzy-date-update-envelope.input';
 import { EnumAnimeSeasonFieldUpdateOperationsInput } from '../prisma/enum-anime-season-field-update-operations.input';
-import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { NullableFloatFieldUpdateOperationsInput } from '../prisma/nullable-float-field-update-operations.input';
 import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
 import { EnumAgeRatingFieldUpdateOperationsInput } from '../prisma/enum-age-rating-field-update-operations.input';
@@ -26,27 +26,20 @@ import { AnimeRelationTypeCreateInput } from '../anime-relation-type/anime-relat
 import { ExternalLinkCreateInput } from '../external-link/external-link-create.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AnimeUpdateproducerIDsInput } from './anime-updateproducer-i-ds.input';
-import { HideField } from '@nestjs/graphql';
 import { AnimeUpdatestudioIDsInput } from './anime-updatestudio-i-ds.input';
 import { AnimeUpdategenreIDsInput } from './anime-updategenre-i-ds.input';
 
 @InputType()
 export class AnimeUncheckedUpdateManyWithoutAnimatedAnimeInput {
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    slug?: StringFieldUpdateOperationsInput;
-
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     malId?: IntFieldUpdateOperationsInput;
 
-    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    anilistId?: IntFieldUpdateOperationsInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    anilistId?: NullableIntFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    @HideField()
     animeXId?: NullableStringFieldUpdateOperationsInput;
-
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    animeBlkomId?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => ImageNullableUpdateEnvelopeInput, {nullable:true})
     banner?: ImageNullableUpdateEnvelopeInput;

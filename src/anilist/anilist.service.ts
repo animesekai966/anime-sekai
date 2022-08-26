@@ -300,6 +300,7 @@ export class AnilistService {
 
       return data;
     } catch (err) {
+      if (err.response.status !== 429) return null;
       return await this.getAnimeDetails({ malId, anilistId });
     }
   }

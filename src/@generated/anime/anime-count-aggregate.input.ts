@@ -9,19 +9,13 @@ export class AnimeCountAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    slug?: true;
-
-    @Field(() => Boolean, {nullable:true})
     malId?: true;
 
     @Field(() => Boolean, {nullable:true})
     anilistId?: true;
 
-    @Field(() => Boolean, {nullable:true})
+    @HideField()
     animeXId?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    animeBlkomId?: true;
 
     @Field(() => Boolean, {nullable:true})
     format?: true;
