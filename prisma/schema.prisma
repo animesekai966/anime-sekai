@@ -14,6 +14,38 @@ generator nestgraphql {
     output   = "../src/@generated"
 }
 
+model User {
+    id        String        @id @default(uuid()) @map("_id")
+    profile   Profile
+    animeList AnimeOnUser[]
+}
+
+type Profile {
+    image  Image?
+    banner Image?
+    name   String
+    bio    String?
+}
+
+model AnimeOnUser {
+    id               String                 @id @default(uuid()) @map("_id")
+    list             AnimeListType
+    score            Float?
+    episodesProgress EpisodeOnAnimeOnUser[]
+    user             User                   @relation(fields: [userId], references: [id])
+    anime            Anime                  @relation(fields: [animeId], references: [id])
+    animeId          String
+    userId           String
+}
+
+model EpisodeOnAnimeOnUser {
+    id            String      @id @default(uuid()) @map("_id")
+    episode       Episode     @relation(fields: [episodeId], references: [id])
+    user          AnimeOnUser @relation(fields: [animeOnUserId], references: [id])
+    episodeId     String
+    animeOnUserId String
+}
+
 model Anime {
     id              String               @id @default(uuid()) @map("_id")
     malId           Int                  @unique
@@ -51,6 +83,7 @@ model Anime {
     staff           StaffOnAnime[]       @relation("animeStaff")
     related         AnimeRelationType[]
     externalLinks   ExternalLink[]
+    users           AnimeOnUser[]
     updatedAt       DateTime             @updatedAt
     createdAt       DateTime             @default(now())
     /// @HideField({ input: true, output: true })
@@ -139,17 +172,18 @@ type AnimeBroadcast {
 }
 
 model Episode {
-    id        String          @id @default(uuid()) @map("_id")
-    anime     Anime           @relation(references: [id], fields: [animeId])
+    id        String                 @id @default(uuid()) @map("_id")
+    anime     Anime                  @relation(references: [id], fields: [animeId])
     number    Float
     name      String
     servers   Server[]
-    source    AnimeSources    @default(ANIME_BLKOM)
-    filler    Boolean         @default(false)
-    last      Boolean         @default(false)
-    language  EpisodeLanguage @default(AR)
-    updatedAt DateTime        @updatedAt
-    createdAt DateTime        @default(now())
+    source    AnimeSources           @default(ANIME_BLKOM)
+    filler    Boolean                @default(false)
+    last      Boolean                @default(false)
+    language  EpisodeLanguage        @default(AR)
+    users     EpisodeOnAnimeOnUser[]
+    updatedAt DateTime               @updatedAt
+    createdAt DateTime               @default(now())
     /// @HideField({ input: true, output: true })
     animeId   String
 }
@@ -223,7 +257,7 @@ type StaffName {
 type Image {
     id        String   @default(uuid()) @map("_id")
     /// @HideField({ input: true, output: true })
-    source    String
+    source    String?
     key       String
     createdAt DateTime @default(now())
 }
@@ -361,4 +395,12 @@ enum ExternalLinkType {
     STREAMING
     SOCIAL
     OTHER
+}
+
+enum AnimeListType {
+    FAVORITE
+    COMPLETED
+    PAUSED
+    DROPPED
+    PLANNING
 }
