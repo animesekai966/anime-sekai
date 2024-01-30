@@ -1,42 +1,26 @@
-import { Injectable } from "@nestjs/common";
-import { EpisodeOrderByWithRelationInput } from "src/@generated/episode/episode-order-by-with-relation.input";
-import { EpisodeWhereInput } from "src/@generated/episode/episode-where.input";
-import { PrismaService } from "src/prisma/prisma.service";
-import { getPageInfo, PageInput } from "src/util.graphql";
-import { EpisodePage } from "./entities/episode.entity";
-
-export interface EpisodeFindInput {
-  where?: EpisodeWhereInput;
-  orderBy?: EpisodeOrderByWithRelationInput;
-  pagination?: PageInput;
-}
+import { Injectable } from '@nestjs/common';
+import { CreateEpisodeInput } from './dto/create-episode.input';
+import { UpdateEpisodeInput } from './dto/update-episode.input';
 
 @Injectable()
 export class EpisodesService {
-  constructor(private prisma: PrismaService) {}
-
-  async findAll({
-    where,
-    orderBy,
-    pagination,
-  }: EpisodeFindInput): Promise<EpisodePage> {
-    const { pageInfo, offset } = getPageInfo({
-      pagination,
-      count: await this.prisma.episode.count({ where }),
-    });
-    const episodes = await this.prisma.episode.findMany({
-      where,
-      orderBy,
-      skip: offset,
-      take: pageInfo.perPage,
-    });
-    return {
-      pageInfo,
-      episodes,
-    };
+  create(createEpisodeInput: CreateEpisodeInput) {
+    return 'This action adds a new episode';
   }
 
-  findOne({ where, orderBy }: EpisodeFindInput) {
-    return this.prisma.episode.findFirst({ where, orderBy });
+  findAll() {
+    return `This action returns all episodes`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} episode`;
+  }
+
+  update(id: number, updateEpisodeInput: UpdateEpisodeInput) {
+    return `This action updates a #${id} episode`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} episode`;
   }
 }

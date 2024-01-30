@@ -1,9 +1,7 @@
-import { ObjectType, Field, Int } from "@nestjs/graphql";
-import { Staff } from "src/@generated/staff/staff.model";
-import { BasePage } from "src/util.graphql";
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
-export class StaffPage extends BasePage {
-  @Field(() => [Staff])
-  staff: Staff[];
+export class Staff {
+  @Field(() => Int, { description: 'Example field (placeholder)' })
+  exampleField: number;
 }

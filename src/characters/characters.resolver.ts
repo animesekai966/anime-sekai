@@ -1,65 +1,35 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Int,
-  ResolveField,
-  Parent,
-} from "@nestjs/graphql";
-import { CharacterOnAnime } from "src/@generated/character-on-anime/character-on-anime.model";
-import { CharacterOrderByWithRelationInput } from "src/@generated/character/character-order-by-with-relation.input";
-import { CharacterWhereInput } from "src/@generated/character/character-where.input";
-import { Character } from "src/@generated/character/character.model";
-import { PrismaService } from "src/prisma/prisma.service";
-import { PageInput } from "src/util.graphql";
-import { CharactersService } from "./characters.service";
-import { CharacterPage } from "./entities/character.entity";
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { CharactersService } from './characters.service';
+import { Character } from './entities/character.entity';
+import { CreateCharacterInput } from './dto/create-character.input';
+import { UpdateCharacterInput } from './dto/update-character.input';
 
 @Resolver(() => Character)
 export class CharactersResolver {
-  constructor(
-    private readonly charactersService: CharactersService,
-    private prisma: PrismaService,
-  ) {}
+  constructor(private readonly charactersService: CharactersService) {}
 
-  @Query(() => CharacterPage, { name: "characters" })
-  findAll(
-    @Args("CharacterWhereInput", { nullable: true })
-    where?: CharacterWhereInput,
-    @Args("CharacterOrderBy", { nullable: true })
-    orderBy?: CharacterOrderByWithRelationInput,
-    @Args("pagination", { nullable: true })
-    pagination?: PageInput,
-  ): Promise<CharacterPage> {
-    
-    return this.charactersService.findAll({ where, orderBy, pagination });
+  @Mutation(() => Character)
+  createCharacter(@Args('createCharacterInput') createCharacterInput: CreateCharacterInput) {
+    return this.charactersService.create(createCharacterInput);
   }
 
-  @Query(() => Character, { name: "character" })
-  findOne(
-    @Args("CharacterWhereInput", { nullable: true })
-    where?: CharacterWhereInput,
-    @Args("CharacterOrderBy", { nullable: true })
-    orderBy?: CharacterOrderByWithRelationInput,
-  ) {
-    return this.charactersService.findOne({ where, orderBy });
+  @Query(() => [Character], { name: 'characters' })
+  findAll() {
+    return this.charactersService.findAll();
   }
 
-  @ResolveField("anime", () => [CharacterOnAnime])
-  async getCharacterAnime(@Parent() character: Character) {
-    let { id } = character;
-    let CharacterOnAnime = await this.prisma.characterOnAnime.findMany({
-      where: {
-        characterId: id,
-      },
-      include: {
-        anime: true,
-        voiceActors: true,
-        _count: true,
-      },
-    });
+  @Query(() => Character, { name: 'character' })
+  findOne(@Args('id', { type: () => Int }) id: number) {
+    return this.charactersService.findOne(id);
+  }
 
-    return CharacterOnAnime;
+  @Mutation(() => Character)
+  updateCharacter(@Args('updateCharacterInput') updateCharacterInput: UpdateCharacterInput) {
+    return this.charactersService.update(updateCharacterInput.id, updateCharacterInput);
+  }
+
+  @Mutation(() => Character)
+  removeCharacter(@Args('id', { type: () => Int }) id: number) {
+    return this.charactersService.remove(id);
   }
 }

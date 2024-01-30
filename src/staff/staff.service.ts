@@ -1,38 +1,26 @@
-import { Injectable } from "@nestjs/common";
-import { StaffOrderByWithRelationInput } from "src/@generated/staff/staff-order-by-with-relation.input";
-import { StaffWhereInput } from "src/@generated/staff/staff-where.input";
-import { PrismaService } from "src/prisma/prisma.service";
-import { getPageInfo, PageInput } from "src/util.graphql";
-
-export interface StaffFindInput {
-  where?: StaffWhereInput;
-  orderBy?: StaffOrderByWithRelationInput;
-  pagination?: PageInput;
-}
+import { Injectable } from '@nestjs/common';
+import { CreateStaffInput } from './dto/create-staff.input';
+import { UpdateStaffInput } from './dto/update-staff.input';
 
 @Injectable()
 export class StaffService {
-  constructor(private prisma: PrismaService) {}
-
-  async findAll({ where, orderBy, pagination }: StaffFindInput) {
-    const staffCount = await this.prisma.staff.count({ where });
-    const { pageInfo, offset } = getPageInfo({ pagination, count: staffCount });
-    const staff = await this.prisma.staff.findMany({
-      where,
-      orderBy,
-      skip: offset,
-      take: pageInfo.perPage,
-    });
-    return {
-      pageInfo,
-      staff,
-    };
+  create(createStaffInput: CreateStaffInput) {
+    return 'This action adds a new staff';
   }
 
-  findOne({ where, orderBy }: StaffFindInput) {
-    return this.prisma.staff.findFirst({
-      where,
-      orderBy,
-    });
+  findAll() {
+    return `This action returns all staff`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} staff`;
+  }
+
+  update(id: number, updateStaffInput: UpdateStaffInput) {
+    return `This action updates a #${id} staff`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} staff`;
   }
 }

@@ -1,47 +1,26 @@
-import { Injectable } from "@nestjs/common";
-import { CharacterOrderByWithRelationInput } from "src/@generated/character/character-order-by-with-relation.input";
-import { CharacterWhereInput } from "src/@generated/character/character-where.input";
-import { PrismaService } from "src/prisma/prisma.service";
-import { getPageInfo, PageInput } from "src/util.graphql";
-import _ from "lodash";
-
-export interface CharacterFindInput {
-  where?: CharacterWhereInput;
-  orderBy?: CharacterOrderByWithRelationInput;
-  pagination?: PageInput;
-}
+import { Injectable } from '@nestjs/common';
+import { CreateCharacterInput } from './dto/create-character.input';
+import { UpdateCharacterInput } from './dto/update-character.input';
 
 @Injectable()
 export class CharactersService {
-  constructor(private prisma: PrismaService) {}
-
-  async findAll({ where, orderBy, pagination }: CharacterFindInput) {
-    pagination = _.merge(
-      {
-        page: 0,
-        perPage: 25,
-      },
-      pagination,
-    );
-    const charactersCount = await this.prisma.character.count({ where });
-    const { pageInfo, offset } = getPageInfo({
-      pagination,
-      count: charactersCount,
-    });
-    const characters = await this.prisma.character.findMany({
-      where,
-      orderBy,
-      skip: offset,
-      take: pageInfo.perPage,
-    });
-
-    return {
-      pageInfo,
-      characters,
-    };
+  create(createCharacterInput: CreateCharacterInput) {
+    return 'This action adds a new character';
   }
 
-  findOne({ where, orderBy }: CharacterFindInput) {
-    return this.prisma.character.findFirst({ where, orderBy });
+  findAll() {
+    return `This action returns all characters`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} character`;
+  }
+
+  update(id: number, updateCharacterInput: UpdateCharacterInput) {
+    return `This action updates a #${id} character`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} character`;
   }
 }

@@ -1,10 +1,8 @@
-import { Module } from "@nestjs/common";
-import { StaffService } from "./staff.service";
-import { StaffResolver } from "./staff.resolver";
-import { PrismaService } from "src/prisma/prisma.service";
-import { AnimeService } from "src/anime/anime.service";
+import { Module } from '@nestjs/common';
+import { StaffService } from './staff.service';
+import { StaffResolver } from './staff.resolver';
 
 @Module({
-  providers: [StaffResolver, StaffService, PrismaService, AnimeService],
+  providers: [StaffResolver, StaffService],
 })
 export class StaffModule {}

@@ -1,59 +1,35 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Int,
-  ResolveField,
-  Parent,
-} from "@nestjs/graphql";
-import { Anime } from "src/@generated/anime/anime.model";
-import { EpisodeOrderByWithRelationInput } from "src/@generated/episode/episode-order-by-with-relation.input";
-import { EpisodeWhereInput } from "src/@generated/episode/episode-where.input";
-import { Episode } from "src/@generated/episode/episode.model";
-import { AnimeService } from "src/anime/anime.service";
-import { PageInput } from "src/util.graphql";
-import { EpisodePage } from "./entities/episode.entity";
-import { EpisodesService } from "./episodes.service";
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { EpisodesService } from './episodes.service';
+import { Episode } from './entities/episode.entity';
+import { CreateEpisodeInput } from './dto/create-episode.input';
+import { UpdateEpisodeInput } from './dto/update-episode.input';
 
 @Resolver(() => Episode)
 export class EpisodesResolver {
-  constructor(
-    private readonly episodesService: EpisodesService,
-    private animeService: AnimeService,
-  ) {}
+  constructor(private readonly episodesService: EpisodesService) {}
 
-  @Query(() => EpisodePage, { name: "episodes" })
-  findAll(
-    @Args("EpisodeWhereInput", { nullable: true })
-    where?: EpisodeWhereInput,
-    @Args("EpisodeOrderBy", { nullable: true })
-    orderBy?: EpisodeOrderByWithRelationInput,
-    @Args("pagination", { nullable: true })
-    pagination?: PageInput,
-  ) {
-    return this.episodesService.findAll({ where, orderBy, pagination });
+  @Mutation(() => Episode)
+  createEpisode(@Args('createEpisodeInput') createEpisodeInput: CreateEpisodeInput) {
+    return this.episodesService.create(createEpisodeInput);
   }
 
-  @Query(() => Episode, { name: "episode" })
-  findOne(
-    @Args("EpisodeWhereInput", { nullable: true })
-    where?: EpisodeWhereInput,
-    @Args("EpisodeOrderBy", { nullable: true })
-    orderBy?: EpisodeOrderByWithRelationInput,
-  ) {
-    return this.episodesService.findOne({ where, orderBy });
+  @Query(() => [Episode], { name: 'episodes' })
+  findAll() {
+    return this.episodesService.findAll();
   }
 
-  @ResolveField("anime", () => Anime)
-  getEpisodeAnime(@Parent() episode: Episode) {
-    let { animeId } = episode;
-    return this.animeService.findFirst({
-      where: {
-        id: {
-          equals: animeId,
-        },
-      },
-    });
+  @Query(() => Episode, { name: 'episode' })
+  findOne(@Args('id', { type: () => Int }) id: number) {
+    return this.episodesService.findOne(id);
+  }
+
+  @Mutation(() => Episode)
+  updateEpisode(@Args('updateEpisodeInput') updateEpisodeInput: UpdateEpisodeInput) {
+    return this.episodesService.update(updateEpisodeInput.id, updateEpisodeInput);
+  }
+
+  @Mutation(() => Episode)
+  removeEpisode(@Args('id', { type: () => Int }) id: number) {
+    return this.episodesService.remove(id);
   }
 }
