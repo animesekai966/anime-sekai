@@ -13,10 +13,12 @@ import { AwService } from './sources/aw/aw.service';
 import { AnimeiatService } from './sources/animeiat/animeiat.service';
 import { JikanService } from './sources/jikan/jikan.service';
 import { AnilistService } from './sources/anilist/anilist.service';
+import { SaService } from './sources/sa/sa.service';
+import { AfService } from './sources/af/af.service';
 
 @Module({
   imports: [AnimeModule, CharactersModule, StaffModule, EpisodesModule],
   controllers: [AppController],
-  providers: [AppService, LoggerService, TranslateService, UploadService, AsService, AwService, AnimeiatService, JikanService, AnilistService],
+  providers: [AppService, LoggerService, TranslateService, UploadService, AsService, AwService, AnimeiatService, JikanService, AnilistService, SaService, AfService],
 })
 export class AppModule {}
