@@ -21,10 +21,12 @@ let AfService = class AfService {
         const animeListSnapshot = await (0, firestore_1.getDocs)(animeList);
         return this.docsData(animeListSnapshot);
     }
-    async getAnime({ malId = '', id = '', ...options }) {
-        const animeQuery = (0, firestore_1.query)((0, firestore_1.collection)(db, 'documents', 'anime', id));
+    async getAnime({ malId, id, ...options }) {
+        const whereClause = malId
+            ? (0, firestore_1.where)('mal_id', '==', Number(malId))
+            : (0, firestore_1.where)('id', '==', Number(id));
+        const animeQuery = (0, firestore_1.query)((0, firestore_1.collection)(db, `anime`), whereClause);
         const animeListSnapshot = await (0, firestore_1.getDocs)(animeQuery);
-        return animeListSnapshot;
         const anime = this.docsData(animeListSnapshot)[0];
         if (options.include.episodes) {
             anime.episodes = await this.getAnimeEps({

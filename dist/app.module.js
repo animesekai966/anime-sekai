@@ -24,6 +24,7 @@ const jikan_service_1 = require("./sources/jikan/jikan.service");
 const anilist_service_1 = require("./sources/anilist/anilist.service");
 const sa_service_1 = require("./sources/sa/sa.service");
 const af_service_1 = require("./sources/af/af.service");
+const bl_service_1 = require("./sources/bl/bl.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,7 +32,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [anime_module_1.AnimeModule, characters_module_1.CharactersModule, staff_module_1.StaffModule, episodes_module_1.EpisodesModule],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, logger_service_1.Logger, translate_service_1.TranslateService, upload_service_1.UploadService, as_service_1.AsService, aw_service_1.AwService, animeiat_service_1.AnimeiatService, jikan_service_1.JikanService, anilist_service_1.AnilistService, sa_service_1.SaService, af_service_1.AfService],
+        providers: [app_service_1.AppService, logger_service_1.Logger, translate_service_1.TranslateService, upload_service_1.UploadService, as_service_1.AsService, aw_service_1.AwService, animeiat_service_1.AnimeiatService, jikan_service_1.JikanService, anilist_service_1.AnilistService, sa_service_1.SaService, af_service_1.AfService, bl_service_1.BlService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

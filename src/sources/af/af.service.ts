@@ -4,13 +4,11 @@ import {
   DocumentData,
   QuerySnapshot,
   collection,
-  doc,
   getDocs,
   getFirestore,
   limit,
-  or,
   query,
-  where,
+  where
 } from 'firebase/firestore';
 
 const app = initializeApp(
@@ -47,12 +45,14 @@ export class AfService {
     return this.docsData(animeListSnapshot);
   }
 
-  async getAnime({ malId = '', id = '', ...options }: getAnimeOptions) {
-    const animeQuery = query(collection(db, 'documents', 'anime', id));
+  async getAnime({ malId, id, ...options }: getAnimeOptions) {
+    const whereClause = malId
+      ? where('mal_id', '==', Number(malId))
+      : where('id', '==', Number(id));
 
+    const animeQuery = query(collection(db, `anime`), whereClause);
     const animeListSnapshot = await getDocs(animeQuery);
 
-    return animeListSnapshot;
     const anime = this.docsData(animeListSnapshot)[0] as AfAnime & {
       episodes?: AfEpisode[];
     };

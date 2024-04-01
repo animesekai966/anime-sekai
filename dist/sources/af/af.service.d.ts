@@ -16,9 +16,9 @@ export declare class AfService {
     listAnime(options: listOptions): Promise<{
         [x: string]: any;
     }[]>;
-    getAnime({ malId, id, ...options }: getAnimeOptions): Promise<QuerySnapshot<DocumentData, DocumentData> | (AfAnime & {
+    getAnime({ malId, id, ...options }: getAnimeOptions): Promise<AfAnime & {
         episodes?: AfEpisode[];
-    })>;
+    }>;
     getAnimeEps(options: getAnimeEpsOptions): Promise<AfEpisode[]>;
     docsData({ docs }: QuerySnapshot<DocumentData, DocumentData>): {
         [x: string]: any;
