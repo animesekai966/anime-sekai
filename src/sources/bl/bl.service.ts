@@ -225,6 +225,28 @@ export class BlService {
     }
   }
 
+  async getAnimeEpServersRawVideoUrl(blkomEmbedUrl: string) {
+    const { body } = await this.client.get(blkomEmbedUrl);
+    const $ = cheerio.load(body);
+
+    const sources: {
+      url: string;
+      res: string;
+      type: string;
+    }[] = [];
+
+    $(`video > source`).each((_, el) => {
+      const srcTag = cheerio.load(el)(`source`);
+      const obj: any = srcTag.attr();
+      sources.push({
+        ...obj,
+        serverUrl: obj.src,
+      });
+    });
+
+    return sources;
+  }
+
   async getAnimeEpServers({ slug, episodeNumber }: getAnimeEpServersOptions) {
     const { body } = await this.client.get(
       `https://blkom.com/watch/${slug}/${episodeNumber}`,
