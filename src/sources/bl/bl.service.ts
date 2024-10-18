@@ -37,6 +37,8 @@ interface getAnimeEpServersOptions {
   episodeNumber: number;
 }
 
+const SORUCE_URL = 'http://103.155.92.42';
+
 @Injectable()
 export class BlService {
   client: typeof gotScraping;
@@ -71,7 +73,7 @@ export class BlService {
     Omit<BlkomAnime, 'malId' | 'malUrl' | 'status' | 'genres' | 'altTitles'>[]
   > {
     const { body, statusCode } = await this.client.get(
-      `https://blkom.com/animes-list?page=${options.page ?? 1}`,
+      `${SORUCE_URL}/animes-list?page=${options.page ?? 1}`,
     );
 
     console.log(`StatusCode: ${statusCode}`);
@@ -118,7 +120,7 @@ export class BlService {
   }
 
   async getAnime({ slug, type, ...options }: getAnimeOptions) {
-    const url = `https://blkom.com/${type}/${slug}`;
+    const url = `${SORUCE_URL}/${type}/${slug}`;
     const { body } = await this.client.get(url);
     const $ = cheerio.load(body);
     const parsedUrl = this.parseUrl(url);
@@ -184,7 +186,7 @@ export class BlService {
   }
 
   async getAnimeEps({ type, slug, ...options }: getAnimeEpsOptions) {
-    const { body } = await this.client.get(`https://blkom.com/${type}/${slug}`);
+    const { body } = await this.client.get(`${SORUCE_URL}/${type}/${slug}`);
     const $ = cheerio.load(body);
 
     const episodes = $(
@@ -229,18 +231,13 @@ export class BlService {
     const { body } = await this.client.get(blkomEmbedUrl);
     const $ = cheerio.load(body);
 
-    const sources: {
-      url: string;
-      res: string;
-      type: string;
-    }[] = [];
+    const sources: BlkomVideo[] = [];
 
     $(`video > source`).each((_, el) => {
       const srcTag = cheerio.load(el)(`source`);
-      const obj: any = srcTag.attr();
+      const obj = srcTag.attr() as unknown as BlkomVideo;
       sources.push({
         ...obj,
-        serverUrl: obj.src,
       });
     });
 
@@ -249,14 +246,18 @@ export class BlService {
 
   async getAnimeEpServers({ slug, episodeNumber }: getAnimeEpServersOptions) {
     const { body } = await this.client.get(
-      `https://blkom.com/watch/${slug}/${episodeNumber}`,
+      `${SORUCE_URL}/watch/${slug}/${episodeNumber}`,
     );
 
     const $ = cheerio.load(body);
 
     const servers = $(`span.server`)
-      .map((_, el) => {
+      .map(async (_, el) => {
         const $$ = cheerio.load(el);
+        const name = cleanString($$('a').text());
+
+        if (name.toLowerCase() !== 'Blkom'.toLocaleLowerCase()) return;
+
         return {
           name: cleanString($$('a').text()),
           translatedBy: $$('span')
@@ -264,15 +265,19 @@ export class BlService {
             .replace(/server|active/g, '')
             .replace(/\-/g, ' ')
             .trim(),
-          url: $$('a').attr('data-src'),
+          videos: await this.getAnimeEpServersRawVideoUrl(
+            $$('a').attr('data-src'),
+          ),
         } satisfies BlkomServer;
       })
       .toArray();
 
-    return servers;
+    return (await Promise.all(servers))[0];
   }
 
   parseUrl(url: string): BlkomParsedUrl {
+    console.log(url);
+
     const urlParts = url.split('/');
     const mediaTypes = ['watch', 'anime', 'movie', 'ona', 'ova', 'special'];
     let mediaType: string | undefined;
@@ -329,7 +334,14 @@ export interface BlkomEpisode {
 export interface BlkomServer {
   name: string;
   translatedBy: string;
-  url: string;
+  videos: BlkomVideo[];
+}
+
+export interface BlkomVideo {
+  src: string;
+  type: string;
+  label: string;
+  res: string;
 }
 
 export interface BlkomParsedUrl {
